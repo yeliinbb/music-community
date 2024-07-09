@@ -1,16 +1,15 @@
 "use client";
 import { getPosts } from "@/app/api/posts/route";
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
 
-const Post = () => {
+const Post = ({ id }: { id: string }) => {
   const { data } = useQuery({
     queryKey: ["posts"],
-    queryFn: getPosts
+    queryFn: () => getPosts(id)
   });
   console.log(data);
 
-  return <div></div>;
+  return <div>{data[0]?.title}</div>;
 };
 
 export default Post;

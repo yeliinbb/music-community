@@ -22,11 +22,13 @@ export const POST = async (request: Request) => {
   }
 };
 
-export const getPosts = async () => {
+export const getPosts = async (id: string) => {
+  console.log("id=>", id);
   const supabase = createClient();
   try {
-    const { data } = await supabase.from("posts").select("*");
+    const { data } = await supabase.from("posts").select("*").eq("id", id);
     console.log("data=>", data);
+    return data;
   } catch (error) {
     console.log(error);
   }
