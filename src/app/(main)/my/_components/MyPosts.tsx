@@ -12,7 +12,7 @@ type MyPostsType = {
 };
 
 export default function MyPosts() {
-  const { data: posts, isFetching } = useQuery<MyPostsType[]>({
+  const { data: posts } = useQuery<MyPostsType[]>({
     queryKey: ["myPosts"],
     queryFn: () => api.me.getMyPosts()
   });

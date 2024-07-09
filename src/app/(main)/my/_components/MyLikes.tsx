@@ -10,12 +10,10 @@ type LikeType = {
 };
 
 export default function MyLikes() {
-  const { data: likes, isFetching } = useQuery<LikeType>({
+  const { data: likes } = useQuery<LikeType>({
     queryKey: ["myLikes"],
     queryFn: () => api.me.getMyLikes()
   });
-
-  console.log("MY LIKES___", likes);
 
   return (
     <div>
