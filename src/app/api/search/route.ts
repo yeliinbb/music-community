@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: NextRequest) {
-  console.log("POST___");
   const response = await fetch("https://accounts.spotify.com/api/token", {
     method: "POST",
     headers: {
@@ -9,8 +8,8 @@ export async function POST(req: NextRequest) {
     },
     body: new URLSearchParams({
       grant_type: "client_credentials",
-      client_id: "c292a5b8d5eb41e0a0b5bb2a704b6c97",
-      client_secret: "99af6a083334406a912f32dda910e1ac"
+      client_id: process.env.NEXT_PUBLIC_SPOTIFY_ID as string,
+      client_secret: process.env.NEXT_PUBLIC_SPOTIFY_SECRET as string
     })
   });
   const data = await response.json();
