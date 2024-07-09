@@ -1,8 +1,13 @@
 import { SpotifySearchResults } from "@/types/spotify.type";
 import { User } from "@/types/users.type";
+import MeAPI from "./me.api";
 
 class API {
-  constructor() {}
+  me;
+
+  constructor() {
+    this.me = new MeAPI();
+  }
 
   async getSearchSpotify(query: string) {
     const response = await fetch(`http://localhost:3000/api/search/spotify/${query}`);
