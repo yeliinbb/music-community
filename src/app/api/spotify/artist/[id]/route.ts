@@ -3,21 +3,14 @@ import { SpotifyArtist } from "@/types/spotify.type";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-interface GetProps {
-  request: NextRequest;
-  params: { id: string };
-}
-
-export const GET = async ({ request, params }: GetProps) => {
+export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
   try {
-    console.log("여기가 파람스 =>", params);
     const token = await getAccessToken();
-    console.log("여기가 토큰=>", token);
-    const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${params.id}`, {
+    const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${context.params.id}`, {
       headers: { Authorization: `Bearer ${token}` },
       params: { market: "KR" }
     });
-    console.log("여기가 리스폰스 =>", response.data);
+
     return NextResponse.json(response.data);
   } catch (error) {
     console.error("Error fetching track:", error);
