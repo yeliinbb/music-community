@@ -1,6 +1,49 @@
-import React from "react";
+"use client";
 
-const signUpPage = () => {
+import { FormState } from "@/types/auth.type";
+import { useRouter } from "next/navigation";
+import { ChangeEventHandler, FormEventHandler, useState } from "react";
+
+const SignUpPage = () => {
+  const router = useRouter();
+  const initialState = {
+    email: "",
+    password: "",
+    nickname: ""
+  };
+
+  const [formState, setFormState] = useState<FormState>(initialState);
+
+  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
+    const { name, value } = e.target;
+    setFormState((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const onSubmitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+    e.preventDefault();
+
+    // 회원가입 요청
+    if (!formState.nickname || !formState.email || !formState.password) {
+      return alert("닉네임, 이메일, 비밀번호 모두 입력해 주세요.");
+    }
+    const data = await fetch("/api/signUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify(formState)
+    }).then((res) => res.json());
+    if (data.errorMsg) {
+      alert(data.errorMsg);
+      return;
+    }
+
+    alert("회원가입 성공");
+    setFormState(initialState);
+
+    router.replace("/login");
+  };
+
   return (
     <div>
       <div className="flex justify-center items-center min-h-screen">
@@ -8,14 +51,17 @@ const signUpPage = () => {
           <div className="text-center mb-8">
             <h2 className="mt-4 text-2xl font-bold text-gray-200">Welcome!</h2>
           </div>
-          <form>
+          <form onSubmit={onSubmitHandler}>
             <div className="mb-6">
               <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="username">
                 UserName
               </label>
               <input
                 type="text"
+                name="nickname"
+                value={formState.nickname}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+                onChange={handleInputChange}
               />
             </div>
             <div className="mb-6">
@@ -24,7 +70,10 @@ const signUpPage = () => {
               </label>
               <input
                 type="email"
+                name="email"
+                value={formState.email}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+                onChange={handleInputChange}
               />
             </div>
             <div className="mb-6">
@@ -33,7 +82,10 @@ const signUpPage = () => {
               </label>
               <input
                 type="password"
+                name="password"
+                value={formState.password}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+                onChange={handleInputChange}
               />
             </div>
             <div className="flex justify-between items-center">
@@ -53,4 +105,4 @@ const signUpPage = () => {
   );
 };
 
-export default signUpPage;
+export default SignUpPage;
