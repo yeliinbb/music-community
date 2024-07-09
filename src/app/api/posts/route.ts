@@ -1,5 +1,7 @@
+"use server";
 import { Request } from "./../../../../node_modules/node-fetch/@types/index.d";
 import { createClient } from "@/utils/supabase/server";
+// import { createClient } from "@/utils/supabase/client";
 import { NextResponse } from "next/server";
 
 export const POST = async (request: Request) => {
@@ -17,5 +19,15 @@ export const POST = async (request: Request) => {
   } catch (error) {
     console.log(error);
     return NextResponse.json({ error: "Internal Server Error", message: error }, { status: 500 });
+  }
+};
+
+export const getPosts = async () => {
+  const supabase = createClient();
+  try {
+    const { data } = await supabase.from("posts").select("*");
+    console.log("data=>", data);
+  } catch (error) {
+    console.log(error);
   }
 };
