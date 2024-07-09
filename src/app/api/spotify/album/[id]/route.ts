@@ -18,6 +18,6 @@ export const GET = async ({ request, params }: GetProps) => {
     return NextResponse.json(response.data);
   } catch (error) {
     console.error("Error fetching track:", error);
-    return NextResponse.json({ error: "Failed to fetch track data" }, { status: 500 });
+    return NextResponse.json({ error: "Failed to fetch album data" }, { status: 500 });
   }
 };

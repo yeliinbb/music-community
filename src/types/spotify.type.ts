@@ -29,3 +29,24 @@ export type SpotifyAlbum = {
   release_date: string;
   total_tracks: number;
 };
+
+export type SpotifyFeaturedPlaylists = {
+  playlists: {
+    items: Array<{
+      id: string;
+      name: string;
+      description: string;
+      images: Array<{ url: string }>;
+      tracks: { total: number };
+      external_urls: { spotify: string };
+    }>;
+  };
+};
+
+export type SpotifyPlaylistTracks = {
+  id: string;
+  name: string;
+  preview_url: null | string;
+  images: Array<{ url: string }>;
+  external_urls: { spotify: string };
+};
