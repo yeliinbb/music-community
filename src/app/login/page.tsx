@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React from "react";
 
 const loginPage = () => {
@@ -36,14 +37,16 @@ const loginPage = () => {
                   Login
                 </button>
               </div>
-              <div>
-                <button
-                  type="submit"
-                  className="mr-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors "
-                >
-                  SignUp
-                </button>
-              </div>
+              <Link href="/signup">
+                <div>
+                  <button
+                    type="submit"
+                    className="mr-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors "
+                  >
+                    SignUp
+                  </button>
+                </div>
+              </Link>
             </div>
           </form>
         </div>
