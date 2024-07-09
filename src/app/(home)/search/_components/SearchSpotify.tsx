@@ -17,13 +17,14 @@ export default function SearchSpotify() {
 
   return (
     <div>
-      {isLoading && <div>나우 로우딩...</div>}
-      {query.length > 0 && !isLoading && searchResults && (
-        <>
-          <div>
-            <h2 className="font-bold text-xl">앨범</h2>
-            <ul className="grid grid-cols-6 gap-4">
-              {searchResults.albums.items.map((item) => (
+      <>
+        <div>
+          <h2 className="font-bold text-xl">앨범</h2>
+          {isLoading && <div>앨범 나우 로우딩..</div>}
+          <ul className="grid grid-cols-6 gap-4">
+            {query.length > 0 &&
+              !isLoading &&
+              searchResults?.albums.items.map((item) => (
                 <li key={item.id}>
                   <div className="relative aspect-square p-2">
                     <Image
@@ -37,12 +38,15 @@ export default function SearchSpotify() {
                   {item.name}
                 </li>
               ))}
-            </ul>
-          </div>
-          <div>
-            <h2 className="font-bold text-xl">아티스트</h2>
-            <ul className="grid grid-cols-6 gap-4">
-              {searchResults.artists.items.map((item) => (
+          </ul>
+        </div>
+        <div>
+          <h2 className="font-bold text-xl">아티스트</h2>
+          {isLoading && <div>아티스트 나우 로우딩..</div>}
+          <ul className="grid grid-cols-6 gap-4">
+            {query.length > 0 &&
+              !isLoading &&
+              searchResults?.artists.items.map((item) => (
                 <li key={item.id}>
                   <div className="relative aspect-square p-2">
                     <Image
@@ -56,10 +60,9 @@ export default function SearchSpotify() {
                   {item.name}
                 </li>
               ))}
-            </ul>
-          </div>
-        </>
-      )}
+          </ul>
+        </div>
+      </>
       {!query.length && !isLoading && <div>검색 결과가 없읍니다</div>}
     </div>
   );

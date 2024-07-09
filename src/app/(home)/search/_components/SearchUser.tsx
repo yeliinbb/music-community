@@ -20,20 +20,22 @@ export default function SearchUser() {
     <div>
       <h2 className="font-bold text-xl">유저</h2>
       <ul className="grid grid-cols-6 gap-4">
-        {searchUsers?.map((searchUser) => (
-          <li key={searchUser.id}>
-            <div className="relative aspect-square p-2">
-              <Image
-                src={"http://via.placeholder.com/640x480"}
-                className="object-cover"
-                fill
-                alt={searchUser.nickname!}
-                sizes={"100px"}
-              />
-            </div>
-            {searchUser.nickname}
-          </li>
-        ))}
+        {isLoading && <div>나우 로우딩</div>}
+        {!isLoading &&
+          searchUsers?.map((searchUser) => (
+            <li key={searchUser.id}>
+              <div className="relative aspect-square p-2">
+                <Image
+                  src={"http://via.placeholder.com/640x480"}
+                  className="object-cover"
+                  fill
+                  alt={searchUser.nickname!}
+                  sizes={"100px"}
+                />
+              </div>
+              {searchUser.nickname}
+            </li>
+          ))}
       </ul>
     </div>
   );
