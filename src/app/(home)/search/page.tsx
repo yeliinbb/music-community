@@ -2,7 +2,7 @@
 
 import SearchBar from "@/app/api/search/_components/SearchBar";
 import { useRouter } from "next/navigation";
-import { Suspense, useRef } from "react";
+import { useRef } from "react";
 
 function SearchPage() {
   const router = useRouter();
@@ -20,9 +20,7 @@ function SearchPage() {
     <div>
       <input ref={inputRef} type="text" />
       <button onClick={onClickHandler}>찾기</button>
-      <Suspense fallback={<div>나우 로우딩...</div>}>
-        <SearchBar />
-      </Suspense>
+      <SearchBar />
     </div>
   );
 }
