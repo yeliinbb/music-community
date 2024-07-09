@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function SearchBar() {
   const searchParams = useSearchParams();
-  console.log("PARAMS___", searchParams);
+  // console.log("PARAMS___", searchParams);
   const query = searchParams.get("params") ? (searchParams.get("params") as string) : "";
   console.log("QUERY___", query);
   const { data: searchResults, isLoading } = useQuery({
@@ -17,7 +17,8 @@ export default function SearchBar() {
 
   return (
     <div>
-      {!isLoading && searchResults && (
+      {isLoading && <div>나우 로우딩...</div>}
+      {query.length > 0 && !isLoading && searchResults && (
         <>
           <div>
             <h2 className="font-bold text-xl">앨범</h2>
@@ -59,6 +60,7 @@ export default function SearchBar() {
           </div>
         </>
       )}
+      {!query.length && !isLoading && <div>검색 결과가 없읍니다</div>}
     </div>
   );
 }
