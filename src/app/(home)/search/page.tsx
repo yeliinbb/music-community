@@ -1,8 +1,9 @@
 "use client";
 
-import SearchBar from "@/app/api/search/_components/SearchBar";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
+import SearchSpotify from "./_components/SearchSpotify";
+import SearchUser from "./_components/SearchUser";
 
 function SearchPage() {
   const router = useRouter();
@@ -20,7 +21,8 @@ function SearchPage() {
     <div>
       <input ref={inputRef} type="text" />
       <button onClick={onClickHandler}>찾기</button>
-      <SearchBar />
+      <SearchUser />
+      <SearchSpotify />
     </div>
   );
 }

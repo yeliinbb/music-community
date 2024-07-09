@@ -3,17 +3,17 @@ import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 import { useSearchParams } from "next/navigation";
 
-export default function SearchBar() {
+export default function SearchSpotify() {
   const searchParams = useSearchParams();
   // console.log("PARAMS___", searchParams);
   const query = searchParams.get("params") ? (searchParams.get("params") as string) : "";
-  console.log("QUERY___", query);
+
   const { data: searchResults, isLoading } = useQuery({
-    queryKey: ["search", { query }],
-    queryFn: () => api.getSearchResult(query)
+    queryKey: ["search", { query, type: "spotify" }],
+    queryFn: () => api.getSearchSpotify(query)
   });
 
-  console.log("DATA___", searchResults);
+  console.log("SPOTIFY DATA___", searchResults);
 
   return (
     <div>
