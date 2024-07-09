@@ -33,13 +33,6 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "comments_postId_fkey"
-            columns: ["postId"]
-            isOneToOne: false
-            referencedRelation: "posts"
-            referencedColumns: ["id"]
-          },
-          {
             foreignKeyName: "comments_userId_fkey"
             columns: ["userId"]
             isOneToOne: false
@@ -77,38 +70,26 @@ export type Database = {
       posts: {
         Row: {
           content: string | null
-          createdAt: string | null
+          created_at: string
           id: string
+          title: string | null
           userId: string | null
         }
         Insert: {
           content?: string | null
-          createdAt?: string | null
-          id: string
+          created_at?: string
+          id?: string
+          title?: string | null
           userId?: string | null
         }
         Update: {
           content?: string | null
-          createdAt?: string | null
+          created_at?: string
           id?: string
+          title?: string | null
           userId?: string | null
         }
-        Relationships: [
-          {
-            foreignKeyName: "posts_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "posts_userId_fkey"
-            columns: ["userId"]
-            isOneToOne: false
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
-        ]
+        Relationships: []
       }
       users: {
         Row: {
