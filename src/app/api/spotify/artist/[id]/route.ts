@@ -3,12 +3,7 @@ import { SpotifyArtist } from "@/types/spotify.type";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-interface GetProps {
-  request: NextRequest;
-  params: { id: string };
-}
-
-export const GET = async ({ request, params }: GetProps) => {
+export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const token = await getAccessToken();
     const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${params.id}`, {
