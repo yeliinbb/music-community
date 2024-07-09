@@ -3,7 +3,10 @@
 @tailwind utilities;
 
 body {
+  width: 100vw;
+  height: 100vh;
   background-color: #54b2d3;
+  padding: 50px 130px 50px 50px;
 }
 
 button:hover {
