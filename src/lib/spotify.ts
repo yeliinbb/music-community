@@ -1,9 +1,9 @@
 import axios from "axios";
 
 export const getAccessToken = async (): Promise<string> => {
-  const client_id = process.env.SPOTIFY_CLIENT_ID;
-  const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-
+  const client_id = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_ID;
+  const client_secret = process.env.NEXT_PUBLIC_SPOTIFY_CLIENT_SECRET;
+  // console.log(client_id, client_secret);
   if (!client_id || !client_secret) {
     throw new Error("Spotify credentials are not set.");
   }
