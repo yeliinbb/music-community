@@ -68,13 +68,13 @@ const Artist = () => {
 
   const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
     <div className={`custom-arrow custom-prev-arrow ${className}`} onClick={onClick}>
-      <img src="arrow-left.svg" alt="이전 아티스트" />
+      <img src="chevrons-left.svg" alt="이전 아티스트" />
     </div>
   );
   
   const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
     <div className={`custom-arrow custom-next-arrow ${className}`} onClick={onClick}>
-      <img src="arrow-right.svg" alt="다음 아티스트" />
+      <img src="chevrons-right.svg" alt="다음 아티스트" />
     </div>
   );
 
