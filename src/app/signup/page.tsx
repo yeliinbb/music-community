@@ -22,26 +22,36 @@ const SignUpPage = () => {
   const onSubmitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
     e.preventDefault();
 
-    // 회원가입 요청
     if (!formState.nickname || !formState.email || !formState.password) {
       return alert("닉네임, 이메일, 비밀번호 모두 입력해 주세요.");
     }
-    const data = await fetch("/api/signUp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(formState)
-    }).then((res) => res.json());
-    if (data.errorMsg) {
-      alert(data.errorMsg);
-      return;
+
+    try {
+      const response = await fetch("/api/signUp", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify(formState)
+      });
+
+      if (!response.ok) {
+        throw new Error("회원가입 요청이 실패하였습니다.");
+      }
+
+      const data = await response.json();
+
+      if (data.errorMsg) {
+        throw new Error(data.errorMsg);
+      }
+
+      alert("회원가입 성공");
+      setFormState(initialState);
+      router.replace("/login");
+    } catch (error: any) {
+      alert(`오류가 발생했습니다: ${error.message}`);
+      console.error("회원가입 오류:", error);
     }
-
-    alert("회원가입 성공");
-    setFormState(initialState);
-
-    router.replace("/login");
   };
 
   return (
