@@ -2,7 +2,7 @@ declare module "react-tooltip" {
   import React from "react";
 
   export interface TooltipProps {
-    anchorId?: string;
+    id?: string;
     place?: "top" | "right" | "bottom" | "left";
     content?: React.ReactNode;
     events?: ("hover" | "click" | "focus")[];

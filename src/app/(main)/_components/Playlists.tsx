@@ -8,6 +8,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from "next/image";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
 
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -45,17 +47,18 @@ const Playlists = () => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1000,
+    cssEase: "ease-in-out",
     slidesToShow: 1,
     slidesToScroll: 1,
     arrow: true,
     beforeChange: (current: number, next: number) => setCurrentIndex(next)
+    // autoplay: true,
+    // autoplaySpeed: 8000
   };
 
   if (isPending) return <div>Loading...</div>;
   if (isError) return <div>Error loading playlists</div>;
-
-  const currentPlaylist = playlists?.[currentIndex];
 
   return (
     <div className="w-full h-full">
@@ -66,6 +69,15 @@ const Playlists = () => {
               {index === currentIndex && (
                 <>
                   <h2 className="mb-2">{playlist.name}</h2>
+                  <div className="flex">
+                    <Image
+                      width={500}
+                      height={100}
+                      src={playlist.tracks[0].album.images[0].url}
+                      alt={playlist.tracks[0].name}
+                      className="w-full h-[150px] object-cover mb-2 rounded-xl"
+                    />
+                  </div>
                   <ul className="w-full grid grid-cols-2 grid-rows-4 gap-2 my-0 mx-auto">
                     {playlist.tracks.map((track) => (
                       <li
@@ -78,7 +90,7 @@ const Playlists = () => {
                             alt={track.name}
                             width={35}
                             height={35}
-                            className="w-auto h-auto object-fit"
+                            className="w-[35px] h-[35px] object-fit"
                           />
                           <div className="w-full">
                             <h4 className="w-[90%] h-[20px] overflow-hidden overflow-ellipsis">{track.name}</h4>
@@ -91,11 +103,10 @@ const Playlists = () => {
                             </div>
                           </div>
                         </div>
-
                         {track.preview_url !== "none" ? (
                           <>
                             <button
-                              className="bg-white rounded-[50%] min-w-[30px] min-h-[30px]"
+                              className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center"
                               onClick={() => playTrack(track.preview_url)}
                             >
                               ⏯
@@ -103,7 +114,22 @@ const Playlists = () => {
                             <audio ref={audioRef} className="hidden" />
                           </>
                         ) : (
-                          <span>미리 듣기를 지원하지 않는 곡입니다.</span>
+                          <>
+                            <button
+                              className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-none"
+                              disabled
+                              data-tooltip-id="플레이버튼"
+                              data-tooltip-content="미리 듣기를 지원하지 않는 곡입니다."
+                            >
+                              ⏯
+                            </button>
+                            <Tooltip
+                              id="플레이버튼"
+                              place="left"
+                              style={{ backgroundColor: "#858585", color: "white" }}
+                            />
+                            <audio ref={audioRef} className="hidden" />
+                          </>
                         )}
                       </li>
                     ))}

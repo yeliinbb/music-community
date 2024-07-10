@@ -10,15 +10,15 @@ export const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"]
 export const GET = async () => {
   // const {searchParams} = new URL(request.url)
   const accessToken = await getAccessToken();
-  const playlists = await getPlaylistIdList();
-  console.log(playlists);
+  const playlistsIds = await getPlaylistIdList();
+  // console.log(playlistsIds);
   if (!accessToken) {
     console.error("Access token is missing");
     return NextResponse.json({ error: "Access token is missing" }, { status: 500 });
   }
   try {
     const playlistsWithTracks = await Promise.all(
-      PLAYLIST_IDS.map(async (playlistId) => {
+      playlistsIds.map(async (playlistId) => {
         try {
           const [playlistResponse, tracksResponse] = await Promise.all([
             axios.get<SpotifyPlaylist>(`https://api.spotify.com/v1/playlists/${playlistId}`, {

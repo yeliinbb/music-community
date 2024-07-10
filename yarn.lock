@@ -340,6 +340,13 @@
   resolved "https://registry.yarnpkg.com/@types/prop-types/-/prop-types-15.7.12.tgz#12bb1e2be27293c1406acb6af1c3f3a1481d98c6"
   integrity sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==
 
+"@types/rc-tooltip@^3.7.14":
+  version "3.7.14"
+  resolved "https://registry.yarnpkg.com/@types/rc-tooltip/-/rc-tooltip-3.7.14.tgz#5958d3a879fe9b3f197f0202d79d04825d6c052f"
+  integrity sha512-FRkZeAjyVCio7S605fkbJePmurSWkFX2+o8QmHOnV8lVoVs6Lh4m6hCGj3qVY4KIk3Na9uHpiCiMkBkYE3ragA==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react-dom@^18":
   version "18.3.0"
   resolved "https://registry.yarnpkg.com/@types/react-dom/-/react-dom-18.3.0.tgz#0cbc818755d87066ab6ca74fbedb2547d74a82b0"
@@ -2394,6 +2401,14 @@ react-slick@^0.30.2:
     lodash.debounce "^4.0.8"
     resize-observer-polyfill "^1.5.0"
 
+react-tooltip-rc@^4.3.5:
+  version "4.3.5"
+  resolved "https://registry.yarnpkg.com/react-tooltip-rc/-/react-tooltip-rc-4.3.5.tgz#90d1ea3b72ee437e223635c4c12541e2235201b1"
+  integrity sha512-8ox5bcQyMYMNAFcJJedsrvuq4/I5YNKbktU5lqEN68j71bdHYX8s7O5RPTH1xNPsIT022WE1n7MQewfL/eawAg==
+  dependencies:
+    prop-types "^15.8.1"
+    uuid "^9.0.0"
+
 react-tooltip@^5.27.1:
   version "5.27.1"
   resolved "https://registry.yarnpkg.com/react-tooltip/-/react-tooltip-5.27.1.tgz#a94481ba146d828d31642f14d6ab29b56998fcda"
@@ -2940,6 +2955,11 @@ util-deprecate@^1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/util-deprecate/-/util-deprecate-1.0.2.tgz#450d4dc9fa70de732762fbd2d4a28981419a0ccf"
   integrity sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==
+
+uuid@^9.0.0:
+  version "9.0.1"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-9.0.1.tgz#e188d4c8853cc722220392c424cd637f32293f30"
+  integrity sha512-b+1eJOlsR9K8HJpow9Ok3fiWOWSIcIzXodvv0rQjVoOVNpWMpxf1wZNpt4y9h10odCNrqnYp1OBzRktckBe3sA==
 
 webidl-conversions@^3.0.0:
   version "3.0.1"
