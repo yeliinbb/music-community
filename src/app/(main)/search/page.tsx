@@ -46,8 +46,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
       <div className="max-w-[800px] mx-auto p-10">
         <SearchInput />
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <SearchUser searchParams={searchParams.params} />
-          <SearchSpotify searchParams={searchParams.params} />
+          <SearchUser />
+          <SearchSpotify />
         </HydrationBoundary>
       </div>
       {/* <SearchSpotify /> */}

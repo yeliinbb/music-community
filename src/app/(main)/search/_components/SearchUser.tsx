@@ -1,17 +1,12 @@
 "use client";
 
-import api from "@/api/api";
-import { useQuery } from "@tanstack/react-query";
+import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
 
-export default function SearchUser({ searchParams }: { searchParams: string }) {
-  const { data: users } = useQuery({
-    queryKey: ["searchUsers", { params: searchParams }],
-    queryFn: () => api.search.searchUsers(searchParams),
-    retry: 0
-  });
-
+export default function SearchUser() {
+  const { users } = useSearch();
   // console.log("USER DATA___", users);
+
   return (
     <div>
       <h2 className="font-bold text-xl">유저</h2>

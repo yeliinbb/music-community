@@ -1,16 +1,10 @@
 "use client";
 
-import api from "@/api/api";
-import { useQuery } from "@tanstack/react-query";
+import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
 
-export default function SearchSpotify({ searchParams }: { searchParams: string }) {
-  const { data: spotifyDatas } = useQuery({
-    queryKey: ["searchSpotify", { params: searchParams }],
-    queryFn: () => api.search.searchSpotify(searchParams),
-    retry: 0
-  });
-
+export default function SearchSpotify() {
+  const { spotifyDatas } = useSearch();
   // console.log("SPOTIFY DATA___", isFetching, isLoading, spotifyDatas);
 
   return (
