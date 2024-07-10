@@ -1,10 +1,11 @@
 import api from "@/api/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
-import { Suspense } from "react";
 import SearchInput from "./_components/SearchInput";
 import SearchSpotify from "./_components/SearchSpotify";
 import SearchUser from "./_components/SearchUser";
+
+// const TestUser = React.lazy(() => import("./_components/SearchUser"));
 
 export const metadata: Metadata = {
   title: {
@@ -45,12 +46,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
       <div className="max-w-[800px] mx-auto p-10">
         <SearchInput />
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <Suspense fallback={<div>유저 검색 중...</div>}>
-            <SearchUser searchParams={searchParams.params} />
-          </Suspense>
-          <Suspense fallback={<div>Spotify 정보를 가져오는 중...</div>}>
-            <SearchSpotify searchParams={searchParams.params} />
-          </Suspense>
+          <SearchUser searchParams={searchParams.params} />
+          <SearchSpotify searchParams={searchParams.params} />
         </HydrationBoundary>
       </div>
       {/* <SearchSpotify /> */}

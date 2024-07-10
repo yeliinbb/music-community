@@ -11,7 +11,7 @@ export default function SearchSpotify({ searchParams }: { searchParams: string }
     retry: 0
   });
 
-  console.log("SPOTIFY DATA___", spotifyDatas);
+  // console.log("SPOTIFY DATA___", isFetching, isLoading, spotifyDatas);
 
   return (
     <div>
