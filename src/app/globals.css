@@ -16,9 +16,14 @@ button:hover {
   cursor: pointer;
 }
 
+.custom-slider {
+  position: relative;
+  padding: 0 5px; /* 화살표를 위한 공간 확보 */
+}
+
 .custom-slider .slick-arrow {
-  width: 30px;
-  height: 30px;
+  position: absolute;
+  top: calc(50% - 15px); 
 }
 
 .custom-slider .slick-arrow:before {
