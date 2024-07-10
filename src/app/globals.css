@@ -32,8 +32,12 @@ button:hover {
 
 .custom-slider .slick-prev {
   left: -30px;
+  width: 30px;
+  height: 30px;
 }
 
 .custom-slider .slick-next {
   right: -30px;
+  width: 30px;
+  height: 30px;
 }
