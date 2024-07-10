@@ -4,7 +4,7 @@ import Comment from "../_component/Comment";
 
 const DetailPage = ({ params }: { params: { id: string } }) => {
   return (
-    <div>
+    <div className="bg-white rounded-xl p-5">
       <Post id={params.id} />
       <Comment id={params.id} />
     </div>

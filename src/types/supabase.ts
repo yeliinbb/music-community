@@ -14,24 +14,31 @@ export type Database = {
           content: string | null
           createdAt: string
           id: string
-          postId: string | null
+          postId: string
           userId: string | null
         }
         Insert: {
           content?: string | null
           createdAt?: string
           id?: string
-          postId?: string | null
+          postId: string
           userId?: string | null
         }
         Update: {
           content?: string | null
           createdAt?: string
           id?: string
-          postId?: string | null
+          postId?: string
           userId?: string | null
         }
         Relationships: [
+          {
+            foreignKeyName: "comments_postId_fkey"
+            columns: ["postId"]
+            isOneToOne: false
+            referencedRelation: "posts"
+            referencedColumns: ["id"]
+          },
           {
             foreignKeyName: "comments_userId_fkey"
             columns: ["userId"]
@@ -45,16 +52,19 @@ export type Database = {
         Row: {
           artistId: string | null
           id: string
+          liked: boolean | null
           userId: string | null
         }
         Insert: {
           artistId?: string | null
           id?: string
+          liked?: boolean | null
           userId?: string | null
         }
         Update: {
           artistId?: string | null
           id?: string
+          liked?: boolean | null
           userId?: string | null
         }
         Relationships: [

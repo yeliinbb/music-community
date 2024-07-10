@@ -6,7 +6,6 @@ export const GET = async (request: Request, { params }: { params: { id: string }
   try {
     const { id } = params;
     const { data, error } = await supabase.from("posts").select("*").eq("id", id).single();
-    console.log("data=>", data);
 
     if (error) {
       console.error(error);

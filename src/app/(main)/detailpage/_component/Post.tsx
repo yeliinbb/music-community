@@ -9,7 +9,6 @@ const Post = ({ id }: { id: string }) => {
     queryKey: ["posts"],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
-
       return data;
     }
   });
@@ -19,8 +18,8 @@ const Post = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="border border-gray-300 h-56 rounded-lg p-5 mb-8">
-      <div>{data?.title}</div>
+    <div className="border border-gray-300 h-56 rounded-lg p-10 mb-8">
+      <div className="text-lg mb-3">{data?.title}</div>
       <div>{data?.content}</div>
     </div>
   );
