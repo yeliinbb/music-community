@@ -1,10 +1,22 @@
 "use client";
 
 import { useLoginStore } from "@/store/auth";
+import { createClient } from "@/utils/supabase/client";
 import { useRouter } from "next/navigation";
+import { useEffect } from "react";
 
 export default function LogoutButton() {
   const { isLogin, login, logout } = useLoginStore();
+  const supabase = createClient();
+
+  useEffect(() => {
+    const getUser = async () => {
+      const { data, error } = await supabase.auth.getSession();
+      // console.log(data);
+    };
+    getUser();
+  }, []);
+
   const router = useRouter();
 
   const handleLogout = async () => {
@@ -28,5 +40,5 @@ export default function LogoutButton() {
     router.replace("/login"); // 예시로 로그인 시 로그인 페이지로 이동
   };
 
-  return <button onClick={isLogin ? handleLogout : handleLogin}>{isLogin ? "로그아웃" : "로그인"}</button>;
+  return <button onClick={true ? handleLogout : handleLogin}>{true ? "로그아웃" : "로그인"}</button>;
 }

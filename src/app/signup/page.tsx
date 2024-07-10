@@ -1,56 +1,37 @@
 "use client";
 
-import { FormState } from "@/types/auth.type";
 import { useRouter } from "next/navigation";
-import { ChangeEventHandler, FormEventHandler, useState } from "react";
+import { useState } from "react";
 
-const SignUpPage = () => {
+const Signup = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [nickname, setNickname] = useState("");
   const router = useRouter();
-  const initialState = {
-    email: "",
-    password: "",
-    nickname: ""
-  };
 
-  const [formState, setFormState] = useState<FormState>(initialState);
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value } = e.target;
-    setFormState((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const onSubmitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!formState.nickname || !formState.email || !formState.password) {
-      return alert("닉네임, 이메일, 비밀번호 모두 입력해 주세요.");
+    if (!email || !password || !nickname) {
+      alert("모든 필드를 입력해주세요.");
+      return;
     }
 
-    try {
-      const response = await fetch("/api/signUp", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify(formState)
-      });
+    const response = await fetch("/api/signUp", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password, nickname })
+    });
 
-      if (!response.ok) {
-        throw new Error("회원가입 요청이 실패하였습니다.");
-      }
+    const data = await response.json();
 
-      const data = await response.json();
-
-      if (data.errorMsg) {
-        throw new Error(data.errorMsg);
-      }
-
-      alert("회원가입 성공");
-      setFormState(initialState);
+    if (!data.errorMsg) {
+      alert("회원가입이 성공적으로 완료되었습니다!");
       router.replace("/login");
-    } catch (error: any) {
-      alert(`오류가 발생했습니다: ${error.message}`);
-      console.error("회원가입 오류:", error);
+    } else {
+      alert(`회원가입 에러: ${data.errorMsg}`);
     }
   };
 
@@ -61,17 +42,17 @@ const SignUpPage = () => {
           <div className="text-center mb-8">
             <h2 className="mt-4 text-2xl font-bold text-gray-200">Welcome!</h2>
           </div>
-          <form onSubmit={onSubmitHandler}>
+          <form onSubmit={handleSignup}>
             <div className="mb-6">
-              <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="username">
+              <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="nickname">
                 UserName
               </label>
               <input
                 type="text"
                 name="nickname"
-                value={formState.nickname}
+                value={nickname}
+                onChange={(e) => setNickname(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
-                onChange={handleInputChange}
               />
             </div>
             <div className="mb-6">
@@ -81,9 +62,9 @@ const SignUpPage = () => {
               <input
                 type="email"
                 name="email"
-                value={formState.email}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
-                onChange={handleInputChange}
               />
             </div>
             <div className="mb-6">
@@ -93,20 +74,18 @@ const SignUpPage = () => {
               <input
                 type="password"
                 name="password"
-                value={formState.password}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
-                onChange={handleInputChange}
               />
             </div>
-            <div className="flex justify-between items-center">
-              <div className="mx-auto block">
-                <button
-                  type="submit"
-                  className="px-20 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors "
-                >
-                  SignUp
-                </button>
-              </div>
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                className="px-20 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors"
+              >
+                SignUp
+              </button>
             </div>
           </form>
         </div>
@@ -115,4 +94,4 @@ const SignUpPage = () => {
   );
 };
 
-export default SignUpPage;
+export default Signup;

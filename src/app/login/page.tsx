@@ -1,65 +1,37 @@
 "use client";
 
-import { useLoginStore } from "@/store/auth";
-import { FormState } from "@/types/auth.type";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { ChangeEventHandler, FormEventHandler, useState } from "react";
 
-const LoginPage = () => {
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const router = useRouter();
 
-  const initialState = {
-    email: "",
-    password: "",
-    nickname: ""
-  };
-
-  const { login } = useLoginStore();
-  const [isLoginMode, setIsLoginMode] = useState<boolean>(true);
-  const [loginFormState, setLoginFormState] = useState<FormState>(initialState);
-
-  const handleInputChange: ChangeEventHandler<HTMLInputElement> = (e) => {
-    const { name, value } = e.target;
-    setLoginFormState((prev) => ({ ...prev, [name]: value }));
-  };
-
-  const onSubmitHandler: FormEventHandler<HTMLFormElement> = async (e) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (isLoginMode) {
-      if (!loginFormState.email || !loginFormState.password) {
-        return alert("이메일과 비밀번호 모두 입력해 주세요.");
-      }
-      const { nickname, ...loginState } = loginFormState;
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 입력해주세요.");
+      return;
+    }
 
-      try {
-        // 로그인 요청
-        const response = await fetch("/api/login", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json"
-          },
-          body: JSON.stringify(loginState)
-        });
+    const response = await fetch("/api/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, password })
+    });
 
-        if (!response.ok) {
-          throw new Error("서버 오류가 발생했습니다.");
-        }
+    const data = await response.json();
 
-        const data = await response.json();
-        if (data.errorMsg) {
-          throw new Error(data.errorMsg);
-        }
-
-        alert("로그인 성공");
-        login();
-        setLoginFormState(initialState);
-        setIsLoginMode(false);
-        router.replace("/");
-      } catch (error: any) {
-        alert(`로그인 실패: ${error.message}`);
-      }
+    if (!data.errorMsg) {
+      alert("로그인 성공!");
+      router.replace("/");
+    } else {
+      alert(`로그인 에러: ${data.errorMsg}`);
     }
   };
 
@@ -70,7 +42,7 @@ const LoginPage = () => {
           <div className="text-center mb-8">
             <h2 className="mt-4 text-2xl font-bold text-gray-200">Welcome back!</h2>
           </div>
-          <form onSubmit={onSubmitHandler}>
+          <form onSubmit={handleLogin}>
             <div className="mb-6">
               <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -78,8 +50,8 @@ const LoginPage = () => {
               <input
                 type="email"
                 name="email"
-                value={loginFormState.email}
-                onChange={handleInputChange}
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
               />
             </div>
@@ -90,29 +62,25 @@ const LoginPage = () => {
               <input
                 type="password"
                 name="password"
-                value={loginFormState.password}
-                onChange={handleInputChange}
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
               />
             </div>
             <div className="flex justify-between items-center">
-              <div>
-                <button
-                  type="submit"
-                  className="ml-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors "
-                >
-                  Login
-                </button>
-              </div>
+              <button
+                type="submit"
+                className="ml-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors"
+              >
+                Login
+              </button>
               <Link href="/signup">
-                <div>
-                  <button
-                    type="submit"
-                    className="mr-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors "
-                  >
-                    SignUp
-                  </button>
-                </div>
+                <button
+                  type="button"
+                  className="mr-20 px-10 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors"
+                >
+                  SignUp
+                </button>
               </Link>
             </div>
           </form>
@@ -122,4 +90,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default Login;
