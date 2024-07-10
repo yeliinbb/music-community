@@ -1,17 +1,3 @@
-export type SpotifyTrack = {
-  id: string;
-  name: string;
-  artists: Array<{ id: string; name: string }>;
-  album: {
-    id: string;
-    name: string;
-    images: Array<{ url: string }>;
-  };
-  duration_ms: number;
-  popularity: number;
-  preview_url: string | null;
-};
-
 export type SpotifyArtist = {
   id: string;
   name: string;
@@ -30,6 +16,53 @@ export type SpotifyAlbum = {
   total_tracks: number;
 };
 
+export type SpotifyFeaturedPlaylists = {
+  playlists: {
+    items: Array<{
+      id: string;
+      name: string;
+      description: string;
+      images: Array<{ url: string }>;
+      tracks: { total: number };
+      external_urls: { spotify: string };
+    }>;
+  };
+};
+
+export type SpotifyPlaylist = {
+  id: string;
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+};
+
+export type SpotifyTrack = {
+  id: string;
+  name: string;
+  preview_url: string | null;
+  external_urls: {
+    spotify: string;
+  };
+  artists: {
+    id: string;
+    name: string;
+  }[];
+  album: {
+    id: string;
+    name: string;
+    images: { url: string }[];
+  };
+};
+
+export type SpotifyPlaylistTracks = {
+  id: string;
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+  tracks: SpotifyTrack[];
+};
 export interface SpotifySearchResults {
   albums: {
     items: TracksItems[];
