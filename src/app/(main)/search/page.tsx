@@ -1,7 +1,6 @@
 import api from "@/api/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
-import SearchInput from "./_components/SearchInput";
 import SearchSpotify from "./_components/SearchSpotify";
 import SearchUser from "./_components/SearchUser";
 
@@ -18,10 +17,8 @@ export const metadata: Metadata = {
 export default async function SearchPage({ searchParams }: { searchParams: { [key: string]: string } }) {
   if (!searchParams.params) {
     return (
-      <div>
-        <h1 className="text-center text-2xl font-bold">Search Page</h1>
-        <div className="max-w-[800px] mx-auto p-10">
-          <SearchInput />
+      <div className="w-full p-10 pt-[90px] h-full">
+        <div className="mx-auto max-w-[1024px] rounded-lg box-border p-10 gap-y-6 flex flex-col h-full  bg-white">
           <div>검색어를 입력해주세요.</div>
         </div>
       </div>
@@ -41,10 +38,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
   });
 
   return (
-    <div>
-      <h1 className="text-center text-2xl font-bold">Search Page</h1>
-      <div className="max-w-[800px] mx-auto p-10">
-        <SearchInput />
+    <div className="w-full p-10 pt-[90px] h-full">
+      <div className="mx-auto max-w-[1024px] rounded-lg box-border p-10 gap-y-10 flex flex-col  h-full bg-white">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <SearchUser />
           <SearchSpotify />
