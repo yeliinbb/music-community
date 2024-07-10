@@ -21,6 +21,7 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
         <h1 className="text-center text-2xl font-bold">Search Page</h1>
         <div className="max-w-[800px] mx-auto p-10">
           <SearchInput />
+          <div>검색어를 입력해주세요.</div>
         </div>
       </div>
     );
