@@ -1,17 +1,3 @@
-export type SpotifyTrack = {
-  id: string;
-  name: string;
-  artists: Array<{ id: string; name: string }>;
-  album: {
-    id: string;
-    name: string;
-    images: Array<{ url: string }>;
-  };
-  duration_ms: number;
-  popularity: number;
-  preview_url: string | null;
-};
-
 export type SpotifyArtist = {
   id: string;
   name: string;
@@ -29,3 +15,100 @@ export type SpotifyAlbum = {
   release_date: string;
   total_tracks: number;
 };
+
+export type SpotifyFeaturedPlaylists = {
+  playlists: {
+    items: Array<{
+      id: string;
+      name: string;
+      description: string;
+      images: Array<{ url: string }>;
+      tracks: { total: number };
+      external_urls: { spotify: string };
+    }>;
+  };
+};
+
+export type SpotifyPlaylist = {
+  id: string;
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+};
+
+export type SpotifyTrack = {
+  id: string;
+  name: string;
+  preview_url: string | null;
+  external_urls: {
+    spotify: string;
+  };
+  artists: {
+    id: string;
+    name: string;
+  }[];
+  album: {
+    id: string;
+    name: string;
+    images: { url: string }[];
+  };
+};
+
+export type SpotifyPlaylistTracks = {
+  id: string;
+  name: string;
+  external_urls: {
+    spotify: string;
+  };
+  tracks: SpotifyTrack[];
+};
+export interface SpotifySearchResults {
+  albums: {
+    items: TracksItems[];
+    total: number;
+  };
+  artists: {
+    items: ArtistsItems[];
+    total: number;
+  };
+}
+export interface ArtistsItems {
+  followers: {
+    total: number;
+  };
+  genres: string[];
+  id: string;
+  images: Image[];
+  name: string;
+}
+export interface TracksItems {
+  album: Album;
+  artists: Artist[];
+  id: string;
+  images: Image[];
+  name: string;
+  release_date: string;
+  release_date_precision: string;
+  total_tracks: number;
+  type: string;
+  uri: string;
+  duration_ms: number;
+  popularity: number;
+}
+
+export interface Artist {
+  href: string;
+  id: string;
+  name: string;
+}
+
+export interface Image {
+  width: number;
+  height: number;
+  url: string;
+}
+
+export interface Album {
+  images: Image[];
+}
