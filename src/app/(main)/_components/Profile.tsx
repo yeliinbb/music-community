@@ -1,11 +1,18 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import Tooltip from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const Profile = () => {
   return (
     <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
       <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
-        <h2>마이 프로필</h2>
+        <div>
+          <span className="mr-1.5">마이 프로필</span>
+          <button data-tip="test">⚙️</button>
+          {/* <Tooltip /> */}
+        </div>
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
           alt="profile image"

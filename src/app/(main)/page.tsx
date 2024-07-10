@@ -9,7 +9,7 @@ const MainPage = () => {
       {/* <div className="w-full h-full bg-white rounded-2xl"> */}
       <Profile />
       {/* </div> */}
-      <div className="w-full bg-white p-[30px] rounded-2xl">
+      <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll">
         MainPage
         {/* <Trending /> */}
         <Playlists />

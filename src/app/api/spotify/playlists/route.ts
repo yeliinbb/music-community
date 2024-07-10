@@ -1,13 +1,17 @@
 import { getAccessToken } from "@/lib/spotify";
+import getPlaylistIdList from "@/lib/utils/getPlaylistIdList";
 import { SpotifyPlaylist, SpotifyTrack, SpotifyPlaylistTracks } from "@/types/spotify.type";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
 // 예시 id 가져와야함.
-const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"];
+export const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"];
 
 export const GET = async () => {
+  // const {searchParams} = new URL(request.url)
   const accessToken = await getAccessToken();
+  const playlists = await getPlaylistIdList();
+  console.log(playlists);
   if (!accessToken) {
     console.error("Access token is missing");
     return NextResponse.json({ error: "Access token is missing" }, { status: 500 });
@@ -25,7 +29,8 @@ export const GET = async () => {
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
                 params: {
-                  fields: "items(track(id,name,preview_url,external_urls,artists(id,name),album(id,name,images)))",
+                  fields:
+                    "items(track(id,name,preview_url,external_urls,duration_ms,artists(id,name),album(id,name,images)))",
                   limit: 8
                 }
               }
