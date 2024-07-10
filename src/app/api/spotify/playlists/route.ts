@@ -22,7 +22,10 @@ export const GET = async () => {
         try {
           const [playlistResponse, tracksResponse] = await Promise.all([
             axios.get<SpotifyPlaylist>(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-              headers: { Authorization: `Bearer ${accessToken}` }
+              headers: { Authorization: `Bearer ${accessToken}` },
+              params: {
+                locale: "ko_KR"
+              }
             }),
             axios.get<{ items: { track: SpotifyTrack }[] }>(
               `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
@@ -31,7 +34,8 @@ export const GET = async () => {
                 params: {
                   fields:
                     "items(track(id,name,preview_url,external_urls,duration_ms,artists(id,name),album(id,name,images)))",
-                  limit: 8
+                  limit: 8,
+                  locale: "ko_KR"
                 }
               }
             )
