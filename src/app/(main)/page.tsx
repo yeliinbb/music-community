@@ -2,6 +2,7 @@ import React from "react";
 import Trending from "./_components/Trending";
 import Playlists from "./_components/Playlists";
 import Profile from "./_components/Profile";
+import Artist from "./_components/Artist";
 
 const MainPage = () => {
   return (
@@ -13,6 +14,7 @@ const MainPage = () => {
         MainPage
         {/* <Trending /> */}
         <Playlists />
+        <Artist />
       </div>
     </section>
   );
