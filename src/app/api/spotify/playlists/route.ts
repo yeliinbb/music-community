@@ -40,7 +40,7 @@ export const GET = async () => {
             },
             tracks: tracksResponse.data.items.map((item) => ({
               ...item.track,
-              preview_url: item.track.preview_url ?? "none",
+              preview_url: item.track.preview_url ?? "none", // ?? :    왼쪽 값이 null 이나 undefined 인 경우에만 오른쪽 값을 반환하는 연산자
               external_urls: {
                 spotify: item.track.external_urls.spotify
               }

@@ -3,7 +3,7 @@ import { TracksItems } from "@/types/spotify.type";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";
 
-export const GET = async (request: NextRequest, context: { params: { id: string } }) => {
+export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const token = await getAccessToken();
     const response = await axios.get<TracksItems[]>(
