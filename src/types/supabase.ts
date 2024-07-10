@@ -67,6 +67,48 @@ export type Database = {
           },
         ]
       }
+      main_artist: {
+        Row: {
+          artistId: string | null
+          artistName: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      main_playlist: {
+        Row: {
+          created_at: string
+          id: number
+          playlistId: string | null
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           content: string | null
@@ -89,7 +131,15 @@ export type Database = {
           title?: string | null
           userId?: string | null
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "posts_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       users: {
         Row: {

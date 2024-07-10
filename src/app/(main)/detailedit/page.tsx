@@ -3,15 +3,18 @@
 import React, { useRef } from "react";
 import { postingPost } from "./post";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const DetailPage = () => {
   const titleRef = useRef<HTMLInputElement>(null);
   const contentRef = useRef<HTMLTextAreaElement>(null);
 
+  const router = useRouter();
+
   const submitFun = async () => {
     const title = titleRef.current?.value;
     const content = contentRef.current?.value;
-    console.log(title, content);
+
     if (title && content) {
       try {
         await postingPost({ title, content });
@@ -19,6 +22,7 @@ const DetailPage = () => {
         console.log(error);
       }
     }
+    router.push("/"); // 이거 마이페이지로 이동해야됨 ~
   };
 
   //   const mutation = useMutation({
