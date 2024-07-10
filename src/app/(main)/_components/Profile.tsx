@@ -3,8 +3,8 @@ import Link from "next/link";
 
 const Profile = () => {
   return (
-    <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3">
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px]">
+    <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
+      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
         <h2>마이 프로필</h2>
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
@@ -20,7 +20,7 @@ const Profile = () => {
           {/* </Link> */}
         </div>
       </div>
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px]">
+      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px] min-w-[350px]">
         <h2>지금 듣고 있는 곡</h2>
         {/* {플레이어} */}
         <img
