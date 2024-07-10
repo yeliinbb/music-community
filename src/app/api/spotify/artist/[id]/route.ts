@@ -10,6 +10,7 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
       headers: { Authorization: `Bearer ${token}` },
       params: { market: "KR", locale: "ko_KR" }
     });
+
     return NextResponse.json(response.data);
   } catch (error) {
     console.error("Error fetching track:", error);

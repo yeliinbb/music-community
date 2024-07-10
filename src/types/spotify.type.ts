@@ -83,7 +83,7 @@ export interface ArtistsItems {
   name: string;
 }
 export interface TracksItems {
-  album_type: string;
+  album: Album;
   artists: Artist[];
   id: string;
   images: Image[];
@@ -93,6 +93,8 @@ export interface TracksItems {
   total_tracks: number;
   type: string;
   uri: string;
+  duration_ms: number;
+  popularity: number;
 }
 
 export interface Artist {
@@ -105,4 +107,8 @@ export interface Image {
   width: number;
   height: number;
   url: string;
+}
+
+export interface Album {
+  images: Image[];
 }

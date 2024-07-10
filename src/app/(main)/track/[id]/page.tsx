@@ -74,7 +74,6 @@ const TrackPage = () => {
       <p className="text-2xl font-semibold">{trackData.name}</p>
       <p>Artist : {trackData.artists.map((artist) => artist.name).join(", ")}</p>
       <p>앨범명 : {trackData.album.name}</p>
-      <p>인기도 : {trackData.popularity}</p>
       {trackData.preview_url && (
         <div>
           <img src={trackData.album.images[2].url} alt={`${trackData.album.name}의 앨범 이미지`} />
