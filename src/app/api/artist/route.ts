@@ -5,7 +5,6 @@ import { NextResponse } from "next/server";
 export const GET = async (request: Request) => {
   const supabase = createClient();
   try {
-    // const { id } = params;
     const { data, error } = await supabase.from("main_artist").select("*");
     //console.log("data=>", data);
 
