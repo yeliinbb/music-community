@@ -14,21 +14,21 @@ export type Database = {
           content: string | null
           createdAt: string
           id: string
-          postId: string | null
+          postId: string
           userId: string | null
         }
         Insert: {
           content?: string | null
           createdAt?: string
           id?: string
-          postId?: string | null
+          postId: string
           userId?: string | null
         }
         Update: {
           content?: string | null
           createdAt?: string
           id?: string
-          postId?: string | null
+          postId?: string
           userId?: string | null
         }
         Relationships: [
@@ -52,16 +52,19 @@ export type Database = {
         Row: {
           artistId: string | null
           id: string
+          liked: boolean | null
           userId: string | null
         }
         Insert: {
           artistId?: string | null
           id?: string
+          liked?: boolean | null
           userId?: string | null
         }
         Update: {
           artistId?: string | null
           id?: string
+          liked?: boolean | null
           userId?: string | null
         }
         Relationships: [
@@ -74,33 +77,71 @@ export type Database = {
           },
         ]
       }
+      main_artist: {
+        Row: {
+          artistId: string | null
+          artistName: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      main_playlist: {
+        Row: {
+          created_at: string
+          id: number
+          playlistId: string | null
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           content: string | null
-          createdAt: string | null
+          created_at: string
           id: string
+          title: string | null
           userId: string | null
         }
         Insert: {
           content?: string | null
-          createdAt?: string | null
-          id: string
+          created_at?: string
+          id?: string
+          title?: string | null
           userId?: string | null
         }
         Update: {
           content?: string | null
-          createdAt?: string | null
+          created_at?: string
           id?: string
+          title?: string | null
           userId?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "posts_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "posts_userId_fkey"
             columns: ["userId"]
