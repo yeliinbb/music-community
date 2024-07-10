@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import axios from "axios";
+// import axios from "axios";
 
 import Slider, { CustomArrowProps } from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -9,69 +9,66 @@ import "slick-carousel/slick/slick-theme.css";
 
 import type { SpotifyArtist } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
-import { MainArtist } from "@/types/main_artist";
 
 const Artist = () => {
-  const {
-    data: artistIds,
-    isLoading: isArtistLoading,
-    isError: isArtistError,
-    error: artistError
-  } = useQuery<(string | null)[], Error>({
-    queryKey: ["artistIds"],
-    queryFn: async () => {
-      const { data } = await axios.get<MainArtist[]>("/api/artist");
-      return data.map((artist) => artist.artistId);
-    }
-  });
+  //   const {
+  //   data: artistData,
+  //   isLoading: isArtistLoading,
+  //   isError: isArtistError,
+  //   error: artistError
+  // } = useQuery<SpotifyArtist[], Error>({
+  //   queryKey: ["artistData"],
+  //   queryFn: async () => {
+  //     const response = await fetch("/api/artist");
+  //     if (!response.ok) {
+  //       throw new Error("서버 응답이 올바르지 않습니다.");
+  //     }
+  //     const data = await response.json();
+  //     return data;
+  //   }
+  // });
 
   const {
     data: artistData,
-    isLoading: isArtistDataLoading,
-    isError: isArtistDataError,
-    error: artistDataError
+    isPending,
+    error
   } = useQuery<SpotifyArtist[], Error>({
-    queryKey: ["artistData", artistIds],
+    queryKey: ["artistData"],
     queryFn: async (): Promise<SpotifyArtist[]> => {
-      if (!artistIds) return []; // artistIds가 없으면 빈 배열 반환
-      const responses = await Promise.all(
-        artistIds.map(async (artistId) => {
-          const response = await fetch(`/api/spotify/artist/${artistId}`);
-          if (!response.ok) {
-            throw new Error("서버 응답이 올바르지 않습니다.");
-          }
-          return response.json();
-        })
-      );
-      return responses;
-    },
-    enabled: !!artistIds // artistIds가 존재할 때만 쿼리 실행
+      const response = await fetch(`/api/spotify/artist`);
+      if (!response.ok) {
+        throw new Error("서버 응답이 올바르지 않습니다.");
+      }
+      const data = await response.json();
+      return data;
+    }
   });
+  console.log('artistData =>', artistData);
 
-  if (isArtistLoading || isArtistDataLoading) {
+  if (isPending) {
     return <div>--- 데이터 수집 중 ---</div>;
   }
 
-  if (isArtistError) {
-    console.error(artistError);
-    return <div className="text-xl">에러가 발생했습니다: {artistError.message}</div>;
+  if (error) {
+    console.error(error);
+    return <div className="text-xl">에러가 발생했습니다: {error?.message}</div>;
   }
 
-  if (isArtistDataError) {
-    console.error(artistDataError);
-    return <div className="text-xl">에러가 발생했습니다: {artistDataError.message}</div>;
-  }
+  // if (isArtistDataError) {
+  //   console.error(artistDataError);
+  //   return <div className="text-xl">에러가 발생했습니다: {artistDataError.message}</div>;
+  // }
 
-  if (!artistData || artistData.length === 0) {
-    return <div className="text-xl">트랙 데이터가 없습니다.</div>;
-  }
+  // if (!artistData || artistData.length === 0) {
+  //   return <div className="text-xl">트랙 데이터가 없습니다.</div>;
+  // }
 
   const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
     <div className={`custom-arrow custom-prev-arrow ${className}`} onClick={onClick}>
-      <img src="chevrons-left.svg" alt="이전 아티스트" />
+      <img src="chevrons-left.svg" alt="이전 아티스트"/>
     </div>
   );
-  
+
   const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
     <div className={`custom-arrow custom-next-arrow ${className}`} onClick={onClick}>
       <img src="chevrons-right.svg" alt="다음 아티스트" />
@@ -97,7 +94,7 @@ const Artist = () => {
           {artistData.map((artist) => (
             <div key={artist.id} className="flex flex-col items-center">
               <div className="flex justify-center">
-                {artist.images ? (
+                {artist.images && artist.images ? (
                   <img
                     src={artist.images[2].url}
                     alt={`${artist.name}`}
