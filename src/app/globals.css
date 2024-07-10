@@ -15,3 +15,18 @@ body {
 button:hover {
   cursor: pointer;
 }
+
+
+@layer components {
+  .custom-slider .custom-arrow {
+    @apply absolute top-1/2 -translate-y-1/2 w-5 h-8 flex items-center justify-center cursor-pointer z-10;
+  }
+
+  .custom-slider .custom-prev-arrow {
+    @apply -left-6;
+  }
+
+  .custom-slider .custom-next-arrow {
+    @apply -right-6;
+  }
+}
