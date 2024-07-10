@@ -1,11 +1,10 @@
 import { getAccessToken } from "@/lib/spotify";
-import { SpotifyPlaylistTracks } from "@/types/spotify.type";
+import { SpotifyPlaylist, SpotifyTrack, SpotifyPlaylistTracks } from "@/types/spotify.type";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
-const PLAYLIST_IDS = [
-  "3cEYpjA9oz9GiPac4AsH4n" // 예시 id 가져와야함.
-];
+// 예시 id 가져와야함.
+const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"];
 
 export const GET = async () => {
   const accessToken = await getAccessToken();
@@ -18,34 +17,37 @@ export const GET = async () => {
       PLAYLIST_IDS.map(async (playlistId) => {
         try {
           const [playlistResponse, tracksResponse] = await Promise.all([
-            axios.get(`https://api.spotify.com/v1/playlists/${playlistId}`, {
+            axios.get<SpotifyPlaylist>(`https://api.spotify.com/v1/playlists/${playlistId}`, {
               headers: { Authorization: `Bearer ${accessToken}` }
             }),
-            axios.get(`https://api.spotify.com/v1/playlists/${playlistId}/tracks`, {
-              headers: { Authorization: `Bearer ${accessToken}` },
-              params: {
-                fields: "items(track(id,name,artists(id,name),album(id,name,images)))"
+            axios.get<{ items: { track: SpotifyTrack }[] }>(
+              `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
+              {
+                headers: { Authorization: `Bearer ${accessToken}` },
+                params: {
+                  fields: "items(track(id,name,preview_url,external_urls,artists(id,name),album(id,name,images)))",
+                  limit: 8
+                }
               }
-            })
+            )
           ]);
 
-          return {
+          const processedPlaylist: SpotifyPlaylistTracks = {
             id: playlistResponse.data.id,
             name: playlistResponse.data.name,
-            tracks: tracksResponse.data.items.map((item: any) => ({
-              id: item.track.id,
-              name: item.track.name,
-              artists: item.track.artists.map((artist: any) => ({
-                id: artist.id,
-                name: artist.name
-              })),
-              album: {
-                id: item.track.album.id,
-                name: item.track.album.name,
-                image: item.track.album.images[0]?.url
+            external_urls: {
+              spotify: playlistResponse.data.external_urls.spotify
+            },
+            tracks: tracksResponse.data.items.map((item) => ({
+              ...item.track,
+              preview_url: item.track.preview_url ?? "none", // ?? :    왼쪽 값이 null 이나 undefined 인 경우에만 오른쪽 값을 반환하는 연산자
+              external_urls: {
+                spotify: item.track.external_urls.spotify
               }
             }))
           };
+
+          return processedPlaylist;
         } catch (error) {
           console.error(`Error fetching playlist ${playlistId}:`, error);
           return null; // 개별 플레이리스트 오류 시 null 반환
