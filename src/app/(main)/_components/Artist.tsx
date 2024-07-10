@@ -48,20 +48,6 @@ const Artist = () => {
     enabled: !!artistIds // artistIds가 존재할 때만 쿼리 실행
   });
 
-  const CustomPrevArrow = (props: CustomArrowProps) => (
-    <div {...props} className="custom-arrow custom-prev-arrow">
-      {/* {'<'} */}
-      <img src="arrow-left.png" alt="이전 아티스트" />
-    </div>
-  );
-
-  const CustomNextArrow = (props: CustomArrowProps) => (
-    <div {...props} className="custom-arrow custom-next-arrow">
-      {/* {">"} */}
-      <img src="arrow-right.png" alt="다음 아티스트" />
-    </div>
-  );
-
   if (isArtistLoading || isArtistDataLoading) {
     return <div>--- 데이터 수집 중 ---</div>;
   }
@@ -80,8 +66,19 @@ const Artist = () => {
     return <div className="text-xl">트랙 데이터가 없습니다.</div>;
   }
 
+  const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
+    <div className={`custom-arrow custom-prev-arrow ${className}`} onClick={onClick}>
+      <img src="arrow-left.png" alt="이전 아티스트" />
+    </div>
+  );
+  
+  const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
+    <div className={`custom-arrow custom-next-arrow ${className}`} onClick={onClick}>
+      <img src="arrow-right.png" alt="다음 아티스트" />
+    </div>
+  );
+
   const settings = {
-    // dots: true,
     infinite: true,
     slidesToShow: 4,
     slidesToScroll: 3,
@@ -95,7 +92,7 @@ const Artist = () => {
   return (
     <div className="w-[700px]">
       <p className="font-bold mb-5">아티스트</p>
-      <div className="custom-slider ml-5">
+      <div className="custom-slider ml-9">
         <Slider {...settings}>
           {artistData.map((artist) => (
             <div key={artist.id} className="flex flex-col items-center">

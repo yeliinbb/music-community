@@ -16,17 +16,19 @@ button:hover {
   cursor: pointer;
 }
 
+.custom-slider .slick-arrow {
+  width: 30px;
+  height: 30px;
+}
 
-@layer components {
-  .custom-slider .custom-arrow {
-    @apply absolute top-1/2 -translate-y-1/2 w-5 h-8 flex items-center justify-center cursor-pointer z-10;
-  }
+.custom-slider .slick-arrow:before {
+  content: none;
+}
 
-  .custom-slider .custom-prev-arrow {
-    @apply -left-6;
-  }
+.custom-slider .slick-prev {
+  left: -30px;
+}
 
-  .custom-slider .custom-next-arrow {
-    @apply -right-6;
-  }
+.custom-slider .slick-next {
+  right: -30px;
 }
