@@ -1,4 +1,5 @@
 import React from "react";
+import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   return (
@@ -16,7 +17,9 @@ const Header = () => {
         </div>
         <div className="flex flex-row items-center">
           <div className="mr-5">
-            <button>logout</button>
+            <div>
+              <LogoutButton />
+            </div>
           </div>
           <img
             src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
