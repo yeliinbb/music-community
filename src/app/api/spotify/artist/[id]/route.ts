@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const token = await getAccessToken();
-    const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${context.params.id}`, {
+    const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${params.id}`, {
       headers: { Authorization: `Bearer ${token}` },
       params: { market: "KR" }
     });

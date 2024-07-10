@@ -1,37 +1,13 @@
 "use client";
 
+import { TracksItems } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 
 interface ArtistTrackProps {
   params: { id: string };
 }
 
-interface Album {
-  images: Image[];
-}
-
-interface Track {
-  album: Album;
-  artists: Artist[];
-  duration_ms: number;
-  id: string;
-  name: string;
-  popularity: number;
-}
-
-interface Artist {
-  href: string;
-  id: string;
-  name: string;
-}
-
-interface Image {
-  height: number;
-  url: string;
-  width: number;
-}
-
-const fetchArtistTrack = async (id: string): Promise<Track[]> => {
+const fetchArtistTrack = async (id: string): Promise<TracksItems[]> => {
   console.log(id);
   const response = await fetch(`/api/spotify/artist/${id}/tracks`);
   const data = await response.json();
@@ -40,7 +16,11 @@ const fetchArtistTrack = async (id: string): Promise<Track[]> => {
 };
 
 const ArtistTrack = ({ params }: ArtistTrackProps) => {
-  const { data, isLoading, error } = useQuery<Track[]>({
+  const {
+    data = [],
+    isLoading,
+    error
+  } = useQuery<TracksItems[]>({
     queryKey: ["artistTrack", params.id],
     queryFn: () => fetchArtistTrack(params.id)
   });
