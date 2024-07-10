@@ -2,17 +2,8 @@
 
 import useMe from "@/hooks/useMe";
 
-type MyPostsType = {
-  id: string;
-  title: string;
-  userId: string;
-  content: string;
-  created_at: string;
-};
-
 export default function MyPosts() {
   const { posts } = useMe();
-
   // console.log("MY POSTS___", posts);
 
   return (

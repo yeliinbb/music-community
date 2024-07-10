@@ -1,12 +1,7 @@
 "use client";
 
 import useMe from "@/hooks/useMe";
-import { ArtistsItems } from "@/types/spotify.type";
 import Image from "next/image";
-
-type LikeType = {
-  artists: ArtistsItems[];
-};
 
 export default function MyLikes() {
   const { likes } = useMe();
