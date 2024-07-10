@@ -1,3 +1,4 @@
+import LogoutButton from "@/components/LogoutButton";
 import React from "react";
 import Trending from "./_components/Trending";
 import Playlists from "./_components/Playlists";
