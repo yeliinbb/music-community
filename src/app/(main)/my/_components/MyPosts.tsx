@@ -1,7 +1,6 @@
 "use client";
 
-import api from "@/api/api";
-import { useQuery } from "@tanstack/react-query";
+import useMe from "@/hooks/useMe";
 
 type MyPostsType = {
   id: string;
@@ -12,10 +11,7 @@ type MyPostsType = {
 };
 
 export default function MyPosts() {
-  const { data: posts } = useQuery<MyPostsType[]>({
-    queryKey: ["myPosts"],
-    queryFn: () => api.me.getMyPosts()
-  });
+  const { posts } = useMe();
 
   // console.log("MY POSTS___", posts);
 

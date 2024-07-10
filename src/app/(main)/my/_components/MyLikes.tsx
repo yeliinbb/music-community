@@ -1,8 +1,7 @@
 "use client";
 
-import api from "@/api/api";
+import useMe from "@/hooks/useMe";
 import { ArtistsItems } from "@/types/spotify.type";
-import { useQuery } from "@tanstack/react-query";
 import Image from "next/image";
 
 type LikeType = {
@@ -10,10 +9,7 @@ type LikeType = {
 };
 
 export default function MyLikes() {
-  const { data: likes } = useQuery<LikeType>({
-    queryKey: ["myLikes"],
-    queryFn: () => api.me.getMyLikes()
-  });
+  const { likes } = useMe();
 
   return (
     <div>
