@@ -2,13 +2,26 @@
 
 import { SpotifyTrack } from "@/types/spotify.type";
 import { useParams } from "next/navigation";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const TrackPage = () => {
   const params = useParams();
   const [trackData, setTrackData] = useState<SpotifyTrack | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const audioRef = useRef<HTMLAudioElement>(null);
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+
+  const togglePlayPause = () => {
+    if (audioRef.current) {
+      if (isPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play();
+      }
+    }
+  };
 
   useEffect(() => {
     const fetchTrackData = async () => {
@@ -64,10 +77,16 @@ const TrackPage = () => {
       <p>인기도 : {trackData.popularity}</p>
       {trackData.preview_url && (
         <div>
-          <audio controls>
-            <source src={trackData.preview_url} type="audio/mpeg" />
-            Your browser does not support the audio element.
-          </audio>
+          <img src={trackData.album.images[2].url} alt={`${trackData.album.name}의 앨범 이미지`} />
+          <p>{trackData.name}</p>
+          <p>{trackData.artists.map((artist) => artist.name).join(", ")}</p>
+          <audio ref={audioRef} src={trackData.preview_url} style={{ display: "none" }} />
+          <button
+            onClick={togglePlayPause}
+            className={`px-4 py-2 mt-2 text-white ${isPlaying ? "bg-black" : "bg-green-500"} rounded`}
+          >
+            {isPlaying ? "Pause" : "Play"}
+          </button>
         </div>
       )}
     </div>
