@@ -8,7 +8,7 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
     const token = await getAccessToken();
     const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${params.id}`, {
       headers: { Authorization: `Bearer ${token}` },
-      params: { market: "KR" }
+      params: { market: "KR", locale: "ko_KR" }
     });
     return NextResponse.json(response.data);
   } catch (error) {
