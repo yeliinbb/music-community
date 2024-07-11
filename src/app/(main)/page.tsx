@@ -1,3 +1,4 @@
+import PostList from "./_components/PostList";
 import Artist from "./artist/_components/mainPage/Artist";
 import Playlists from "./playlists/_components/Playlists";
 
@@ -5,6 +6,7 @@ const MainPage = () => {
   return (
     <div className="p-4">
       <Playlists />
+      <PostList />
       <Artist />
     </div>
   );
