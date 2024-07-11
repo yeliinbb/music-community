@@ -7,7 +7,7 @@ const Header = () => {
       <p className="text-2xl font-bold">CyTunes</p>
       <div className="flex items-center justify-between">
         <div className="flex flex-row">
-          <img src="/search.png" alt="검색 아이콘" className="w-7 h-7 mt-1 mr-3" />
+          <img src="/search.svg" alt="검색 아이콘" className="w-7 h-7 mt-1 mr-3" />
           <SearchInput />
         </div>
         <div className="flex flex-row items-center">
