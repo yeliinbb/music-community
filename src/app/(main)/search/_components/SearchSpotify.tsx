@@ -7,7 +7,7 @@ import { useEffect, useRef } from "react";
 export default function SearchSpotify() {
   const obsRef = useRef<HTMLDivElement>(null);
   const { albums, isFetching, hasNextPage, fetchNextPage } = useSearch();
-  console.log("SPOTIFY DATA___", albums);
+  // console.log("SPOTIFY DATA___", albums);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -39,7 +39,13 @@ export default function SearchSpotify() {
         <h2 className="font-bold text-2xl">앨범</h2>
         <div className="size-full flex-1">
           {!albums?.length && <h2 className="font-bold test-2xl select-none">앨범 검색 결과가 없습니다.</h2>}
-          <ul className="flex gap-2 overflow-x-scroll p-2">
+          <ul
+            className="flex gap-2 overflow-x-scroll p-2 
+          scrollbar
+          scrollbar-corner-sky-500  
+          scrollbar-thumb-slate-700
+           scrollbar-track-slate-300"
+          >
             {albums?.map((item) => (
               <li className="flex flex-col gap-y-2" key={item.id}>
                 <div className="relative size-24 aspect-square p-2">
