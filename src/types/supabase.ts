@@ -52,19 +52,16 @@ export type Database = {
         Row: {
           artistId: string | null
           id: string
-          liked: boolean | null
           userId: string | null
         }
         Insert: {
           artistId?: string | null
           id?: string
-          liked?: boolean | null
           userId?: string | null
         }
         Update: {
           artistId?: string | null
           id?: string
-          liked?: boolean | null
           userId?: string | null
         }
         Relationships: [
@@ -124,6 +121,7 @@ export type Database = {
           content: string | null
           created_at: string
           id: string
+          imageURL: string
           title: string | null
           userId: string | null
         }
@@ -131,6 +129,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           id?: string
+          imageURL: string
           title?: string | null
           userId?: string | null
         }
@@ -138,6 +137,7 @@ export type Database = {
           content?: string | null
           created_at?: string
           id?: string
+          imageURL?: string
           title?: string | null
           userId?: string | null
         }
@@ -156,19 +156,19 @@ export type Database = {
           email: string | null
           id: string
           nickname: string | null
-          password: string | null
+          profileUrl: string | null
         }
         Insert: {
           email?: string | null
           id: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Update: {
           email?: string | null
           id?: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Relationships: [
           {
