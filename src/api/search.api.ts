@@ -12,11 +12,19 @@ class SearchAPI {
     return data;
   }
 
+  async searchSpotifyArtists(query: string | null, pageParam: number) {
+    const response = await fetch(`http://localhost:3000/api/search/spotify/artists/${query}?page=${pageParam}`);
+    // console.log("GET SPOTIFY ARTISTS INFINITY___", response);
+    const data = await response.json();
+    // console.log("GET SPOTIFY ARTISTS INFINITY DATA___", data);
+    return data.artists.items;
+  }
+
   async searchSpotifyAlbums(query: string | null, pageParam: number) {
     const response = await fetch(`http://localhost:3000/api/search/spotify/albums/${query}?page=${pageParam}`);
-    // console.log("GET SPOTIFY INFINITY___", response);
+    // console.log("GET SPOTIFY ALBUMS INFINITY___", response);
     const data = await response.json();
-    // console.log("GET SPOTIFY INFINITY DATA___", data);
+    // console.log("GET SPOTIFY ALBUMS INFINITY DATA___", data);
     return data.albums.items;
   }
 

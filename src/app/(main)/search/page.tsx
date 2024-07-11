@@ -2,7 +2,8 @@ import api from "@/api/api";
 import { SpotifyAlbums } from "@/types/spotify.type";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
-import SearchSpotify from "./_components/SearchSpotify";
+import SearchAlbums from "./_components/SearchAlbums";
+import SearchArtists from "./_components/SearchArtists";
 import SearchUser from "./_components/SearchUser";
 
 // const TestUser = React.lazy(() => import("./_components/SearchUser"));
@@ -27,16 +28,23 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
   }
 
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({
-    queryKey: ["searchUsers", { params: searchParams.params }],
-    queryFn: () => api.search.searchUsers(searchParams.params),
-    retry: 0
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["searchUsers", { params: searchParams.params }],
+  //   queryFn: () => api.search.searchUsers(searchParams.params),
+  //   retry: 0
+  // });
 
-  await queryClient.prefetchQuery({
-    queryKey: ["searchSpotify", { params: searchParams.params }],
-    queryFn: () => api.search.searchSpotify(searchParams.params),
-    retry: 0
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["searchSpotify", { params: searchParams.params }],
+  //   queryFn: () => api.search.searchSpotify(searchParams.params),
+  //   retry: 0
+  // });
+
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["artists"],
+    queryFn: ({ pageParam }) => api.search.searchSpotifyArtists(searchParams.params, pageParam),
+    getNextPageParam: (lastPage: SpotifyAlbums[]) => lastPage.length + 1,
+    initialPageParam: 0
   });
 
   await queryClient.prefetchInfiniteQuery({
@@ -51,7 +59,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
       <div className="mx-auto max-w-[1024px] rounded-lg box-border p-10 gap-y-10 flex flex-col  h-full bg-white">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <SearchUser />
-          <SearchSpotify />
+          <SearchAlbums />
+          <SearchArtists />
         </HydrationBoundary>
       </div>
       {/* <SearchSpotify /> */}
