@@ -80,7 +80,7 @@ const Playlists = () => {
                       alt={currentTrack?.name || playlist.tracks[0].name}
                       className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow-custom"
                     />
-                    <ul className="flex flex-wrap w-fit gap-2 my-0 mx-auto">
+                    <ul className="grid grid-cols-2 gap-2 ">
                       {playlist.tracks.map((track) => (
                         <li
                           key={track.id}
@@ -95,7 +95,7 @@ const Playlists = () => {
                               className="w-[35px] h-[35px] object-fill"
                             />
                             <div className="w-full">
-                              <h4 className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis">{track.name}</h4>
+                              <h4 className="h-[20px] overflow-hidden overflow-ellipsis">{track.name}</h4>
                               <div className="flex justify-between items-center w-full">
                                 <Link href={`http://localhost:3000/artist/${track.artists[0].id}`}>
                                   <span className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis hover:underline">
