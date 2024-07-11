@@ -7,7 +7,7 @@ import Image from "next/image";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { useLoginStore } from "@/store/auth";
-import {Tooltip} from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
 import { MdOutlineMail } from 'react-icons/md';
 

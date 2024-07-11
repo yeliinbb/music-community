@@ -11,7 +11,6 @@ interface ProfileModalProps {
 
 
 // 프로필 사진 업데이트 함수
-
 const ProfileModal = ({ userId }: ProfileModalProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [file, setFile] = useState<File | null>(null);
@@ -73,7 +72,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
         classNames={{
           body: "py-6",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-          base: "border-[#292f46] bg-[#66b3cf] dark:bg-[#19172c] text-black",
+          base: "border-[#292f46] bg-[#66b3cf] text-black",
           header: "border-b-[1px] border-[#292f46]",
           footer: "border-t-[1px] border-[#292f46]",
           closeButton: "hover:bg-white/5 active:bg-white/10"
@@ -87,7 +86,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
                 <input onChange={handleFileInputChange} type="file" ref={fileInputRef} id="hiddenFileInput" />
               </ModalBody>
               <ModalFooter>
-                <Button color="primary" variant="light" onPress={onClose}>
+                <Button variant="light" onPress={onClose}>
                   닫기
                 </Button>
                 <Button
