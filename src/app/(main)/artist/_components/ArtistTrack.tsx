@@ -8,10 +8,10 @@ interface ArtistTrackProps {
 }
 
 const fetchArtistTrack = async (id: string): Promise<TracksItems[]> => {
-  console.log(id);
+  // console.log(id);
   const response = await fetch(`/api/spotify/artist/${id}/tracks`);
   const data = await response.json();
-  console.log(data);
+  // console.log(data);
   return data.tracks;
 };
 
@@ -42,21 +42,27 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
   return (
     <>
       <div className="m-4">인기</div>
-      <div className="grid gap-4 ">
-        {data.map((track, index) => {
-          return (
-            <div key={track.id} className="p-4 border rounded-lg max-w-lg " style={{ width: "500px", height: "100px" }}>
-              <div className="flex items-center space-x-4">
-                <div className="font-bold">{index + 1}</div>
-                <img src={track.album.images[2].url} alt="앨범 이미지" />
-                <div>
-                  <div className="mt-2">{track.name}</div>
-                  <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
+      <div>
+        <div className="grid gap-4 ">
+          {data.map((track, index) => {
+            return (
+              <div
+                key={track.id}
+                className="p-4 border rounded-lg max-w-lg "
+                style={{ width: "500px", height: "100px" }}
+              >
+                <div className="flex items-center space-x-4">
+                  <div className="font-bold">{index + 1}</div>
+                  <img src={track.album.images[2].url} alt="앨범 이미지" />
+                  <div>
+                    <div className="mt-2">{track.name}</div>
+                    <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
+                  </div>
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
       </div>
     </>
   );
