@@ -27,3 +27,30 @@ button:hover {
   --rt-transition-show-delay: 0.15s;
   --rt-transition-closing-delay: 0.15s;
 }
+
+
+.custom-slider {
+  position: relative;
+  padding: 0 5px; /* 화살표를 위한 공간 확보 */
+}
+
+.custom-slider .slick-arrow {
+  position: absolute;
+  top: calc(50% - 15px); 
+}
+
+.custom-slider .slick-arrow:before {
+  content: none;
+}
+
+.custom-slider .slick-prev {
+  left: -20px;
+  width: 30px;
+  height: 30px;
+}
+
+.custom-slider .slick-next {
+  right: -30px;
+  width: 30px;
+  height: 30px;
+}

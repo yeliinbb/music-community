@@ -5,7 +5,7 @@ const NavigationBar = () => {
     <div className="flex flex-col gap-4 absolute right-[-100px] top-[150px] z-50">
       <NavButton path="/">Home</NavButton>
       <NavButton path="/my">My Page</NavButton>
-      <NavButton path="/">Post</NavButton>
+      <NavButton path="/post">Post</NavButton>
     </div>
   );
 };

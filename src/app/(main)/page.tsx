@@ -1,9 +1,11 @@
-import Playlists from "./_components/playlists/Playlists";
+import Artist from "./artist/_components/mainPage/Artist";
+import Playlists from "./playlists/_components/Playlists";
 
 const MainPage = () => {
   return (
-    <div>
+    <div className="p-4">
       <Playlists />
+      <Artist />
     </div>
   );
 };
