@@ -24,7 +24,7 @@ const Profile = () => {
       }
       const data = await response.json();
       return data;
-    }
+    },
   });
 
   console.log(userProfileData);    
