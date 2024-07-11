@@ -29,6 +29,15 @@ export type SpotifyFeaturedPlaylists = {
   };
 };
 
+export type SpotifyFeaturedPlaylist = {
+  id: string;
+  name: string;
+  description: string;
+  imageUrl: string;
+  trackLink: string;
+  tracksCount: number;
+};
+
 export type SpotifyPlaylist = {
   id: string;
   name: string;

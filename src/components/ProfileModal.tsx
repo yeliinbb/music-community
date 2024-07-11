@@ -4,6 +4,7 @@ import React, { useRef } from "react";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { IoIosSettings } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 const ProfileModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -11,9 +12,9 @@ const ProfileModal = () => {
   const fileInputRef = useRef(null);
 
   const handleFileInputChange = async (file) => {
-    console.log("inputchange");
+    // console.log("inputchange");
   };
-  console.log("first");
+  // console.log("first");
 
   //const imageUrl = userProfileData.profilePictureUrl ?? profileDefaultUrl;
   return (
