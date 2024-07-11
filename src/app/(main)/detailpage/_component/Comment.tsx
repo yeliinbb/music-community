@@ -7,13 +7,12 @@ const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
 
-  const { data: commentList, isError } = useQuery({
+  const { data: commentList } = useQuery({
     queryKey: ["comments"],
     queryFn: async () => {
       try {
         const supabase = createClient();
         const { data } = await supabase.from("comments").select("*,users(nickname, email)");
-        console.log(data);
         return data;
       } catch (error) {
         console.log(error);
@@ -21,22 +20,30 @@ const Comment = ({ id }: { id: string }) => {
     }
   });
 
-  const { mutateAsync: createComment } = useMutation({
-    mutationFn: (newComment: any) => addComment(newComment),
-    onSuccess: () => {}
+  const addComment = async (newComment: any) => {
+    const supabase = createClient();
+    const response = await supabase.from("comments").insert(newComment);
+    return response;
+  };
+
+  const { mutate: createComment } = useMutation({
+    mutationFn: addComment,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments"] });
+    }
   });
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const comment = commentRef.current?.value;
-    const newComment = { content: comment, postId: id, userId: "37a68d71-1c40-4a40-b21f-cb49d28ce82c" }; // userId 바꾸기
-    console.log(newComment);
-    const response = await createComment(newComment);
-  };
 
-  const addComment = async (newComment: any) => {
-    const supabase = createClient();
-    const response = await supabase.from("comments").insert(newComment);
+    if (!comment) {
+      alert("내용을 입력하세요!");
+      return;
+    }
+
+    const newComment = { content: comment, postId: id, userId: "37a68d71-1c40-4a40-b21f-cb49d28ce82c" }; // userId 바꾸기
+    createComment(newComment);
   };
 
   return (
