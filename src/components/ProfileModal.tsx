@@ -2,6 +2,7 @@
 
 import React, { useRef } from "react";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { IoIosSettings } from "react-icons/io";
 
 const ProfileModal = () => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -23,7 +24,7 @@ const ProfileModal = () => {
   return (
     <>
       <Button onPress={onOpen} className="w-5 h-5 min-w-0 p-0">
-        <img src="/setting.svg" alt="프로필 사진 변경" className="w-5 h-5" />
+          <IoIosSettings />
       </Button>
       <Modal
         backdrop="opaque"
