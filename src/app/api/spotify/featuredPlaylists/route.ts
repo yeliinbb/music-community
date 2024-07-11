@@ -1,16 +1,16 @@
 import { getAccessToken } from "@/lib/spotify";
 import { SpotifyFeaturedPlaylists } from "@/types/spotify.type";
 import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
-export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
+export const GET = async () => {
   try {
     const token = await getAccessToken();
     const response = await axios.get<SpotifyFeaturedPlaylists>(`https://api.spotify.com/v1/browse/featured-playlists`, {
       headers: { Authorization: `Bearer ${token}` },
       params: {
         country: "KR",
-        // limit: 10,
+        limit: 10,
         locale: "ko_KR"
       }
     });

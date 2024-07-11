@@ -3,10 +3,12 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useLoginStore } from "@/store/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { login } = useLoginStore();
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,6 +31,7 @@ const Login = () => {
 
     if (!data.errorMsg) {
       alert("로그인 성공!");
+      login();
       router.replace("/");
     } else {
       alert(`로그인 에러: ${data.errorMsg}`);
