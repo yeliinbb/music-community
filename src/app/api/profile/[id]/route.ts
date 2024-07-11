@@ -37,7 +37,7 @@ export const POST = async (request: NextRequest, { params }: { params: { id: str
     const fileName = `${userId}/${Date.now()}.jpg`;
     const { data: uploadData, error: uploadError } = await supabase.storage
     .from('profile')
-    .upload(fileName, await profilePictureFile.arrayBuffer(), {
+    .upload(fileName, profilePictureFile, {
       contentType: profilePictureFile.type,
       cacheControl: '3600',
       upsert: false,

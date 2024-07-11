@@ -64,7 +64,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
     mutationFn: updateProfilePicture,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userData", userId] });
-      alert("프로필 사진이 성공적으로 업데이트되었습니다.");
+      alert("프로필 사진이 업데이트에 성공했습니다.");
     },
     onError: (error) => {
       console.error("프로필 사진 업데이트 오류:", error);
