@@ -73,11 +73,14 @@ export type SpotifyPlaylistTracks = {
   };
   tracks: SpotifyTrack[];
 };
+
+export type SpotifyAlbums = {
+  items: TracksItems[];
+  total: number;
+}[];
+
 export interface SpotifySearchResults {
-  albums: {
-    items: TracksItems[];
-    total: number;
-  };
+  albums: SpotifyAlbums;
   artists: {
     items: ArtistsItems[];
     total: number;

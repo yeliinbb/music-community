@@ -10,7 +10,7 @@ export default function SearchInput() {
   const onClickHandler = () => {
     if (inputRef.current) {
       const encodeURL = encodeURIComponent(inputRef.current.value);
-      router.push(`?params=${encodeURL}`, { scroll: false });
+      router.push(`/search?params=${encodeURL}`, { scroll: false });
     }
   };
 

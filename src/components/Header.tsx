@@ -1,4 +1,4 @@
-import React from "react";
+import SearchInput from "@/app/(main)/search/_components/SearchInput";
 import LogoutButton from "./LogoutButton";
 
 const Header = () => {
@@ -7,13 +7,8 @@ const Header = () => {
       <p className="text-2xl font-bold">CyTunes</p>
       <div className="flex items-center justify-between">
         <div className="flex flex-row">
-          <img src="/search.svg" alt="검색 아이콘" className="w-5 h-5 mt-2 mr-3" />
-          <input
-            type="text"
-            placeholder="검색어를 입력해 주세요"
-            autoFocus
-            className="w-72 p-1 border border-gray-300 rounded"
-          />
+          <img src="/search.png" alt="검색 아이콘" className="w-7 h-7 mt-1 mr-3" />
+          <SearchInput />
         </div>
         <div className="flex flex-row items-center">
           <div className="mr-5">
