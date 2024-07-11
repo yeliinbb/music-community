@@ -15,7 +15,7 @@ interface EditLikeParams {
 const fetchArtist = async (id: string) => {
   const response = await fetch(`/api/spotify/artist/${id}`);
   const data = await response.json();
-  console.log(data);
+  // console.log(data);
   return data;
 };
 
@@ -24,7 +24,7 @@ const likeState = async (id: string) => {
   const res = await fetch(`/api/artist/likes/${id}`);
   const likeData = await res.json();
 
-  console.log(likeData);
+  // console.log(likeData);
   return likeData;
 };
 
@@ -37,7 +37,6 @@ const editLike = async ({ id, isDelete }: EditLikeParams) => {
   } else {
     const res = await fetch(`/api/artist/likes/${id}`, {
       method: "POST",
-      //여기 부분에 왜 이걸 넣어야 하는지 말 모르겠어요 JSON 형식의 데이터라서 그런거라는데 맞나요???
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ artistId: id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" })
     });
