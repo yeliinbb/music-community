@@ -1,7 +1,7 @@
 import api from "@/api/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
-import MyLikes from "./_components/MyLikes";
+import MyArtists from "./_components/MyArtists";
 import MyPosts from "./_components/MyPosts";
 
 export const metadata: Metadata = {
@@ -25,7 +25,7 @@ export default async function MyPage() {
       <div className="flex flex-col gap-y-4">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <h2 className="font-bold text-2xl">좋아요 한 아티스트</h2>
-          <MyLikes />
+          <MyArtists />
           <h2 className="font-bold text-2xl">내 게시글</h2>
           <MyPosts />
         </HydrationBoundary>
