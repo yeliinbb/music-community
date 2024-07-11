@@ -43,13 +43,16 @@ const Trending = () => {
       {isSuccess && (
         <>
           <h2>Featured Playlists</h2>
-          <Image
-            src={selectedPlaylist.imageUrl}
-            alt={selectedPlaylist.name}
-            height={200}
-            width={200}
-            className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
-          />
+          {selectedPlaylist?.imageUrl ? (
+            <Image
+              src={selectedPlaylist.imageUrl || ""}
+              alt={selectedPlaylist.name}
+              height={200}
+              width={200}
+              className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
+            />
+          ) : null}
+
           <div className="flex flex-col items-center gap-2">
             <p className="h-[15px]">{selectedPlaylist.name}</p>
             <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
