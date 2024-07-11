@@ -4,12 +4,13 @@ import api from "@/api/api";
 import { ArtistsItems } from "@/types/spotify.type";
 import { useQueries, UseQueryResult } from "@tanstack/react-query";
 
-type MyPostsType = {
+export type MyPostsType = {
   id: string;
   title: string;
   userId: string;
   content: string;
   created_at: string;
+  imageURL: string;
 };
 
 type LikeType = {

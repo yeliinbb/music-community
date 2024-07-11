@@ -13,6 +13,7 @@ export const metadata: Metadata = {
 };
 
 //TODO search route 경로 한번 정리해야함.
+//TODO 검색 데이터 없을때 스크롤바 나오는거 없애야함.
 
 export default async function MyPage() {
   const queryClient = new QueryClient();
@@ -20,15 +21,15 @@ export default async function MyPage() {
   await queryClient.prefetchQuery({ queryKey: ["myLikes"], queryFn: () => api.me.getMyLikes() });
 
   return (
-    <section className="w-full h-full grid grid-cols-main-layout gap-8 pt-[100px] pb-[60px] px-[60px]">
+    <main className="max-w-[800px] mx-auto">
       <div>
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <h2 className="font-bold text-2xl">내 게시글</h2>
-          <MyPosts />
           <h2 className="font-bold text-2xl">좋아요 한 아티스트</h2>
           <MyLikes />
+          <h2 className="font-bold text-2xl">내 게시글</h2>
+          <MyPosts />
         </HydrationBoundary>
       </div>
-    </section>
+    </main>
   );
 }

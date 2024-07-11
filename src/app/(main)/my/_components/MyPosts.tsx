@@ -1,6 +1,7 @@
 "use client";
 
 import useMe from "@/hooks/useMe";
+import MyPostCard from "./MyPostCard";
 
 export default function MyPosts() {
   const { posts } = useMe();
@@ -8,11 +9,10 @@ export default function MyPosts() {
 
   return (
     <div>
-      <ul className="grid grid-cols-3 gap-2 p-2">
+      <ul className="grid grid-cols-4 gap-2 p-2">
         {posts?.map((post) => (
-          <li className="divide-y-2 border border-black rounded p-2" key={post.id}>
-            <h2 className="font-bold text-lg">{post.title}</h2>
-            <p className="text-sm">{post.content}</p>
+          <li className="border border-black rounded p-2 flex flex-col gap-y-4" key={post.id}>
+            <MyPostCard post={post} />
           </li>
         ))}
       </ul>
