@@ -3,12 +3,15 @@
 import React from "react";
 import Link from "next/link";
 import ProfileModal from "@/components/ProfileModal";
-import { MdOutlineMail } from "react-icons/md";
+import Image from "next/image";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { useLoginStore } from "@/store/auth";
 import {Tooltip} from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
+import { useLoginStore } from "@/store/auth";
+import { useQuery } from "@tanstack/react-query";
+import { MdOutlineMail } from 'react-icons/md';
 
 const Profile = () => {
   const userId = useLoginStore((state) => state.userId);

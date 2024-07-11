@@ -3,14 +3,13 @@ import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   return (
-    <header className="w-full h-[90px] grid grid-cols-main-layout items-center gap-8 pt-3 px-[60px] absolute">
+    <header className="flex w-full gap-32 justify-between py-4 px-10">
       <p className="text-2xl font-bold">CyTunes</p>
-      <div className="flex items-center justify-between">
-        <div className="flex flex-row">
-          <img src="/search.svg" alt="검색 아이콘" className="w-7 h-7 mt-1 mr-3" />
+      <div className="flex flex-1 items-center justify-between">
+        <div className="flex flex-grow max-w-[600px]">
           <SearchInput />
         </div>
-        <div className="flex flex-row items-center">
+        <div className="flex items-center">
           <div className="mr-5">
             <div>
               <LogoutButton />

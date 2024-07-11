@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef } from "react";
 
@@ -15,14 +16,16 @@ export default function SearchInput() {
   };
 
   return (
-    <div className="flex gap-x-2">
-      <input className="px-4 py-2 rounded-md" ref={inputRef} type="text" />
+    <div className="flex gap-x-2 w-full">
+      <input className="px-4 py-2 w-full rounded-md" ref={inputRef} type="text" />
       <button
         className=" select-none border border-black rounded-md p-2 bg-white font-bold
       hover:shadow-lg active:shadow-[inset_0_1px_6px_gray]"
         onClick={onClickHandler}
       >
-        찾기
+        <div className="relative aspect-square size-[20px]">
+          <Image src="/heart.svg" alt="검색 아이콘" className="object-cover" fill sizes="50px" />
+        </div>
       </button>
     </div>
   );
