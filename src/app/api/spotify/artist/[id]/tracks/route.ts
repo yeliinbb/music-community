@@ -6,13 +6,10 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   try {
     const token = await getAccessToken();
-    const response = await axios.get<TracksItems[]>(
-      `https://api.spotify.com/v1/artists/${context.params.id}/top-tracks`,
-      {
-        headers: { Authorization: `Bearer ${token}` },
-        params: { market: "KR" }
-      }
-    );
+    const response = await axios.get<TracksItems[]>(`https://api.spotify.com/v1/artists/${params.id}/top-tracks`, {
+      headers: { Authorization: `Bearer ${token}` },
+      params: { market: "KR" }
+    });
 
     return NextResponse.json(response.data);
   } catch (error) {

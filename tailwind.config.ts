@@ -15,9 +15,12 @@ const config: Config = {
       gridTemplateColumns: {
         "main-layout": "350px 4fr",
         "profile-layout": "repeat(2, 1fr)"
+      },
+      boxShadow: {
+        custom: "0 0 10px 3px rgba(116, 116, 116, 0.3)"
       }
     }
   },
-  plugins: []
+  plugins: [require("tailwind-scrollbar-hide")]
 };
 export default config;
