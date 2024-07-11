@@ -9,6 +9,9 @@ export default function useSearch() {
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
 
+  //TODO user 정보 주석처리되서 다시 가져와야함.
+  //TODO search route 경로 한번 정리해야함.
+  //TODO MY PAGE SSG에서 변경해야함.
   // const results = useQueries({
   //   queries: [
   //     {
