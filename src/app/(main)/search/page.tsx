@@ -1,4 +1,5 @@
 import api from "@/api/api";
+import { SpotifyAlbums } from "@/types/spotify.type";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
 import SearchSpotify from "./_components/SearchSpotify";
@@ -31,10 +32,18 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
     queryFn: () => api.search.searchUsers(searchParams.params),
     retry: 0
   });
+
   await queryClient.prefetchQuery({
     queryKey: ["searchSpotify", { params: searchParams.params }],
     queryFn: () => api.search.searchSpotify(searchParams.params),
     retry: 0
+  });
+
+  await queryClient.prefetchInfiniteQuery({
+    queryKey: ["albums"],
+    queryFn: ({ pageParam }) => api.search.searchSpotifyAlbums(searchParams.params, pageParam),
+    getNextPageParam: (lastPage: SpotifyAlbums[]) => lastPage.length + 1,
+    initialPageParam: 0
   });
 
   return (

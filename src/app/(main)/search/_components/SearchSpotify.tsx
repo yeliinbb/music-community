@@ -2,23 +2,47 @@
 
 import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
+import { useEffect, useRef } from "react";
 
 export default function SearchSpotify() {
-  const { spotifyDatas } = useSearch();
-  // console.log("SPOTIFY DATA___", isFetching, isLoading, spotifyDatas);
+  const obsRef = useRef<HTMLDivElement>(null);
+  const { albums, isFetching, hasNextPage, fetchNextPage } = useSearch();
+  console.log("SPOTIFY DATA___", albums);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries, observer) => {
+        if (entries[0].isIntersecting && hasNextPage) {
+          fetchNextPage();
+          observer.unobserve(entries[0].target);
+        }
+      },
+      { threshold: 0.9 }
+    );
+
+    const currentObs = obsRef.current;
+
+    if (currentObs) {
+      obs.observe(currentObs);
+    }
+
+    return () => {
+      if (currentObs) {
+        obs.unobserve(currentObs);
+      }
+    };
+  }, [albums, fetchNextPage, hasNextPage]);
 
   return (
     <div className="flex flex-col gap-y-10">
       <div className="flex flex-col gap-y-4 min-h-[200px]">
         <h2 className="font-bold text-2xl">앨범</h2>
         <div className="size-full flex-1">
-          {!spotifyDatas?.albums.items.length && (
-            <h2 className="font-bold test-2xl select-none">앨범 검색 결과가 없습니다.</h2>
-          )}
-          <ul className="grid grid-cols-7 gap-4 ">
-            {spotifyDatas?.albums.items.slice(0, 7).map((item) => (
+          {!albums?.length && <h2 className="font-bold test-2xl select-none">앨범 검색 결과가 없습니다.</h2>}
+          <ul className="flex gap-2 overflow-x-scroll p-2">
+            {albums?.map((item) => (
               <li className="flex flex-col gap-y-2" key={item.id}>
-                <div className="relative aspect-square p-2">
+                <div className="relative size-24 aspect-square p-2">
                   <Image
                     src={item.images[1].url}
                     className="object-cover border-gray-300 border"
@@ -28,19 +52,17 @@ export default function SearchSpotify() {
                   />
                 </div>
                 <div>
-                  <p className="line-clamp-1 text-sm font-bold">{item.name}</p>
-                  <div className="flex gap-2 text-xs">
-                    <p>
-                      {item.release_date.split("-")[0]} • {item.artists[0].name}
-                    </p>
-                  </div>
+                  <p className="text-[9px] text-gray-400">{item.release_date.split("-")[0]}</p>
+                  <p className="line-clamp-1 text-xs font-bold">{item.name}</p>
+                  <p className="flex gap-2 text-xs">{item.artists[0].name}</p>
                 </div>
               </li>
             ))}
+            {!isFetching && hasNextPage && <div ref={obsRef} className="bg-red-500 w-10 flex-shrink-0" />}
           </ul>
         </div>
       </div>
-      <div className="flex flex-col gap-y-4 min-h-[200px]">
+      {/* <div className="flex flex-col gap-y-4 min-h-[200px]">
         <h2 className="font-bold text-2xl">아티스트</h2>
         <div className="size-full flex-1">
           {!spotifyDatas?.artists.items.length && (
@@ -65,8 +87,7 @@ export default function SearchSpotify() {
             ))}
           </ul>
         </div>
-      </div>
-      {/* {!query.length && !isLoading && <div>검색 결과가 없읍니다</div>} */}
+      </div> */}
     </div>
   );
 }
