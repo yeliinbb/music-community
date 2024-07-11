@@ -6,15 +6,30 @@ import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 import { MdOutlineMail } from "react-icons/md";
 import { IoPersonCircleOutline } from "react-icons/io5";
-
+import { useQuery } from "@tanstack/react-query";
 
 const Profile = () => {
+  const userId = "ce36f4d0-624c-43fd-adee-fe9d61d18a67";
+  const { data: userProfileData, isPending, error } = useQuery({
+    queryKey: ["userData", userId],
+    queryFn: async ({ queryKey }) => {
+      const [_key, userId] = queryKey;
+      const response = await fetch(`/api/profile/${userId}`);
+      if (!response.ok) {
+        throw new Error("사용자 정보를 가져오는데 실패했습니다.");
+      }
+      const data = await response.json();
+      return data;
+    }
+  });
+
+  console.log(userProfileData);    
   return (
     <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
       <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
         <div>
           <span className="mr-1.5">마이 프로필</span>
-            <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정"/>
+          <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" />
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
         <img
@@ -24,13 +39,13 @@ const Profile = () => {
         />
         {/* {수파베이스에서 데이터 가져오기} */}
         <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-1.5">
-            <IoPersonCircleOutline />
-            <span className="h-[15px]">이름</span>
+          <div className="flex items-center gap-1.5 flex-row">
+            <IoPersonCircleOutline className="mt-2" />
+            <span className="h-[15px]">{userProfileData?.nickname}</span>
           </div>
-          <div className="flex items-center gap-1.5">
-            <MdOutlineMail />
-            <span className="h-[15px]">e-mail</span>
+          <div className="flex items-center gap-1.5 flex-row">
+            <MdOutlineMail className="mt-2" />
+            <span className="h-[15px]">{userProfileData?.email}</span>
           </div>
         </div>
       </div>
