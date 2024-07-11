@@ -1,8 +1,5 @@
-import LogoutButton from "@/components/LogoutButton";
 import React from "react";
-import Trending from "./_components/Trending";
-import Playlists from "./_components/Playlists";
-import Profile from "./_components/Profile";
+import Playlists from "./playlists/_components/Playlists";
 
 const MainPage = () => {
   return (

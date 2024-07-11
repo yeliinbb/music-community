@@ -85,7 +85,7 @@ const Playlists = () => {
                       {playlist.tracks.map((track) => (
                         <li
                           key={track.id}
-                          className=" flex items-center px-[15px] py-[8px] bg-[#D9D9D9] min-w-[300px] place-self-center rounded-xl justify-between gap-4"
+                          className="grow shrink-0 flex items-center px-[15px] py-[8px] bg-[#D9D9D9] min-w-[300px] max-w-[50%] basis-[45%] place-self-center rounded-xl justify-between gap-4"
                         >
                           <div className="flex items-center gap-3 w-full">
                             <Image

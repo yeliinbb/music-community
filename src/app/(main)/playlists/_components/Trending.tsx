@@ -5,14 +5,15 @@ import axios from "axios";
 import React, { use } from "react";
 
 const Trending = () => {
-  // const { data, isPending, isError, isSuccess } = useQuery({
-  //   queryKey: ["trending"],
-  //   queryFn: async () => {
-  //     const response = await axios<SpotifyFeaturedPlaylists>("/api/spotify/featuredPlaylists");
-  //     // console.log("response => ", response);
-  //     return response.data;
-  //   }
-  // });
+  const { data, isPending, isError, isSuccess } = useQuery({
+    queryKey: ["trending"],
+    queryFn: async () => {
+      const response = await axios<SpotifyFeaturedPlaylists>("/api/spotify/featuredPlaylists");
+      console.log("trending response => ", response);
+      return response.data;
+    }
+  });
+  // const selected = data[Math.random()*10]
   return (
     <div>
       <h1>Spotify Featured Playlists</h1>

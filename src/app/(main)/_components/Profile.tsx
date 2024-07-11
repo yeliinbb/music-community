@@ -6,6 +6,7 @@ import { Tooltip } from "react-tooltip";
 import { MdOutlineMail } from "react-icons/md";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { IoIosSettings } from "react-icons/io";
+import Trending from "../playlists/_components/Trending";
 
 const Profile = () => {
   return (
@@ -37,6 +38,7 @@ const Profile = () => {
       </div>
       <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px] min-w-[350px]">
         <h2>Featured Playlists</h2>
+        <Trending />
         {/* {플레이어} */}
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
