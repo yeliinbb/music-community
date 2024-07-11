@@ -7,13 +7,13 @@ export default function MyPostCard({ post }: { post: MyPostsType }) {
 
   return (
     <>
-      <div className="relative w-full aspect-video border border-gray-300">
+      <div className="relative w-full aspect-video border border-gray-300 rounded-lg">
         <Image src={imageURL} fill className="object-cover" sizes="100px" alt={`${id}${created_at}`} />
       </div>
       <div className="flex flex-col gap-y-2 divide-y-2">
         <div className="flex flex-col ">
-          <h2 className="font-bold text-lg line-clamp-1">{title}</h2>
-          <p className="ml-auto text-xs text-gray-300">{convertDateFormat(created_at)}</p>
+          <h2 className="font-bold text-xl text-gray-800 line-clamp-1">{title}</h2>
+          <p className="ml-auto text-xs text-gray-500">{convertDateFormat(created_at)}</p>
         </div>
         <p className="text-sm line-clamp-2 pt-2">{content}</p>
       </div>

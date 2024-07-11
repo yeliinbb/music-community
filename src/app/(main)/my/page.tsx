@@ -21,8 +21,8 @@ export default async function MyPage() {
   await queryClient.prefetchQuery({ queryKey: ["myLikes"], queryFn: () => api.me.getMyLikes() });
 
   return (
-    <main className="max-w-[800px] mx-auto">
-      <div>
+    <main className="max-w-[800px] mx-auto p-8 pt-0">
+      <div className="flex flex-col gap-y-4">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <h2 className="font-bold text-2xl">좋아요 한 아티스트</h2>
           <MyLikes />
