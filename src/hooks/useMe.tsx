@@ -18,7 +18,7 @@ type LikeType = {
 };
 
 export default function useMe() {
-  const results = useQueries({
+  const [posts, likes] = useQueries({
     queries: [
       {
         queryKey: ["myPosts"],
@@ -41,5 +41,5 @@ export default function useMe() {
   //   queryFn: () => api.me.getMyLikes()
   // });
 
-  return { posts: results[0].data, likes: results[1].data };
+  return { posts: posts.data, likes: likes.data };
 }

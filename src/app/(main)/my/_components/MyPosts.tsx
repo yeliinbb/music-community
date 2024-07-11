@@ -7,7 +7,7 @@ import MyPostCard from "./MyPostCard";
 export default function MyPosts() {
   const { posts } = useMe();
   // console.log("MY POSTS___", posts);
-
+  // console.log("postsIsFetching___", postsIsFetching, isLoading);
   return (
     <div>
       <ul className="grid grid-cols-4 gap-2 p-2">
