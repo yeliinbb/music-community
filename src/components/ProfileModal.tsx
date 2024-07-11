@@ -36,9 +36,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       const data = await response.json();
       console.log("Upload successful:", data);
 
-      const encodedFileName = encodeURIComponent(data.path);
-      console.log(encodedFileName)
-      const profileUrl = `${SUPABASE_URL}/storage/v1/object/public/profile/${encodedFileName}`;
+      const profileUrl = `${SUPABASE_URL}/storage/v1/object/public/profile/${data.path}`;
 
       const updateResponse = await fetch(`/api/profile/${userId}`, {
         method: "PUT",
