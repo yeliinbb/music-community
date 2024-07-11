@@ -12,7 +12,6 @@ const ProfileModal = () => {
   const handleFileInputChange = async (file) => {
     console.log("inputchange");
   };
-  console.log('first')
 
   //const imageUrl = userProfileData.profilePictureUrl ?? profileDefaultUrl;
   return (
