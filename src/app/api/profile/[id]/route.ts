@@ -22,8 +22,6 @@ export const GET = async (request: NextRequest, { params }: { params: { id: stri
   }
 }
 
-
-
 export const POST = async (request: NextRequest, { params }: { params: { id: string } }) => {
   const userId = params.id;
   const supabase = createClient();
@@ -36,7 +34,7 @@ export const POST = async (request: NextRequest, { params }: { params: { id: str
       return NextResponse.json({ error: '프로필 사진이 전송되지 않았습니다.' }, { status: 400 });
     }
 
-    const fileName = `${userId}/${Date.now()}_${profilePictureFile.name}`;
+    const fileName = `${userId}/${Date.now()}.jpg`;
     const { data: uploadData, error: uploadError } = await supabase.storage
     .from('profile')
     .upload(fileName, await profilePictureFile.arrayBuffer(), {
@@ -58,14 +56,26 @@ export const POST = async (request: NextRequest, { params }: { params: { id: str
   }
 }
 
-// export const PUT = async (request: NextRequest, { params }: { params: { id: string } }, profilePictureUrl: string) => {
-//   const userId = params.id;
-//   console.log("userId test=>", userId);
-//   const supabase = createClient();
+export const PUT = async ( { params }: { params: { id: string } }, profileUrl: string) => {
+  const userId = params.id;
+  console.log("userId test=>", userId);
+  const supabase = createClient();
 
-//   try {
+  try {
+    const { data: updateData, error: updateError } = await supabase
+    .from("users")
+    .update({ profileUrl })
+    .eq("id", userId);
 
-//   } catch(error) {
+  if (updateError) {
+    console.error("Supabase upload error:", updateError);
+    throw new Error("유저의 프로필 정보를 업데이트하는 데 실패했습니다. 다시 시도해 주세요");
+  }
 
-//   }
-// }
+  return NextResponse.json(updateData, { status: 200 });
+  
+  } catch(error) {
+    console.error("서버 오류:", error);
+    return NextResponse.json({ error: `서버 오류: ${error}` }, { status: 500 });
+  }
+}
