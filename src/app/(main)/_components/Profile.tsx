@@ -1,11 +1,23 @@
+"use client";
 import React from "react";
 import Link from "next/link";
+import "react-tooltip/dist/react-tooltip.css";
+import { Tooltip } from "react-tooltip";
+import { MdOutlineMail } from "react-icons/md";
+import { IoPersonCircleOutline } from "react-icons/io5";
+import { IoIosSettings } from "react-icons/io";
 
 const Profile = () => {
   return (
-    <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3">
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px]">
-        <h2>마이 프로필</h2>
+    <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
+      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
+        <div>
+          <span className="mr-1.5">마이 프로필</span>
+          <button data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정">
+            <IoIosSettings />
+          </button>
+          <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
+        </div>
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
           alt="profile image"
@@ -13,15 +25,18 @@ const Profile = () => {
         />
         {/* {수파베이스에서 데이터 가져오기} */}
         <div className="flex flex-col items-center gap-2">
-          <p className="h-[15px]">이름</p>
-          <p className="h-[15px]">e-mail</p>
-          {/* <Link href=""> */}
-          <p className="h-[15px]">게시물 작성</p>
-          {/* </Link> */}
+          <div className="flex items-center gap-1.5">
+            <IoPersonCircleOutline />
+            <span className="h-[15px]">이름</span>
+          </div>
+          <div className="flex items-center gap-1.5">
+            <MdOutlineMail />
+            <span className="h-[15px]">e-mail</span>
+          </div>
         </div>
       </div>
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px]">
-        <h2>지금 듣고 있는 곡</h2>
+      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px] min-w-[350px]">
+        <h2>Featured Playlists</h2>
         {/* {플레이어} */}
         <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
@@ -29,9 +44,10 @@ const Profile = () => {
           className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
         />
         <div className="flex flex-col items-center gap-2">
-          <p className="h-[15px]">트랙 이름</p>
-          <p className="h-[15px]">아티스트</p>
-          <button className="h-[15px]">재생 버튼</button>
+          <p className="h-[15px]">플레이리스트 이름</p>
+          {/* <Link href={플레이리스트 링크}> */}
+          <p className="h-[15px]">바로가기</p>
+          {/* </Link> */}
         </div>
       </div>
     </div>

@@ -41,6 +41,7 @@ export type SpotifyTrack = {
   id: string;
   name: string;
   preview_url: string | null;
+  duration_ms: number;
   external_urls: {
     spotify: string;
   };
