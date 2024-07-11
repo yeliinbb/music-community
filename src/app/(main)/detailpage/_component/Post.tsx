@@ -1,26 +1,20 @@
 "use client";
 
+import { deletePost, editPost, enableMutation } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-
-const editPost = async ({ id, title, content }: PostType) => {
-  const supabase = createClient();
-  const { error } = await supabase.from("posts").update({ title, content }).eq('id', id);
-  if (error) {
-    throw new Error(error.message);
-  }
-  return;
-};
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const queryClient = useQueryClient();
+  const router = useRouter();
 
   const {
     data: post,
@@ -45,27 +39,57 @@ const Post = ({ id }: { id: string }) => {
     }
   });
 
-  const enableEditing = async () => {
-    const supabase = createClient();
-    const {
-      data: { session }
-    } = await supabase.auth.getSession();
-    const userId = session?.user.id;
+  const deleteMutation = useMutation({
+    mutationFn: deletePost,
+    onSuccess: () => {
+      alert("삭제되었습니다!");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
+    }
+  });
 
+  const onEdit = async () => {
+    const userId = await enableMutation();
     if (userId !== post?.userId) {
       alert("작성자만 수정할 수 있습니다");
       return;
+    } else {
+      setIsEditing(true);
+      if (titleRef.current && contentRef.current) {
+        const title: PostType["title"] = titleRef.current?.value;
+        const content: PostType["content"] = contentRef.current?.value;
+        if (title !== undefined && content !== undefined) {
+          const editedPost: PostType = {
+            id: id,
+            title: title,
+            content: content,
+            created_at: post?.created_at ?? "",
+            imageURL: post?.imageURL ?? "",
+            userId: userId || null
+          };
+          editMutation.mutate(editedPost);
+        }
+      }
     }
-    setIsEditing(true);
   };
 
-  const onEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
-    if (titleRef.current && contentRef.current) {
-      const title: string = titleRef.current?.value;
-      const content: string = contentRef.current?.value;
-      const editedPost = { ...post, id: id, title: title, content: content };
-      editMutation.mutate(editedPost);
+  const onDelete = async () => {
+    const userId = await enableMutation();
+    if (userId !== post?.userId) {
+      alert("작성자만 삭제할 수 있습니다.");
+      return;
+    }
+
+    if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+      try {
+        deleteMutation.mutate(id);
+        router.push("/my");
+        console.log("삭제가 완료되었습니다.");
+      } catch (error) {
+        console.error("삭제 중 오류 발생", error);
+        alert("삭제 중 오류가 발생했습니다.");
+      }
+    } else {
+      alert("삭제가 취소되었습니다.");
     }
   };
 
@@ -84,7 +108,9 @@ const Post = ({ id }: { id: string }) => {
             <button className="border border-gray-400 bg-[#CFCFCF] rounded-lg p-[3px] text-[15px]" onClick={onEdit}>
               완료
             </button>
-            <button className="border border-black rounded-lg bg-[#2c2c2c] p-[3px] text-[15px]">삭제</button>
+            <button className="border border-black rounded-lg bg-[#2c2c2c] p-[3px] text-[15px]" onClick={onDelete}>
+              삭제
+            </button>
           </div>
 
           <div className="flex items-center">
@@ -95,7 +121,6 @@ const Post = ({ id }: { id: string }) => {
               defaultValue={post?.title ?? undefined}
             ></input>
           </div>
-
           <textarea
             ref={contentRef}
             defaultValue={post?.content ?? undefined}
@@ -105,13 +130,12 @@ const Post = ({ id }: { id: string }) => {
       ) : (
         <>
           <div className="absolute top-[10px] right-[10px] flex gap-2 text-white">
-            <button
-              className="border border-gray-400 bg-[#CFCFCF] rounded-lg p-[3px] text-[15px]"
-              onClick={enableEditing}
-            >
+            <button className="border border-gray-400 bg-[#CFCFCF] rounded-lg p-[3px] text-[15px]" onClick={onEdit}>
               수정
             </button>
-            <button className="border border-black rounded-lg bg-[#2c2c2c] p-[3px] text-[15px]">삭제</button>
+            <button className="border border-black rounded-lg bg-[#2c2c2c] p-[3px] text-[15px]" onClick={onDelete}>
+              삭제
+            </button>
           </div>
 
           <div className="flex items-center">
