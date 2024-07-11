@@ -8,13 +8,13 @@ export default function SearchUser() {
   // console.log("USER DATA___", users);
 
   return (
-    <div>
-      <h2 className="font-bold text-xl">유저</h2>
-      <div className="min-h-[100px]">
-        {!users?.length && <div className="flex items-center justify-center flex-1">유저 검색 결과가 없습니다.</div>}
-        <ul className="grid grid-cols-6 gap-4">
+    <div className="flex flex-col gap-y-4 min-h-[200px] ">
+      <h2 className="font-bold text-2xl">사용자</h2>
+      <div className="size-full flex-1">
+        {!users?.length && <h2 className="font-bold test-2xl select-none">유저 검색 결과가 없습니다.</h2>}
+        <ul className="grid grid-cols-7 gap-4">
           {users?.map((user) => (
-            <li key={user.id}>
+            <li className="flex flex-col gap-y-2" key={user.id}>
               <div className="relative aspect-square p-2">
                 <Image
                   src={"http://via.placeholder.com/640x480"}
@@ -24,7 +24,9 @@ export default function SearchUser() {
                   sizes={"100px"}
                 />
               </div>
-              {user.nickname}
+              <div>
+                <p className="line-clamp-1 text-sm font-bold">{user.nickname}</p>
+              </div>
             </li>
           ))}
         </ul>

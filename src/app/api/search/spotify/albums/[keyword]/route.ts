@@ -5,7 +5,16 @@ interface Context {
   params: { keyword: string };
 }
 
+const OFFSET = 8;
+
 export async function GET(req: NextRequest, context: Context) {
+  const url = new URL(req.url);
+  const params = new URLSearchParams(url.search);
+  const page = params.get("page");
+  const offset = Number(page) * OFFSET;
+
+  // console.log("PAGE___", page);
+
   const { keyword } = context.params;
   const token = await getAccessToken();
 
@@ -14,12 +23,15 @@ export async function GET(req: NextRequest, context: Context) {
   }
 
   try {
-    const response = await fetch(`https://api.spotify.com/v1/search?q=${keyword}&type=album%2Cartist&market=KR`, {
-      headers: {
-        "content-type": "application/x-www-form-urlencoded",
-        Authorization: `Bearer ${token}`
+    const response = await fetch(
+      `https://api.spotify.com/v1/search?q=${keyword}&type=album&market=KR&limit=8&offset=${offset}`,
+      {
+        headers: {
+          "content-type": "application/x-www-form-urlencoded",
+          Authorization: `Bearer ${token}`
+        }
       }
-    });
+    );
     const data = await response.json();
 
     return NextResponse.json(data);
