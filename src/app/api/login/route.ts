@@ -20,7 +20,7 @@ import { createClient } from "@/utils/supabase/server";
 export async function POST(request: Request) {
   const supabase = createClient();
   const { email, password } = (await request.json()) as Omit<FormState, "nickname">;
-  
+
   let { data, error } = await supabase.auth.signInWithPassword({
     email,
     password

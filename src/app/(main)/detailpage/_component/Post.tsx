@@ -2,7 +2,6 @@
 
 import { deletePost, editPost, enableMutation } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
-import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
@@ -25,7 +24,7 @@ const Post = ({ id }: { id: string }) => {
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
-      console.log("posts", data);
+      // console.log("posts", data);
       return data;
     }
   });
