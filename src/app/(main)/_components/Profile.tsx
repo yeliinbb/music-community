@@ -9,8 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useLoginStore } from "@/store/auth";
 import {Tooltip} from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
-import { useLoginStore } from "@/store/auth";
-import { useQuery } from "@tanstack/react-query";
 import { MdOutlineMail } from 'react-icons/md';
 
 const Profile = () => {
@@ -47,7 +45,6 @@ const Profile = () => {
           className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
         />
         }
-        
         {/* {수파베이스에서 데이터 가져오기} */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-center gap-1.5 flex-row">
