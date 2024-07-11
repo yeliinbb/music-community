@@ -12,6 +12,7 @@ const MainPage = () => {
     //   <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide">
     <>
       <Playlists />
+      <Artist />
     </>
     //   </div>
     // </section>
