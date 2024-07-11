@@ -2,21 +2,11 @@
 
 import { deletePost, editPost, enableMutation } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
-import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
-
-const editPost = async ({ id, title, content }: PostType) => {
-  const supabase = createClient();
-  const { error } = await supabase.from("posts").update({ title, content }).eq("id", id);
-  if (error) {
-    throw new Error(error.message);
-  }
-  return;
-};
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -67,7 +57,14 @@ const Post = ({ id }: { id: string }) => {
         const title: PostType["title"] = titleRef.current?.value;
         const content: PostType["content"] = contentRef.current?.value;
         if (title !== undefined && content !== undefined) {
-          const editedPost = { ...post, title: title, content: content };
+          const editedPost: PostType = {
+            id: id,
+            title: title,
+            content: content,
+            created_at: post?.created_at ?? "",
+            imageURL: post?.imageURL ?? "",
+            userId: userId || null
+          };
           editMutation.mutate(editedPost);
         }
       }
