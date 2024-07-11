@@ -12,6 +12,7 @@ import { useLoginStore } from "@/store/auth";
 
 const Profile = () => {
   const userId = useLoginStore((state) => state.userId);
+  console.log(userId)
 
   const { data: userProfileData, isPending, error } = useQuery({
     queryKey: ["userData", userId],
