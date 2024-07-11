@@ -1,7 +1,6 @@
 import api from "@/api/api";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { Metadata } from "next";
-import Profile from "../_components/Profile";
 import MyLikes from "./_components/MyLikes";
 import MyPosts from "./_components/MyPosts";
 
@@ -20,9 +19,7 @@ export default async function MyPage() {
 
   return (
     <section className="w-full h-full grid grid-cols-main-layout gap-8 pt-[100px] pb-[60px] px-[60px]">
-      <Profile />
       <div>
-        <h1 className="text-center text-2xl font-bold">My Page</h1>
         <HydrationBoundary state={dehydrate(queryClient)}>
           <h2 className="font-bold text-2xl">내 게시글</h2>
           <MyPosts />
