@@ -1,16 +1,19 @@
 import SearchInput from "@/app/(main)/search/_components/SearchInput";
+import Image from "next/image";
 import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   return (
-    <header className="w-full h-[90px] grid grid-cols-main-layout items-center gap-8 pt-3 px-[60px] absolute">
+    <header className="w-full h-[80px] grid grid-cols-main-layout items-center gap-8 ">
       <p className="text-2xl font-bold">CyTunes</p>
       <div className="flex items-center justify-between">
-        <div className="flex flex-row">
-          <img src="/search.png" alt="검색 아이콘" className="w-7 h-7 mt-1 mr-3" />
+        <div className="flex flex-shrink-0">
+          <div className="relative aspect-square size-full">
+            <Image src="/heart.svg" alt="검색 아이콘" className="object-cover" fill sizes="50px" />
+          </div>
           <SearchInput />
         </div>
-        <div className="flex flex-row items-center">
+        <div className="flex items-center">
           <div className="mr-5">
             <div>
               <LogoutButton />

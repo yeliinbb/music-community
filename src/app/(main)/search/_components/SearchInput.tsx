@@ -15,7 +15,7 @@ export default function SearchInput() {
   };
 
   return (
-    <div className="flex gap-x-2">
+    <div className="flex gap-x-2 h-full">
       <input className="px-4 py-2 rounded-md" ref={inputRef} type="text" />
       <button
         className=" select-none border border-black rounded-md p-2 bg-white font-bold

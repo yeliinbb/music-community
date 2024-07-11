@@ -1,17 +1,19 @@
 import Header from "@/components/Header";
 import { PropsWithChildren } from "react";
-import NavigationBar from "./_components/NavigationBar";
+import NavigationBar from "../../components/NavigationBar";
 import Profile from "./_components/Profile";
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
-    <main className="w-full h-full bg-[#D9D9D9] rounded-3xl relative min-w-[700px]">
-      <Header />
-      <NavigationBar />
-      <section className="w-full h-full grid grid-cols-main-layout gap-8 pt-[100px] pb-[60px] px-[60px]">
-        <Profile />
-        <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide">{children}</div>
-      </section>
+    <main className="h-screen flex items-center justify-center">
+      <div className="bg-[#D9D9D9] rounded-3xl w-[1280px] relative shadow-xl">
+        <Header />
+        <NavigationBar />
+        <section className="w-full h-full grid grid-cols-main-layout gap-8 px-10 pb-10">
+          <Profile />
+          <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide">{children}</div>
+        </section>
+      </div>
     </main>
   );
 };

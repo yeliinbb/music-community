@@ -13,7 +13,7 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
       },
       gridTemplateColumns: {
-        "main-layout": "350px 4fr",
+        "main-layout": "200px 4fr",
         "profile-layout": "repeat(2, 1fr)"
       },
       boxShadow: {

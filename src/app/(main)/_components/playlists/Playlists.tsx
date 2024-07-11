@@ -1,17 +1,16 @@
 "use client";
-import { PLAYLIST_IDS } from "@/app/api/spotify/playlists/route";
 import { SpotifyPlaylistTracks, SpotifyTrack } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Image from "next/image";
-import "react-tooltip/dist/react-tooltip.css";
 import Link from "next/link";
+import { useRef, useState } from "react";
 import { HiMiniPlay } from "react-icons/hi2";
+import Slider from "react-slick";
 import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
