@@ -94,9 +94,9 @@ const Artist = () => {
   };
 
   return (
-    <div className="w-[700px]">
+    <div className="w-full mt-10">
       <p className="font-bold mb-5">아티스트</p>
-      <div className="custom-slider ml-9">
+      <div className="custom-slider ml-3 mr-3">
         <Slider {...settings}>
           {artistData.map((artist) => (
             <div key={artist.id} className="flex flex-col items-center">
