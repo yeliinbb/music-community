@@ -1,4 +1,12 @@
-export const postingPost = async ({ title, content }: { title: string; content: string }) => {
+export const postingPost = async ({
+  title,
+  content,
+  imageURL
+}: {
+  title: string;
+  content: string;
+  imageURL: string;
+}) => {
   try {
     const response = await fetch("/api/posts", {
       method: "POST",
@@ -7,7 +15,8 @@ export const postingPost = async ({ title, content }: { title: string; content: 
       },
       body: JSON.stringify({
         title,
-        content
+        content,
+        imageURL
       })
     });
     if (!response.ok) {

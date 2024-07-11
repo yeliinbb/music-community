@@ -9,9 +9,9 @@ import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
 import Image from "next/image";
 import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
 import Link from "next/link";
 import { HiMiniPlay } from "react-icons/hi2";
+import { Tooltip } from "react-tooltip";
 
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
