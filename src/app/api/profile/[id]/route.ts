@@ -56,10 +56,11 @@ export const POST = async (request: NextRequest, { params }: { params: { id: str
   }
 }
 
-export const PUT = async ( { params }: { params: { id: string } }, profileUrl: string) => {
+export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
   const userId = params.id;
   console.log("userId test=>", userId);
   const supabase = createClient();
+  const { profileUrl } = await request.json();
 
   try {
     const { data: updateData, error: updateError } = await supabase
