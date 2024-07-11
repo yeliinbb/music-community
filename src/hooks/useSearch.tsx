@@ -2,30 +2,18 @@
 
 import api from "@/api/api";
 import { ArtistsItems, TracksItems } from "@/types/spotify.type";
-import { useInfiniteQuery } from "@tanstack/react-query";
+import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
 export default function useSearch() {
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
 
-  //TODO user 정보 주석처리되서 다시 가져와야함.
-  //TODO search route 경로 한번 정리해야함.
-  //TODO MY PAGE SSG에서 변경해야함.
-  // const results = useQueries({
-  //   queries: [
-  //     {
-  //       queryKey: ["searchSpotify", { params }],
-  //       queryFn: () => api.search.searchSpotify(params),
-  //       retry: 0
-  //     },
-  //     {
-  //       queryKey: ["searchUsers", { params }],
-  //       queryFn: () => api.search.searchUsers(params),
-  //       retry: 0
-  //     }
-  //   ]
-  // });
+  const { data: users } = useQuery({
+    queryKey: ["users", { params }],
+    queryFn: () => api.search.searchUsers(params),
+    retry: 0
+  });
 
   const {
     data: albums,
@@ -60,6 +48,8 @@ export default function useSearch() {
   });
 
   return {
+    users,
+
     albums,
     albumsIsFetching,
     albumsHasNextPage,
@@ -70,8 +60,6 @@ export default function useSearch() {
     artistsHasNextPage,
     artistsFetchNextPage,
 
-    // spotifyDatas: results[0].data,
-    // users: results[1].data,
     params
   };
 }

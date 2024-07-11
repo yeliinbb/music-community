@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 
 const editPost = async ({ id, title, content }: PostType) => {
   const supabase = createClient();
-  const { error } = await supabase.from("posts").update({ title, content }).eq('id', id);
+  const { error } = await supabase.from("posts").update({ title, content }).eq("id", id);
   if (error) {
     throw new Error(error.message);
   }
