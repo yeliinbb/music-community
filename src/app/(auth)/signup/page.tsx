@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -38,11 +39,11 @@ const Signup = () => {
   return (
     <div>
       <div className="text-center mb-8">
-        <h2 className="mt-4 text-2xl font-bold text-gray-200">Welcome!</h2>
+        <h2 className="mt-4 text-2xl font-bold text-black-200">Welcome!</h2>
       </div>
       <form onSubmit={handleSignup}>
         <div className="mb-6">
-          <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="nickname">
+          <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="nickname">
             UserName
           </label>
           <input
@@ -50,11 +51,11 @@ const Signup = () => {
             name="nickname"
             value={nickname}
             onChange={(e) => setNickname(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+            className="w-full px-3 py-2 bg-[#d9d9d9] border-b-2 border-black focus:outline-none focus:border-[#54b2d3]"
           />
         </div>
         <div className="mb-6">
-          <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="email">
+          <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="email">
             Email
           </label>
           <input
@@ -62,11 +63,11 @@ const Signup = () => {
             name="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+            className="w-full px-3 py-2 bg-[#d9d9d9] border-b-2 border-black focus:outline-none focus:border-[#54b2d3]"
           />
         </div>
         <div className="mb-6">
-          <label className="block text-gray-400 text-sm font-bold mb-2" htmlFor="password">
+          <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="password">
             PassWord
           </label>
           <input
@@ -74,13 +75,21 @@ const Signup = () => {
             name="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className="w-full px-3 py-2 bg-gray-800 border-b-2 border-blue-400 text-gray-200 focus:outline-none focus:border-blue-400"
+            className="w-full px-3 py-2 bg-[#d9d9d9] border-b-2 border-black focus:outline-none focus:border-[#54b2d3]"
           />
         </div>
-        <div className="flex justify-center">
+        <div className="flex justify-between items-center">
+          <Link href="/login">
+            <button
+              type="button"
+              className="ml-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
+            >
+              Back
+            </button>
+          </Link>
           <button
             type="submit"
-            className="px-20 py-3 border border-blue-400 text-blue-400 font-bold hover:bg-blue-400 hover:text-gray-800 transition-colors"
+            className="mr-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
           >
             SignUp
           </button>
