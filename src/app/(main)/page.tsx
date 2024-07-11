@@ -1,8 +1,9 @@
 import LogoutButton from "@/components/LogoutButton";
 import React from "react";
-import Trending from "./_components/Trending";
-import Playlists from "./_components/Playlists";
+import Trending from "./playlists/_components/Trending";
+import Playlists from "./playlists/_components/Playlists";
 import Profile from "./_components/Profile";
+import Artist from "./artist/_components/mainPage/Artist";
 
 const MainPage = () => {
   return (
@@ -11,6 +12,7 @@ const MainPage = () => {
     //   <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide">
     <>
       <Playlists />
+      <Artist />
     </>
     //   </div>
     // </section>
