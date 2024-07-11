@@ -58,7 +58,7 @@ const DetailPage = () => {
       }
     }
 
-    // router.push("/"); // 이거 마이페이지로 이동해야됨 ~
+    router.push("/my"); // 이거 마이페이지로 이동해야됨 ~
   };
 
   //   const mutation = useMutation({
