@@ -10,7 +10,7 @@ export const GET = async (request: NextRequest, context: { params: { id: string 
       `https://api.spotify.com/v1/artists/${context.params.id}/top-tracks`,
       {
         headers: { Authorization: `Bearer ${token}` },
-        params: { market: "KR" }
+        params: { market: "KR", locale: "ko_KR" }
       }
     );
 
