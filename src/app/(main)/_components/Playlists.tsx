@@ -13,6 +13,12 @@ import { Tooltip } from "react-tooltip";
 import Link from "next/link";
 import { HiMiniPlay } from "react-icons/hi2";
 
+type CustomArrowProps = {
+  className?: string;
+  style?: React.CSSProperties;
+  onClick?: () => void;
+}
+
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
   // const [selectedTracks, setSelectedTracks] = useState<SpotifyPlaylistTracks | null>(null);
@@ -48,17 +54,31 @@ const Playlists = () => {
     }
   };
 
+  const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
+    <div className={`custom-arrow custom-prev-arrow ${className}`} onClick={onClick}  style={{ width: '30px', height: '30px' }}>
+      <img src="chevrons-left.svg" alt="이전 아티스트" />
+    </div>
+  );
+
+  const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
+    <div className={`custom-arrow custom-next-arrow ${className}`} onClick={onClick}  style={{ width: '30px', height: '30px' }}>
+      <img src="chevrons-right.svg" alt="다음 아티스트"  />
+    </div>
+  );
+
   const settings = {
-    dots: true,
+    // dots: true,
     infinite: true,
     speed: 1000,
     cssEase: "ease-in-out",
     slidesToShow: 1,
     slidesToScroll: 1,
     arrow: true,
-    beforeChange: (current: number, next: number) => setCurrentIndex(next)
+    beforeChange: (current: number, next: number) => setCurrentIndex(next),
     // autoplay: true,
     // autoplaySpeed: 8000
+    prevArrow: <CustomPrevArrow />,
+    nextArrow: <CustomNextArrow />
   };
 
   if (isPending) return <div>Loading...</div>;
