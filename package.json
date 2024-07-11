@@ -25,6 +25,7 @@
     "react-tooltip": "^5.27.1",
     "react-tooltip-rc": "^4.3.5",
     "slick-carousel": "^1.8.1",
+    "supabase": ">=1.8.1",
     "tailwind-scrollbar-hide": "^1.1.7",
     "zustand": "^4.5.4"
   },
