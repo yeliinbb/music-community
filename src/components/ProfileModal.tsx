@@ -3,35 +3,42 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { IoIosSettings } from "react-icons/io";
-import {Tooltip} from "react-tooltip";
+import { Tooltip } from "react-tooltip";
 
 interface ProfileModalProps {
   userId: string;
 }
+
+
 // 프로필 사진 업데이트 함수
-const updateProfilePicture = async (userId: string, file: File) => {
-  const formData = new FormData();
-  formData.append('profilePictureFile', file);
-
-  const response = await fetch(`/api/profile/${userId}`, {
-    method: 'POST',
-    body: formData,
-  });
-
-  if (!response.ok) {
-    throw new Error('프로필 사진 업데이트 실패');
-  }
-
-  return response.json();
-};
-
 
 const ProfileModal = ({ userId }: ProfileModalProps) => {
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
   const [file, setFile] = useState<File | null>(null);
-
   const fileInputRef = useRef(null);
 
+  const handleFileUpload = async (userId: string, file: File): Promise<any> => {
+    const formData = new FormData();
+    formData.append("profilePictureFile", file);
+  
+    try {
+      const response = await fetch(`/api/profile/${userId}`, {
+        method: "POST",
+        body: formData
+      });
+  
+      if (!response.ok) {
+        throw new Error("Failed to upload profile picture");
+      }
+  
+      const data: any = await response.json();
+      console.log("Upload successful:", data);
+      return data;
+    } catch (error) {
+      console.error("Error uploading profile picture:", error);
+      throw error;
+    }
+  };
   const handleFileInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const selectedFile = event.target.files?.[0];
     if (selectedFile) {
@@ -39,18 +46,18 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       console.log("File selected:", selectedFile);
     }
   };
+
   const handleProfileSubmit = async () => {
     if (file) {
       try {
-        await updateProfilePicture(userId, file);
-        alert('프로필 사진이 성공적으로 업데이트되었습니다.');
+        await handleFileUpload(userId, file);
+        alert("프로필 사진이 성공적으로 업데이트되었습니다.");
       } catch (error) {
-        console.error('프로필 사진 업데이트 오류:', error);
-        alert('프로필 사진 업데이트에 실패했습니다.');
+        console.error("프로필 사진 업데이트 오류:", error);
+        alert("프로필 사진 업데이트에 실패했습니다.");
       }
     }
   };
-
 
   return (
     <>
@@ -77,18 +84,16 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
             <>
               <ModalBody>
                 <label htmlFor="hiddenFileInput">📷 프로필 사진 변경</label>
-                <input
-                  onChange={handleFileInputChange}
-                  type="file"
-                  ref={fileInputRef}
-                  id="hiddenFileInput"
-                />
+                <input onChange={handleFileInputChange} type="file" ref={fileInputRef} id="hiddenFileInput" />
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" variant="light" onPress={onClose}>
                   닫기
                 </Button>
-                <Button className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg" onPress={handleProfileSubmit}>
+                <Button
+                  className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg"
+                  onPress={handleProfileSubmit}
+                >
                   확인
                 </Button>
               </ModalFooter>
@@ -100,6 +105,4 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
   );
 };
 
-
 export default ProfileModal;
-
