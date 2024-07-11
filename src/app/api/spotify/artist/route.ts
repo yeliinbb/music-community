@@ -21,8 +21,6 @@ import { NextRequest, NextResponse } from "next/server";
 //   }
 // };
 
-const ARTIST_IDS = ['68ym0sOo7MazZxScbm1wtI', '2GEPtT5RDxrmdi0A4mbDi7', '7gSVTyMFvcvwb6JUAJzLb2', '0LigV2SSsRZaeX2htEFXV9'];
-
 
 export const GET = async () => {
   try {
