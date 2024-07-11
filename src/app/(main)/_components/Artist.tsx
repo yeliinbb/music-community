@@ -4,14 +4,12 @@ import React from "react";
 // import axios from "axios";
 
 import { useQuery } from "@tanstack/react-query";
-import ProfileModal from "@/components/ProfileModal";
 
-import Slider, { CustomArrowProps } from "react-slick";
+import Slider,  { CustomArrowProps } from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 import type { SpotifyArtist } from "@/types/spotify.type";
-
 
 const Artist = () => {
   //   const {
@@ -92,7 +90,6 @@ const Artist = () => {
   return (
     <div className="w-[700px]">
       <p className="font-bold mb-5">아티스트</p>
-      <ProfileModal />
       <div className="custom-slider ml-9">
         <Slider {...settings}>
           {artistData.map((artist) => (
