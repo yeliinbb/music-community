@@ -7,7 +7,7 @@ import axios from "axios";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-const editPost = async ({ title, content }: { title: string; content: string }) => {
+const editPost = async ({ id, title, content }: { id: string; title: string; content: string }) => {
   const supabase = createClient();
   const { error } = await supabase.from("posts").update({ title, content });
   if (error) {
@@ -22,12 +22,21 @@ const Post = ({ id }: { id: string }) => {
   const contentRef = useRef<HTMLTextAreaElement>(null);
   const queryClient = useQueryClient();
 
-  const { data, error } = useQuery<PostType | null, Error>({
-    queryKey: ["posts"],
+  const { data, error } = useQuery<PostType, Error>({
+    queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
       console.log(data);
       return data;
+    }
+  });
+
+  const editMutation = useMutation({
+    mutationFn: editPost,
+    onSuccess: () => {
+      setIsEditing(false);
+      alert("수정되었습니다!");
+      queryClient.invalidateQueries({ queryKey: ["posts"] });
     }
   });
 
@@ -49,21 +58,12 @@ const Post = ({ id }: { id: string }) => {
     setIsEditing(true);
   };
 
-  const editMutation = useMutation({
-    mutationFn: editPost,
-    onSuccess: () => {
-      setIsEditing(false);
-      alert("수정되었습니다!");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
-  });
-
   const onEdit = async (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
-    const title = titleRef.current?.value;
-    const content = contentRef.current?.value;
+    const title: string = titleRef.current?.value;
+    const content: string = contentRef.current?.value;
 
-    editMutation.mutate({ title, content });
+    editMutation.mutate({ id, title, content });
   };
 
   return (
