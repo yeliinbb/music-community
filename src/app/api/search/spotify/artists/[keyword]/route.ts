@@ -5,7 +5,7 @@ interface Context {
   params: { keyword: string };
 }
 
-const OFFSET = 8;
+const OFFSET = 10;
 
 export async function GET(req: NextRequest, context: Context) {
   const url = new URL(req.url);
@@ -24,7 +24,7 @@ export async function GET(req: NextRequest, context: Context) {
 
   try {
     const response = await fetch(
-      `https://api.spotify.com/v1/search?q=${keyword}&type=artist&market=KR&limit=8&offset=${offset}`,
+      `https://api.spotify.com/v1/search?q=${keyword}&type=artist&market=KR&limit=10&offset=${offset}`,
       {
         headers: {
           "content-type": "application/x-www-form-urlencoded",

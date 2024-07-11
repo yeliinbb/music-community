@@ -53,7 +53,8 @@ const Artist = ({ params }: ArtistProps) => {
   const {
     data: artistData,
     isLoading,
-    error: artistError
+    error: artistError,
+    isSuccess
   } = useQuery({
     queryKey: ["artist", params.id],
     queryFn: () => fetchArtist(params.id)
@@ -86,26 +87,29 @@ const Artist = ({ params }: ArtistProps) => {
     <>
       <div className="m-4">아티스트</div>
       <div className="flex items-center space-x-4">
-        <Image
-          src={artistData.images[0].url}
-          alt="이미지"
-          width={500}
-          height={500}
-          className=" object-cover rounded-lg shadow-lg"
-        />
-
-        <div className="flex flex-col">
-          <div className="font-bold text-xl">{artistData.name}</div>
-          <div className="text-gray-600">{artistData.genres[0]}</div>
-          <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
-          <button onClick={onChangeLiked}>
-            {like ? (
-              <Image src="/heart.svg" alt="플러스" width={40} height={40} />
-            ) : (
-              <Image src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
-            )}
-          </button>
-        </div>
+        {isSuccess && (
+          <>
+            <Image
+              src={artistData.images[0].url}
+              alt="이미지"
+              width={500}
+              height={500}
+              className=" object-cover rounded-lg shadow-lg"
+            />
+            <div className="flex flex-col">
+              <div className="font-bold text-xl">{artistData.name}</div>
+              <div className="text-gray-600">{artistData.genres[0]}</div>
+              <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
+              <button onClick={onChangeLiked}>
+                {like ? (
+                  <Image src="/heart.svg" alt="플러스" width={40} height={40} />
+                ) : (
+                  <Image src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
+                )}
+              </button>
+            </div>
+          </>
+        )}
       </div>
     </>
   );

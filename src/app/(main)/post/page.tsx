@@ -57,21 +57,13 @@ const DetailPage = () => {
         console.log(error);
       }
     }
-
-    router.push("/my"); // 이거 마이페이지로 이동해야됨 ~
+    router.push("/my");
   };
-
-  //   const mutation = useMutation({
-  //     mutationFn: submitFun,
-  //     onSuccess:()=>{
-
-  //     }
-  //   });
 
   return (
     <div className="flex flex-col p-10 w-4/5 h-[700px] border-2 border-gray-400 bg-white rounded-lg relative gap-y-2">
       <input
-        className=" border-b border-black mb-4 indent-2.5 h-10 w-10/12 mx-auto outline-none"
+        className="border-b border-black mb-4 indent-2.5 h-10 w-10/12 mx-auto outline-none"
         type="text"
         placeholder="제목을 입력하세요!"
         ref={titleRef}
