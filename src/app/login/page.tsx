@@ -28,7 +28,6 @@ const Login = () => {
     });
 
     const data = await response.json();
-   // console.log('무슨 데이터???', data.user.id);
 
     if (!data.errorMsg) {
       alert("로그인 성공!");
