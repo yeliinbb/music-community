@@ -12,6 +12,8 @@ export const metadata: Metadata = {
   description: "뮤직 커뮤니티에서 음악을 공유하고, 좋아하는 음악을 발견해보세요."
 };
 
+//TODO search route 경로 한번 정리해야함.
+
 export default async function MyPage() {
   const queryClient = new QueryClient();
   await queryClient.prefetchQuery({ queryKey: ["myPosts"], queryFn: () => api.me.getMyPosts() });
