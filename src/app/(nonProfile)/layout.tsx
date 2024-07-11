@@ -1,9 +1,7 @@
 import Footer from "@/components/Footer";
 import Header from "@/components/Header";
-
-import NavigationBar from "@/components/NavigationBar";
 import { PropsWithChildren } from "react";
-import Profile from "./_components/Profile";
+import NavigationBar from "../../components/NavigationBar";
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
@@ -12,11 +10,8 @@ const MainLayout = ({ children }: PropsWithChildren) => {
         <div className="grid place-items-center flex-1 bg-[#D9D9D9] rounded-3xl w-[1280px] relative shadow-xl">
           <Header />
           <NavigationBar />
-          <section className="w-full h-[800px] grid grid-cols-main-layout gap-8 px-10 pb-10">
-            <Profile />
-            <div className="w-full bg-white p-[20px] rounded-xl overflow-y-scroll scrollbar-hide scroll-smooth">
-              {children}
-            </div>
+          <section className="w-full h-[800px] grid px-10 pb-10">
+            <div className="w-full bg-white p-[20px] rounded-xl overflow-y-scroll scrollbar-hide">{children}</div>
           </section>
         </div>
         <div className="grid place-items-end">

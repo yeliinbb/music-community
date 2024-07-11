@@ -1,38 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useLoginStore } from "@/store/auth";
 
-const Signup = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [nickname, setNickname] = useState("");
+  const { login, setUserId } = useLoginStore();
   const router = useRouter();
 
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (!email || !password || !nickname) {
-      alert("모든 필드를 입력해주세요.");
+    if (!email || !password) {
+      alert("이메일과 비밀번호를 입력해주세요.");
       return;
     }
 
-    const response = await fetch("/api/signUp", {
+    const response = await fetch("/api/login", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
       },
-      body: JSON.stringify({ email, password, nickname })
+      body: JSON.stringify({ email, password })
     });
 
     const data = await response.json();
 
     if (!data.errorMsg) {
-      alert("회원가입이 성공적으로 완료되었습니다!");
-      router.replace("/login");
+      alert("로그인 성공!");
+      login();
+      setUserId(data.user.id);
+      router.replace("/");
     } else {
-      alert(`회원가입 에러: ${data.errorMsg}`);
+      alert(`로그인 에러: ${data.errorMsg}`);
     }
   };
 
@@ -41,21 +44,9 @@ const Signup = () => {
       <div className="flex justify-center items-center min-h-screen">
         <div className="w-full max-w-lg bg-[#d9d9d9] p-8 shadow-md rounded-lg">
           <div className="text-center mb-8">
-            <h2 className="mt-4 text-2xl font-bold text-black-200">Welcome!</h2>
+            <h2 className="mt-4 text-2xl font-bold text-black-200">Welcome back!</h2>
           </div>
-          <form onSubmit={handleSignup}>
-            <div className="mb-6">
-              <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="nickname">
-                UserName
-              </label>
-              <input
-                type="text"
-                name="nickname"
-                value={nickname}
-                onChange={(e) => setNickname(e.target.value)}
-                className="w-full px-3 py-2 bg-[#d9d9d9] border-b-2 border-black focus:outline-none focus:border-[#54b2d3]"
-              />
-            </div>
+          <form onSubmit={handleLogin}>
             <div className="mb-6">
               <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="email">
                 Email
@@ -81,20 +72,20 @@ const Signup = () => {
               />
             </div>
             <div className="flex justify-between items-center">
-              <Link href="/login">
-                <button
-                  type="button"
-                  className="ml-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
-                >
-                  Back
-                </button>
-              </Link>
               <button
                 type="submit"
-                className="mr-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
+                className="ml-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
               >
-                SignUp
+                Login
               </button>
+              <Link href="/signup">
+                <button
+                  type="button"
+                  className="mr-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
+                >
+                  SignUp
+                </button>
+              </Link>
             </div>
           </form>
         </div>
@@ -103,4 +94,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default Login;

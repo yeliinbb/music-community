@@ -2145,12 +2145,10 @@
   dependencies:
     tslib "^2.4.0"
 
-
 "@tanstack/query-core@5.51.1":
   version "5.51.1"
   resolved "https://registry.yarnpkg.com/@tanstack/query-core/-/query-core-5.51.1.tgz#55049ef0252c7d29de05e8219fd19b679509270e"
   integrity sha512-fJBMQMpo8/KSsWW5ratJR5+IFr7YNJ3K2kfP9l5XObYHsgfVy1w3FJUWU4FT2fj7+JMaEg33zOcNDBo0LMwHnw==
-
 
 "@tanstack/query-devtools@5.51.1":
   version "5.51.1"
