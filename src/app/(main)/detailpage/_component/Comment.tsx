@@ -1,11 +1,28 @@
 "use client";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
+  const [loginUser, setLoginUser] = useState("");
+
+  useEffect(() => {
+    const user = async () => {
+      const supabase = createClient();
+      const {
+        data: { session }
+      } = await supabase.auth.getSession();
+
+      if (!session) {
+        return;
+      }
+      const userId = session.user.id;
+      setLoginUser(userId);
+    };
+    user();
+  }, []);
 
   const { data: commentList } = useQuery({
     queryKey: ["comments"],
@@ -42,7 +59,7 @@ const Comment = ({ id }: { id: string }) => {
       return;
     }
 
-    const newComment = { content: comment, postId: id, userId: "37a68d71-1c40-4a40-b21f-cb49d28ce82c" }; // userId 바꾸기
+    const newComment = { content: comment, postId: id, userId: loginUser }; // userId 바꾸기
     createComment(newComment);
   };
 

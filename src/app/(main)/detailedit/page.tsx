@@ -22,7 +22,7 @@ const DetailPage = () => {
         console.log(error);
       }
     }
-    router.push("/"); // 이거 마이페이지로 이동해야됨 ~
+    router.push("/my");
   };
 
   //   const mutation = useMutation({

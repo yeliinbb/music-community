@@ -52,19 +52,16 @@ export type Database = {
         Row: {
           artistId: string | null
           id: string
-          liked: boolean | null
           userId: string | null
         }
         Insert: {
           artistId?: string | null
           id?: string
-          liked?: boolean | null
           userId?: string | null
         }
         Update: {
           artistId?: string | null
           id?: string
-          liked?: boolean | null
           userId?: string | null
         }
         Relationships: [
@@ -156,19 +153,19 @@ export type Database = {
           email: string | null
           id: string
           nickname: string | null
-          password: string | null
+          profileUrl: string | null
         }
         Insert: {
           email?: string | null
           id: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Update: {
           email?: string | null
           id?: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Relationships: [
           {

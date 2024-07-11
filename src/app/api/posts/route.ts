@@ -11,7 +11,7 @@ export const POST = async (request: Request) => {
   const supabase = createClient();
   try {
     const { title, content } = (await request.json()) as Post;
-    const { data, error } = await supabase.from("posts").insert({
+    const { error } = await supabase.from("posts").insert({
       title,
       content
     });
