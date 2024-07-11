@@ -1,11 +1,15 @@
 "use client";
 
-import { createClient } from "@/utils/supabase/client";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+
 interface ArtistProps {
   params: { id: string };
+}
+
+interface EditLikeParams {
+  id: string;
+  isDelete: boolean;
 }
 
 const fetchArtist = async (id: string) => {
@@ -15,9 +19,37 @@ const fetchArtist = async (id: string) => {
   return data;
 };
 
+const likeState = async (id: string) => {
+  console.log(id);
+  const res = await fetch(`/api/artist/likes/${id}`);
+  const likeData = await res.json();
+
+  console.log(likeData);
+  return likeData;
+};
+
+const editLike = async ({ id, isDelete }: EditLikeParams) => {
+  console.log(id);
+  if (isDelete) {
+    const res = await fetch(`/api/artist/likes/${id}`, {
+      method: "DELETE"
+    });
+  } else {
+    const res = await fetch(`/api/artist/likes/${id}`, {
+      method: "POST",
+      //여기 부분에 왜 이걸 넣어야 하는지 말 모르겠어요 JSON 형식의 데이터라서 그런거라는데 맞나요???
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ artistId: id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" })
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP error! status: ${res.status}`);
+    }
+  }
+};
+
 const Artist = ({ params }: ArtistProps) => {
-  const supabase = createClient();
-  const [like, setLike] = useState<boolean | null>(false);
+  const queryclient = useQueryClient();
 
   const {
     data: artistData,
@@ -28,36 +60,16 @@ const Artist = ({ params }: ArtistProps) => {
     queryFn: () => fetchArtist(params.id)
   });
 
-  useEffect(() => {
-    const likeState = async () => {
-      const { data: likeData, error: likeError } = await supabase
-        .from("likes")
-        .select("*")
-        .match({ artistId: params.id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" });
+  const { data: like } = useQuery({ queryKey: ["artistLike"], queryFn: () => likeState(params.id) });
 
-      if (likeData && likeData.length) {
-        setLike(true);
-      } else {
-        setLike(false);
-      }
-
-      console.log(likeData);
-    };
-    likeState();
-  }, [params.id]);
+  const { mutateAsync: editLikeMutate } = useMutation<void, Error, EditLikeParams>({
+    mutationFn: async (mutationParam: EditLikeParams): Promise<void> => editLike(mutationParam)
+  });
 
   const onChangeLiked = async () => {
     try {
-      if (like) {
-        await supabase
-          .from("likes")
-          .delete()
-          .match({ artistId: params.id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" });
-        setLike(false);
-      } else {
-        await supabase.from("likes").insert({ artistId: params.id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" });
-        setLike(true);
-      }
+      await editLikeMutate({ id: params.id, isDelete: like ? true : false });
+      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
     } catch (error) {
       console.error(error);
     }
