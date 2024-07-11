@@ -1,7 +1,7 @@
-import React, { PropsWithChildren } from "react";
 import Header from "@/components/Header";
-import Profile from "./_components/Profile";
+import React, { PropsWithChildren } from "react";
 import NavigationBar from "@/components/NavigationBar";
+import Profile from "./_components/Profile";
 
 const MainLayout = ({ children }: PropsWithChildren) => {
   return (
