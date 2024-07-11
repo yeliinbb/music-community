@@ -123,7 +123,7 @@ const Playlists = () => {
                           ) : (
                             <>
                               <button
-                                className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-none"
+                                className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-default"
                                 disabled
                                 data-tooltip-id="플레이버튼"
                                 data-tooltip-content="미리 듣기를 지원하지 않는 곡입니다."
