@@ -3,6 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import React from "react";
 import { HiMiniPlay } from "react-icons/hi2";
+import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
 
 interface TrackProps {
