@@ -105,7 +105,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
         classNames={{
           body: "py-6",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-          base: "border-[#292f46] bg-[#66b3cf] text-black",
+          base: "border-[#292f46] bg-[#66b3cf] text-black rounded-lg",
           header: "border-b-[1px] border-[#292f46]",
           footer: "border-t-[1px] border-[#292f46]",
           closeButton: "hover:bg-white/5 active:bg-white/10"
@@ -115,11 +115,13 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
           {(onClose) => (
             <>
               <ModalBody>
-                <label htmlFor="hiddenFileInput">📷 프로필 사진 변경</label>
-                <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" />
-              </ModalBody>
-              <ModalFooter>
-                <Button variant="light" onPress={onClose}>
+                <div>
+                <p className="text-xl font-bold">📷 프로필 사진 변경하기</p>
+                <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5"/>
+                <div className="flex flex-row justify-end gap-x-5 mt-5">
+                <Button 
+                  className="bg-gray-300 rounded-lg"
+                variant="light" onPress={onClose}>
                   닫기
                 </Button>
                 <Button
@@ -128,7 +130,9 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
                 >
                   확인
                 </Button>
-              </ModalFooter>
+                </div>
+                </div>
+              </ModalBody>
             </>
           )}
         </ModalContent>
