@@ -3,12 +3,13 @@
 import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import SearchArtistsSkeleton from "./SearchArtistsSkeleton";
 
 export default function SearchArtists() {
   const obsRef = useRef<HTMLDivElement>(null);
   const { artists, artistsIsFetching, artistsHasNextPage, artistsFetchNextPage } = useSearch();
   const length = artists?.length ?? 41;
-  console.log("SPOTIFY ARTISTS DATA___", artists);
+  // console.log("SPOTIFY ARTISTS DATA___", artists);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -63,8 +64,14 @@ export default function SearchArtists() {
                 </div>
               </li>
             ))}
+            {artistsIsFetching &&
+              Array.from({ length: 8 }).map((_, idx) => (
+                <li key={idx} className="animate-pulse transition select-none">
+                  <SearchArtistsSkeleton />
+                </li>
+              ))}
             {!artistsIsFetching && length! < 40 && artistsHasNextPage && (
-              <div ref={obsRef} className="bg-red-500 w-10 flex-shrink-0" />
+              <div ref={obsRef} className="w-10 flex-shrink-0" />
             )}
           </ul>
         </div>

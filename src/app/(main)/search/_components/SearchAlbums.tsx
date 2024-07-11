@@ -3,6 +3,7 @@
 import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
 import { useEffect, useRef } from "react";
+import SearchAlbumsSkeleton from "./SearchAlbumsSkeleton";
 
 export default function SearchAlbums() {
   const obsRef = useRef<HTMLDivElement>(null);
@@ -62,12 +63,18 @@ export default function SearchAlbums() {
                 <div>
                   <p className="text-[9px] text-gray-400">{item.release_date.split("-")[0]}</p>
                   <p className="line-clamp-1 text-xs font-bold">{item.name}</p>
-                  <p className="flex gap-2 text-xs">{item.artists[0].name}</p>
+                  <p className="line-clamp-1 text-[10px]">{item.artists[0].name}</p>
                 </div>
               </li>
             ))}
+            {albumsIsFetching &&
+              Array.from({ length: 8 }).map((_, idx) => (
+                <li key={idx} className="animate-pulse transition select-none">
+                  <SearchAlbumsSkeleton />
+                </li>
+              ))}
             {!albumsIsFetching && length! < 40 && albumsHasNextPage && (
-              <div ref={obsRef} className="bg-red-500 w-10 flex-shrink-0" />
+              <div ref={obsRef} className="w-10 flex-shrink-0" />
             )}
           </ul>
         </div>
