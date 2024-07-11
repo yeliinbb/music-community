@@ -1,14 +1,14 @@
 "use client";
+import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 import { SpotifyPlaylistTracks, SpotifyTrack } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { useRef, useState } from "react";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import Slider from "react-slick";
 import Image from "next/image";
+import { useRef, useState } from "react";
+import Slider from "react-slick";
 import "react-tooltip/dist/react-tooltip.css";
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
 import Track from "../../_components/Track";
 
 const Playlists = () => {
@@ -78,7 +78,7 @@ const Playlists = () => {
                       alt={currentTrack?.name || playlist.tracks[0].name}
                       className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow-custom"
                     />
-                    <ul className="flex flex-wrap w-fit gap-2 my-0 mx-auto">
+                    <ul className="grid grid-cols-2 gap-2 ">
                       {playlist.tracks.map((track) => (
                         <Track key={track.id} track={track} audioRef={audioRef} playTrack={playTrack} />
                       ))}

@@ -2,9 +2,9 @@
 import { SpotifyFeaturedPlaylist } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import React, { use, useEffect, useState } from "react";
-import Link from "next/link";
 import Image from "next/image";
+import Link from "next/link";
+import { useEffect, useState } from "react";
 
 const Trending = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
@@ -39,10 +39,10 @@ const Trending = () => {
   }, [featuredPlaylists]);
 
   return (
-    <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px] min-w-[350px]">
+    <div className="w-full flex flex-col p-2 gap-y-2">
       {isSuccess && (
         <>
-          <h2>Featured Playlists</h2>
+          <span className="text-sm text-gray-400">플레이 리스트</span>
           {selectedPlaylist?.imageUrl ? (
             <Image
               src={selectedPlaylist.imageUrl || ""}
@@ -53,7 +53,7 @@ const Trending = () => {
             />
           ) : null}
 
-          <div className="flex flex-col items-center gap-2">
+          <div className="flex flex-col text-sm gap-2">
             <p className="h-[15px]">{selectedPlaylist.name}</p>
             <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
               <p className="h-[15px] hover:underline">바로가기</p>

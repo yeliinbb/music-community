@@ -1,20 +1,21 @@
-'use client';
+"use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import React, { PropsWithChildren } from "react";
 
-interface ButtonProps extends PropsWithChildren {
-  href: string;
-}
+import { PropsWithChildren } from "react";
 
-const Button = ({ children, href }: ButtonProps) => {
-  const pathname = usePathname();
-  const isPath = pathname === href;
+type NavButtonType = {
+  path: string;
+};
 
+const Button = ({ children, path }: PropsWithChildren<NavButtonType>) => {
   return (
-    <Link href={href}>
-      <button className={`w-[150px] ${isPath ? 'bg-[#989898]' : 'bg-white' } text-black hover:bg-[#989898] active:bg-[#989898] py-[13px] px-[5px] rounded-xl border-solid border-black border-[1.5px]`}>
+    <Link href={`${path}`}>
+      <button
+        className="shadow-lg w-[150px]
+       bg-white text-black hover:bg-[#989898]
+        active:bg-[#989898] py-[13px] px-[5px] rounded-xl border-solid border-black border-[1.5px]"
+      >
         {children}
       </button>
     </Link>
