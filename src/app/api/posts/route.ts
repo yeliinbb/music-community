@@ -1,19 +1,21 @@
-import { Request } from "./../../../../node_modules/node-fetch/@types/index.d";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
+import { Request } from "./../../../../node_modules/node-fetch/@types/index.d";
 
 interface Post {
   title: string;
   content: string;
+  imageURL: string;
 }
 
 export const POST = async (request: Request) => {
   const supabase = createClient();
   try {
-    const { title, content } = (await request.json()) as Post;
+    const { title, content, imageURL } = (await request.json()) as Post;
     const { data, error } = await supabase.from("posts").insert({
       title,
-      content
+      content,
+      imageURL
     });
     if (error) {
       return NextResponse.json({ error: "등록실패", message: error }, { status: 500 });

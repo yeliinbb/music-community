@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
-import React, { PropsWithChildren } from "react";
-import NavigationBar from "@/components/NavigationBar";
+import { PropsWithChildren } from "react";
+import NavigationBar from "./_components/NavigationBar";
 import Profile from "./_components/Profile";
 
 
