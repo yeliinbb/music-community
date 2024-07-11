@@ -81,7 +81,7 @@ const Post = ({ id }: { id: string }) => {
     if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
       try {
         deleteMutation.mutate(id);
-        router.push("/");
+        router.push("/my");
         console.log("삭제가 완료되었습니다.");
       } catch (error) {
         console.error("삭제 중 오류 발생", error);
