@@ -13,11 +13,14 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
       },
       gridTemplateColumns: {
-        "main-layout": "1.5fr 4fr",
+        "main-layout": "350px 4fr",
         "profile-layout": "repeat(2, 1fr)"
+      },
+      boxShadow: {
+        custom: "0 0 10px 3px rgba(116, 116, 116, 0.3)"
       }
     }
   },
-  plugins: []
+  plugins: [require("tailwind-scrollbar-hide")]
 };
 export default config;

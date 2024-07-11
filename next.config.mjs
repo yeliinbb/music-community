@@ -6,12 +6,20 @@ const nextConfig = {
         hostname: "i.scdn.co"
       },
       {
+        hostname: "fjudnzlhchschbqcanpw.supabase.co"
+      },
+      {
         hostname: "via.placeholder.com"
       },
       {
         protocol: "https",
         hostname: "cdn-icons-png.flaticon.com",
         pathname: "/256/25/**"
+      },
+      {
+        protocol: "https",
+        hostname: "i.scdn.co",
+        pathname: "/image/**"
       }
     ]
   }

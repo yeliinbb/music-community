@@ -41,6 +41,7 @@ export type SpotifyTrack = {
   id: string;
   name: string;
   preview_url: string | null;
+  duration_ms: number;
   external_urls: {
     spotify: string;
   };
@@ -63,11 +64,14 @@ export type SpotifyPlaylistTracks = {
   };
   tracks: SpotifyTrack[];
 };
+
+export type SpotifyAlbums = {
+  items: TracksItems[];
+  total: number;
+}[];
+
 export interface SpotifySearchResults {
-  albums: {
-    items: TracksItems[];
-    total: number;
-  };
+  albums: SpotifyAlbums;
   artists: {
     items: ArtistsItems[];
     total: number;

@@ -1,32 +1,41 @@
 import { getAccessToken } from "@/lib/spotify";
+import getPlaylistIdList from "@/lib/utils/getPlaylistIdList";
 import { SpotifyPlaylist, SpotifyTrack, SpotifyPlaylistTracks } from "@/types/spotify.type";
 import axios from "axios";
 import { NextResponse } from "next/server";
 
 // 예시 id 가져와야함.
-const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"];
+export const PLAYLIST_IDS = ["56AF0dTLXpcrAYfJhMSAdt", "1Owx9OwxqogNfpSu8yIWKx"];
 
 export const GET = async () => {
+  // const {searchParams} = new URL(request.url)
   const accessToken = await getAccessToken();
+  const playlistsIds = await getPlaylistIdList();
+  // console.log(playlistsIds);
   if (!accessToken) {
     console.error("Access token is missing");
     return NextResponse.json({ error: "Access token is missing" }, { status: 500 });
   }
   try {
     const playlistsWithTracks = await Promise.all(
-      PLAYLIST_IDS.map(async (playlistId) => {
+      playlistsIds.map(async (playlistId) => {
         try {
           const [playlistResponse, tracksResponse] = await Promise.all([
             axios.get<SpotifyPlaylist>(`https://api.spotify.com/v1/playlists/${playlistId}`, {
-              headers: { Authorization: `Bearer ${accessToken}` }
+              headers: { Authorization: `Bearer ${accessToken}` },
+              params: {
+                locale: "ko_KR"
+              }
             }),
             axios.get<{ items: { track: SpotifyTrack }[] }>(
               `https://api.spotify.com/v1/playlists/${playlistId}/tracks`,
               {
                 headers: { Authorization: `Bearer ${accessToken}` },
                 params: {
-                  fields: "items(track(id,name,preview_url,external_urls,artists(id,name),album(id,name,images)))",
-                  limit: 8
+                  fields:
+                    "items(track(id,name,preview_url,external_urls,duration_ms,artists(id,name),album(id,name,images)))",
+                  limit: 8,
+                  locale: "ko_KR"
                 }
               }
             )
@@ -40,7 +49,7 @@ export const GET = async () => {
             },
             tracks: tracksResponse.data.items.map((item) => ({
               ...item.track,
-              preview_url: item.track.preview_url ?? "none",
+              preview_url: item.track.preview_url ?? "none", // ?? :    왼쪽 값이 null 이나 undefined 인 경우에만 오른쪽 값을 반환하는 연산자
               external_urls: {
                 spotify: item.track.external_urls.spotify
               }
