@@ -58,7 +58,14 @@ const Post = ({ id }: { id: string }) => {
         const title: PostType["title"] = titleRef.current?.value;
         const content: PostType["content"] = contentRef.current?.value;
         if (title !== undefined && content !== undefined) {
-          const editedPost = { ...post, title: title, content: content };
+          const editedPost: PostType = {
+            id: id,
+            title: title,
+            content: content,
+            created_at: post?.created_at ?? "",
+            imageURL: post?.imageURL ?? "",
+            userId: userId || null
+          };
           editMutation.mutate(editedPost);
         }
       }
@@ -75,7 +82,7 @@ const Post = ({ id }: { id: string }) => {
     if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
       try {
         deleteMutation.mutate(id);
-        router.push("/");
+        router.push("/my");
         console.log("삭제가 완료되었습니다.");
       } catch (error) {
         console.error("삭제 중 오류 발생", error);
