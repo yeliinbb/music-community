@@ -10,12 +10,6 @@ const ProfileModal = () => {
   const fileInputRef = useRef(null);
 
   const handleFileInputChange = async (file) => {
-    // try {
-    //   await api.user.updateUserProfile(userId, file);
-    //   await fetchUserProfilePicture();
-    // } catch (error) {
-    //   console.error('프로필 사진 업로드 및 사용자 데이터 업데이트 오류:', error.message);
-    // }
     console.log("inputchange");
   };
   console.log('first')
@@ -34,7 +28,7 @@ const ProfileModal = () => {
         classNames={{
           body: "py-6",
           backdrop: "bg-[#292f46]/50 backdrop-opacity-40",
-          base: "border-[#292f46] bg-[#19172c] dark:bg-[#19172c] text-[#a8b0d3]",
+          base: "border-[#292f46] bg-[#66b3cf] dark:bg-[#19172c] text-black",
           header: "border-b-[1px] border-[#292f46]",
           footer: "border-t-[1px] border-[#292f46]",
           closeButton: "hover:bg-white/5 active:bg-white/10"
@@ -44,7 +38,7 @@ const ProfileModal = () => {
           {(onClose) => (
             <>
               <ModalBody>
-                <label htmlFor="hiddenFileInput">프로필 사진 변경</label>
+                <label htmlFor="hiddenFileInput">📷 프로필 사진 변경</label>
                 <input
                   onChange={(e) => handleFileInputChange(e.target.files[0])}
                   type="file"
@@ -54,10 +48,10 @@ const ProfileModal = () => {
               </ModalBody>
               <ModalFooter>
                 <Button color="primary" variant="light" onPress={onClose}>
-                  Close
+                  닫기
                 </Button>
-                <Button className="bg-[#6f4ef2] shadow-lg shadow-indigo-500/20" onPress={onClose}>
-                  Action
+                <Button className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg" onPress={onClose}>
+                  확인
                 </Button>
               </ModalFooter>
             </>
