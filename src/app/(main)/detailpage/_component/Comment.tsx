@@ -9,8 +9,7 @@ const Comment = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const [loginUser, setLoginUser] = useState("");
   const userId = useLoginStore((state) => state.userId);
-  console.log('코멘트;',userId);
-
+  console.log("코멘트;", userId);
   // useEffect(() => {
   //   const user = async () => {
   //     const supabase = createClient();
