@@ -6,6 +6,9 @@ const nextConfig = {
         hostname: "i.scdn.co"
       },
       {
+        hostname: "fjudnzlhchschbqcanpw.supabase.co"
+      },
+      {
         hostname: "via.placeholder.com"
       },
       {
