@@ -7,6 +7,8 @@ import { MdOutlineMail } from "react-icons/md";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
 import { useLoginStore } from "@/store/auth";
+import {Tooltip} from "react-tooltip";
+import Trending from "../playlists/_components/Trending";
 
 const Profile = () => {
   const userId = useLoginStore((state) => state.userId);

@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
 import { IoIosSettings } from "react-icons/io";
+import {Tooltip} from "react-tooltip";
 
 interface ProfileModalProps {
   userId: string;
@@ -98,7 +99,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
     </>
   );
 };
-};
+
 
 export default ProfileModal;
 
