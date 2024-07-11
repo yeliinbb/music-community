@@ -1,4 +1,5 @@
 "use client";
+
 import React from "react";
 import Link from "next/link";
 import ProfileModal from "@/components/ProfileModal";
@@ -7,9 +8,11 @@ import { Tooltip } from "react-tooltip";
 import { MdOutlineMail } from "react-icons/md";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
+import { useLoginStore } from "@/store/auth";
 
 const Profile = () => {
-  const userId = "ce36f4d0-624c-43fd-adee-fe9d61d18a67";
+  const userId = useLoginStore((state) => state.userId);
+
   const { data: userProfileData, isPending, error } = useQuery({
     queryKey: ["userData", userId],
     queryFn: async ({ queryKey }) => {
@@ -29,14 +32,18 @@ const Profile = () => {
       <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
         <div>
           <span className="mr-1.5">마이 프로필</span>
-          <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" />
+          <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
-        <img
+        {
+          userProfileData ? <img src={userProfileData.profileUrl ?? "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"} alt='사용자 프로필 이미지' className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center" /> : 
+          <img
           src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
           alt="profile image"
           className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
         />
+        }
+        
         {/* {수파베이스에서 데이터 가져오기} */}
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-center gap-1.5 flex-row">
