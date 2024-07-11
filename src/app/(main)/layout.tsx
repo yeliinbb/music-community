@@ -1,6 +1,6 @@
 import Header from "@/components/Header";
-import { PropsWithChildren } from "react";
-import NavigationBar from "./_components/NavigationBar";
+import React, { PropsWithChildren } from "react";
+import NavigationBar from "@/components/NavigationBar";
 import Profile from "./_components/Profile";
 
 const MainLayout = ({ children }: PropsWithChildren) => {
@@ -10,7 +10,9 @@ const MainLayout = ({ children }: PropsWithChildren) => {
       <NavigationBar />
       <section className="w-full h-full grid grid-cols-main-layout gap-8 pt-[100px] pb-[60px] px-[60px]">
         <Profile />
-        <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide">{children}</div>
+        <div className="w-full bg-white p-[30px] rounded-2xl overflow-y-scroll scrollbar-hide scroll-smooth">
+          {children}
+        </div>
       </section>
     </main>
   );

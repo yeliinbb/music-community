@@ -7,9 +7,9 @@ import axios from "axios";
 import Image from "next/image";
 import { useRef, useState } from "react";
 
-const editPost = async ({ id, title, content }: { id: string; title: string; content: string }) => {
+const editPost = async ({ id, title, content }: PostType) => {
   const supabase = createClient();
-  const { error } = await supabase.from("posts").update({ title, content });
+  const { error } = await supabase.from("posts").update({ title, content }).eq('id', id);
   if (error) {
     throw new Error(error.message);
   }
@@ -18,15 +18,20 @@ const editPost = async ({ id, title, content }: { id: string; title: string; con
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const titleRef = useRef<HTMLInputElement>(null);
-  const contentRef = useRef<HTMLTextAreaElement>(null);
+  const titleRef = useRef<HTMLInputElement | null>(null);
+  const contentRef = useRef<HTMLTextAreaElement | null>(null);
   const queryClient = useQueryClient();
 
-  const { data, error } = useQuery<PostType, Error>({
+  const {
+    data: post,
+    error,
+    isPending,
+    isSuccess
+  } = useQuery<PostType, Error>({
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
-      console.log(data);
+      console.log("posts", data);
       return data;
     }
   });
@@ -40,10 +45,6 @@ const Post = ({ id }: { id: string }) => {
     }
   });
 
-  if (error) {
-    return <div>불러오기 실패</div>;
-  }
-
   const enableEditing = async () => {
     const supabase = createClient();
     const {
@@ -51,24 +52,33 @@ const Post = ({ id }: { id: string }) => {
     } = await supabase.auth.getSession();
     const userId = session?.user.id;
 
-    if (userId !== data?.userId) {
+    if (userId !== post?.userId) {
       alert("작성자만 수정할 수 있습니다");
       return;
     }
     setIsEditing(true);
   };
 
-  const onEdit = async (e: React.MouseEvent<HTMLDivElement>) => {
+  const onEdit = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
-    const title: string = titleRef.current?.value;
-    const content: string = contentRef.current?.value;
-
-    editMutation.mutate({ id, title, content });
+    if (titleRef.current && contentRef.current) {
+      const title: string = titleRef.current?.value;
+      const content: string = contentRef.current?.value;
+      const editedPost = { ...post, id: id, title: title, content: content };
+      editMutation.mutate(editedPost);
+    }
   };
+
+  if (isPending) {
+    return <div>데이터 불러오는 중...</div>;
+  }
+  if (error) {
+    return <div>불러오기 실패</div>;
+  }
 
   return (
     <div className="border-2 border-gray-300 h-56 rounded-lg p-3 mb-8 relative overflow-auto">
-      {isEditing ? (
+      {isSuccess && isEditing ? (
         <>
           <div className="absolute top-[10px] right-[10px] flex gap-2 text-white">
             <button className="border border-gray-400 bg-[#CFCFCF] rounded-lg p-[3px] text-[15px]" onClick={onEdit}>
@@ -78,17 +88,17 @@ const Post = ({ id }: { id: string }) => {
           </div>
 
           <div className="flex items-center">
-            <Image src={data?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
+            <Image src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
             <input
               className="text-lg mb-3 ml-8 h-8 border border-gray-500 outline-none p-1 rounded-md"
               ref={titleRef}
-              defaultValue={data?.title}
+              defaultValue={post?.title ?? undefined}
             ></input>
           </div>
 
           <textarea
             ref={contentRef}
-            defaultValue={data?.content}
+            defaultValue={post?.content ?? undefined}
             className="resize-none outline-none border border-gray-500 mt-5 w-full h-[80px] rounded-md p-1"
           ></textarea>
         </>
@@ -105,11 +115,11 @@ const Post = ({ id }: { id: string }) => {
           </div>
 
           <div className="flex items-center">
-            <Image src={data?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
-            <div className="text-lg mb-3 ml-8 h-8">{data?.title}</div>
+            <Image src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
+            <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
           </div>
 
-          <div className="mt-4">{data?.content}</div>
+          <div className="mt-4">{post?.content}</div>
         </>
       )}
     </div>
