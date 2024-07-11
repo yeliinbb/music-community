@@ -56,6 +56,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       <Button onPress={onOpen} className="w-5 h-5 min-w-0 p-0">
         <IoIosSettings />
       </Button>
+      <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
       <Modal
         backdrop="opaque"
         isOpen={isOpen}
@@ -97,5 +98,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
     </>
   );
 };
+};
 
 export default ProfileModal;
+

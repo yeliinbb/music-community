@@ -8,14 +8,8 @@ import { useQuery } from "@tanstack/react-query";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-
 import type { SpotifyArtist } from "@/types/spotify.type";
-
-type CustomArrowProps = {
-  className?: string;
-  style?: React.CSSProperties;
-  onClick?: () => void;
-}
+import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 
 const Artist = () => {
   //   const {
@@ -50,7 +44,7 @@ const Artist = () => {
       return data;
     }
   });
-  console.log("artistData =>", artistData);
+  // console.log("artistData =>", artistData);
 
   if (isPending) {
     return <div>--- 데이터 수집 중 ---</div>;
@@ -69,18 +63,6 @@ const Artist = () => {
   // if (!artistData || artistData.length === 0) {
   //   return <div className="text-xl">트랙 데이터가 없습니다.</div>;
   // }
-
-  const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
-    <div className={`custom-arrow custom-prev-arrow ${className}`} onClick={onClick}>
-      <img src="chevrons-left.svg" alt="이전 아티스트" />
-    </div>
-  );
-
-  const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
-    <div className={`custom-arrow custom-next-arrow ${className}`} onClick={onClick}>
-      <img src="chevrons-right.svg" alt="다음 아티스트" />
-    </div>
-  );
 
   const settings = {
     infinite: true,

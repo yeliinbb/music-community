@@ -3,8 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import ProfileModal from "@/components/ProfileModal";
-import "react-tooltip/dist/react-tooltip.css";
-import { Tooltip } from "react-tooltip";
 import { MdOutlineMail } from "react-icons/md";
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useQuery } from "@tanstack/react-query";
@@ -57,21 +55,7 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pb-[30px] min-w-[350px]">
-        <h2>Featured Playlists</h2>
-        {/* {플레이어} */}
-        <img
-          src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
-          alt="profile image"
-          className="max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
-        />
-        <div className="flex flex-col items-center gap-2">
-          <p className="h-[15px]">플레이리스트 이름</p>
-          {/* <Link href={플레이리스트 링크}> */}
-          <p className="h-[15px]">바로가기</p>
-          {/* </Link> */}
-        </div>
-      </div>
+      <Trending />
     </div>
   );
 };
