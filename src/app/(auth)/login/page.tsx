@@ -1,14 +1,14 @@
 "use client";
 
-import { useLoginStore } from "@/store/auth";
+import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useLoginStore } from "@/store/auth";
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useLoginStore();
+  const { login, setUserId } = useLoginStore();
   const router = useRouter();
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -32,6 +32,7 @@ const Login = () => {
     if (!data.errorMsg) {
       alert("로그인 성공!");
       login();
+      setUserId(data.user.id);
       router.replace("/");
     } else {
       alert(`로그인 에러: ${data.errorMsg}`);
