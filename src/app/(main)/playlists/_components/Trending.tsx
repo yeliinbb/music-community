@@ -56,7 +56,7 @@ const Trending = () => {
           <div className="flex flex-col text-sm gap-2">
             <p className="h-[15px]">{selectedPlaylist.name}</p>
             <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
-              <p className="h-[15px] hover:underline">바로가기</p>
+              <p className="h-[15px] hover:underline mt-5">바로가기</p>
             </Link>
           </div>
         </>

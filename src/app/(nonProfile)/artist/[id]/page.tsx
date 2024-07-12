@@ -1,7 +1,7 @@
 import React from "react";
 import Artist from "../_components/Artist";
 import ArtistTrack from "../_components/ArtistTrack";
-import RelateedArtist from "../_components/RelateedArtist";
+import RelateedArtist from "../_components/RelatedArtist";
 
 interface ArtistPageProps {
   params: { id: string };

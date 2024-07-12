@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 
 interface ArtistProps {
   params: { id: string };
@@ -89,7 +88,7 @@ const Artist = ({ params }: ArtistProps) => {
       <div className="flex items-center space-x-4">
         {isSuccess && (
           <>
-            <Image
+            <img
               src={artistData.images[0].url}
               alt="이미지"
               width={300}
@@ -102,9 +101,9 @@ const Artist = ({ params }: ArtistProps) => {
               <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
               <button onClick={onChangeLiked}>
                 {like ? (
-                  <Image src="/heart.svg" alt="플러스" width={40} height={40} />
+                  <img src="/heart.svg" alt="플러스" width={40} height={40} />
                 ) : (
-                  <Image src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
+                  <img src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
                 )}
               </button>
             </div>

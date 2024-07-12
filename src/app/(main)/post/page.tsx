@@ -61,51 +61,53 @@ const DetailPage = () => {
   };
 
   return (
-    <div className="flex flex-col p-10 w-4/5 h-[700px] border-2 border-gray-400 bg-white rounded-lg relative gap-y-2">
-      <input
-        className="border-b border-black mb-4 indent-2.5 h-10 w-10/12 mx-auto outline-none"
-        type="text"
-        placeholder="제목을 입력하세요!"
-        ref={titleRef}
-      />
-      <div className="w-4/5 mx-auto flex flex-col items-center gap-y-2 select-none">
-        {/* 이미지 파일 */}
-        <div className="size-40  border border-gray-300 relative aspect-square flex items-center justify-center">
-          {isUploading && <div className="font-bold">이미지 업로드중...</div>}
-          {!isUploading && !imageURL.length && <div className="font-bold">썸네일 올려주세요..</div>}
-          {imageURL.length > 0 && !isUploading && (
-            <Image fill className="object-cover" src={imageURL} alt="Thumbnail" sizes="100px" />
-          )}
-        </div>
-        {/* 이미지 파일 받는곳 */}
-        <div>
-          <label
-            className="cursor-pointer hover:shadow-md active:shadow-[inset_0_2px_8px_gray] 
+    <div className="flex justify-center">
+      <div className="flex flex-col p-10 w-4/5 h-[700px] border-2 border-gray-400 bg-white rounded-lg relative gap-y-2">
+        <input
+          className="border-b border-black mb-4 indent-2.5 h-10 w-10/12 mx-auto outline-none"
+          type="text"
+          placeholder="제목을 입력하세요!"
+          ref={titleRef}
+        />
+        <div className="w-4/5 mx-auto flex flex-col items-center gap-y-2 select-none">
+          {/* 이미지 파일 */}
+          <div className="size-40  border border-gray-300 relative aspect-square flex items-center justify-center">
+            {isUploading && <div className="font-bold">이미지 업로드중...</div>}
+            {!isUploading && !imageURL.length && <div className="font-bold">썸네일 올려주세요..</div>}
+            {imageURL.length > 0 && !isUploading && (
+              <Image fill className="object-cover" src={imageURL} alt="Thumbnail" sizes="100px" />
+            )}
+          </div>
+          {/* 이미지 파일 받는곳 */}
+          <div>
+            <label
+              className="cursor-pointer hover:shadow-md active:shadow-[inset_0_2px_8px_gray] 
             py-1.5 px-4 border border-black w-16 h-11 rounded-lg bg-[#2c2c2c] text-white font-bold text-sm"
-            htmlFor="fileInput"
-          >
-            썸네일 업로드
-          </label>
-          <input
-            className="hidden"
-            id="fileInput"
-            type="file"
-            accept=".jpg, .jpeg, .png"
-            onChange={(e) => onClickFileUpload(e.target.files?.[0] || null)}
-          />
+              htmlFor="fileInput"
+            >
+              썸네일 업로드
+            </label>
+            <input
+              className="hidden"
+              id="fileInput"
+              type="file"
+              accept=".jpg, .jpeg, .png"
+              onChange={(e) => onClickFileUpload(e.target.files?.[0] || null)}
+            />
+          </div>
         </div>
-      </div>
-      <textarea
-        className="border border-black resize-none w-10/12 mx-auto outline-none rounded-lg p-5 h-[70%]"
-        ref={contentRef}
-      ></textarea>
-      <div className="w-[144px] absolute bottom-[70px] right-[100px] text-white">
-        <Link href={"/"}>
-          <button className="border border-black w-16 h-11 rounded-lg mr-4 bg-[#CFCFCF]">취소</button>
-        </Link>
-        <button className="border border-black w-16 h-11 rounded-lg bg-[#2c2c2c]" onClick={submitFun}>
-          게시
-        </button>
+        <textarea
+          className="border border-black resize-none w-10/12 mx-auto outline-none rounded-lg p-5 h-[70%] mt-5"
+          ref={contentRef}
+        ></textarea>
+        <div className="w-[144px] absolute bottom-[70px] right-[100px] text-white mr-4">
+          <Link href={"/"}>
+            <button className="border border-black w-16 h-11 rounded-lg mr-4 bg-[#CFCFCF]">취소</button>
+          </Link>
+          <button className="border border-black w-16 h-11 rounded-lg bg-[#2c2c2c]" onClick={submitFun}>
+            게시
+          </button>
+        </div>
       </div>
     </div>
   );

@@ -1,8 +1,8 @@
 "use client";
 
-import { deletePost, editPost, enableMutation } from "@/lib/utils/postUtils";
+import { enableMutation } from "@/lib/getUserId";
+import { deletePost, editPost } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
-import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
@@ -25,7 +25,7 @@ const Post = ({ id }: { id: string }) => {
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
-      console.log("posts", data);
+      // console.log("posts", data);
       return data;
     }
   });
@@ -50,7 +50,7 @@ const Post = ({ id }: { id: string }) => {
   const onEdit = async () => {
     const userId = await enableMutation();
     if (userId !== post?.userId) {
-      alert("작성자만 수정할 수 있습니다");
+      alert("작성자만 게시글을 수정할 수 있습니다");
       return;
     } else {
       setIsEditing(true);
@@ -75,7 +75,7 @@ const Post = ({ id }: { id: string }) => {
   const onDelete = async () => {
     const userId = await enableMutation();
     if (userId !== post?.userId) {
-      alert("작성자만 삭제할 수 있습니다.");
+      alert("작성자만 게시글을 삭제할 수 있습니다.");
       return;
     }
 
@@ -83,21 +83,21 @@ const Post = ({ id }: { id: string }) => {
       try {
         deleteMutation.mutate(id);
         router.push("/my");
-        console.log("삭제가 완료되었습니다.");
+        console.log("게시글 삭제가 완료되었습니다.");
       } catch (error) {
-        console.error("삭제 중 오류 발생", error);
-        alert("삭제 중 오류가 발생했습니다.");
+        console.error("게시글 삭제 중 오류 발생", error);
+        alert("게시글 삭제 중 오류가 발생했습니다.");
       }
     } else {
-      alert("삭제가 취소되었습니다.");
+      alert("게시글 삭제가 취소되었습니다.");
     }
   };
 
   if (isPending) {
-    return <div>데이터 불러오는 중...</div>;
+    return <div>게시글 불러오는 중...</div>;
   }
   if (error) {
-    return <div>불러오기 실패</div>;
+    return <div>게시글 불러오기 실패</div>;
   }
 
   return (

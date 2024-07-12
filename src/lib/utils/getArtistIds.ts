@@ -1,4 +1,4 @@
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 
 export const getArtistIds = async (): Promise<string[]> => {
   const supabase = createClient();
