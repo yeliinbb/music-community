@@ -11,9 +11,7 @@ import { useUserData } from "@/hooks/useUserData";
 
 const Profile = () => {
   const userId = useLoginStore((state) => state.userId);
-  // console.log(userId);
   const { data: userProfileData, isPending, error } = useUserData(userId);
-
   const defaultImg =
     "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
