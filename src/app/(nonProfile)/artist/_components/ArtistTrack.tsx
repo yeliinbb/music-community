@@ -3,21 +3,22 @@
 import { SpotifyTrack, TracksItems } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 import PlayBtn from "./PlayBtn";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 interface ArtistTrackProps {
   params: { id: string };
 }
 
 const fetchArtistTrack = async (id: string): Promise<TracksItems[]> => {
-  // console.log(id);
   const response = await fetch(`/api/spotify/artist/${id}/tracks`);
   const data = await response.json();
-  // console.log(data);
   return data.tracks;
 };
 
 const ArtistTrack = ({ params }: ArtistTrackProps) => {
+  const [isPlaying, setIsPlaying] = useState<boolean>(false);
+  const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
+
   const {
     data = [],
     isLoading,
@@ -30,29 +31,18 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   const playTrack = (track: SpotifyTrack) => {
-    if (audioRef.current && track.preview_url) {
-      audioRef.current.src = track.preview_url;
-      audioRef.current.play();
-      console.log("재생");
-    } else {
-      audioRef.current?.pause();
-      console.log("멈춤");
+    if (audioRef.current) {
+      if (isPlaying && currentTrack?.id === track.id) {
+        audioRef.current.pause();
+        setIsPlaying(false);
+      } else {
+        audioRef.current.src = track.preview_url || "";
+        audioRef.current.play();
+        setIsPlaying(true);
+        setCurrentTrack(track);
+      }
     }
   };
-
-  // const playTrack = (track: SpotifyTrack) => {
-  //   if (audioRef.current) {
-  //     if (isPlaying && currentTrack?.id === track.id) {
-  //       audioRef.current.pause();
-  //       setIsPlaying(false);
-  //     } else {
-  //       audioRef.current.src = track.preview_url || "";
-  //       audioRef.current.play();
-  //       setIsPlaying(true);
-  //       setCurrentTrack(track);
-  //     }
-  //   }
-  // };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -80,14 +70,24 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
                 className="p-4 border rounded-lg max-w-lg "
                 style={{ width: "500px", height: "100px" }}
               >
-                <div className="flex items-center space-x-4">
-                  <div className="font-bold">{index + 1}</div>
-                  <img src={track.album.images[2].url} alt="앨범 이미지" />
-                  <div>
-                    <div className="mt-2">{track.name}</div>
-                    <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
+                <div className="flex items-center space-x-4 justify-between">
+                  <div className="flex flex-row gap-x-5 items-center ">
+                    <div className="font-bold">{index + 1}</div>
+                    <img src={track.album.images[2].url} alt="앨범 이미지" />
+                    <div>
+                      <div className="mt-2">{track.name}</div>
+                      <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
+                    </div>
                   </div>
-                  <PlayBtn previewUrl={track.preview_url} playTrack={() => playTrack(track)} audioRef={audioRef} />
+
+                  <div>
+                    <PlayBtn
+                      previewUrl={track.preview_url}
+                      playTrack={() => playTrack(track)}
+                      audioRef={audioRef}
+                      isPlaying={isPlaying}
+                    />
+                  </div>
                 </div>
               </div>
             );

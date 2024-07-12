@@ -16,20 +16,16 @@ interface EditLikeParams {
 const fetchArtist = async (id: string) => {
   const response = await fetch(`/api/spotify/artist/${id}`);
   const data = await response.json();
-  // console.log(data);
   return data;
 };
 
 const likeState = async ({ id, userId }: { id: string; userId: string }) => {
   const res = await fetch(`/api/artist/likes/${id}`);
   const likeData = await res.json();
-  console.log(userId);
-  // console.log(likeData);
   return likeData;
 };
 
 const editLike = async ({ id, isDelete, userId }: EditLikeParams & { userId: string }) => {
-  // console.log(id);
   if (isDelete) {
     const res = await fetch(`/api/artist/likes/${id}`, {
       method: "DELETE"
@@ -61,17 +57,21 @@ const Artist = ({ params }: ArtistProps) => {
     queryFn: () => fetchArtist(params.id)
   });
 
-  const { data: like } = useQuery({ queryKey: ["artistLike"], queryFn: () => likeState({ id: params.id, userId }) });
-
-  const { mutateAsync: editLikeMutate } = useMutation<void, Error, EditLikeParams>({
-    mutationFn: async (mutationParam: EditLikeParams): Promise<void> => editLike(mutationParam)
+  const { data: like } = useQuery({
+    queryKey: ["artistLike", params.id],
+    queryFn: () => likeState({ id: params.id, userId })
   });
 
-  // console.log(like);
+  const { mutateAsync: editLikeMutate } = useMutation<void, Error, EditLikeParams>({
+    mutationFn: async (mutationParam: EditLikeParams): Promise<void> => editLike(mutationParam),
+    onSuccess: () => {
+      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
+    }
+  });
+
   const onChangeLiked = async () => {
     try {
       await editLikeMutate({ id: params.id, isDelete: like ? true : false, userId });
-      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
     } catch (error) {
       console.error(error);
     }
@@ -98,15 +98,16 @@ const Artist = ({ params }: ArtistProps) => {
               height={300}
               className=" object-cover rounded-lg shadow-lg"
             />
+
             <div className="flex flex-col">
               <div className="font-bold text-xl">{artistData.name}</div>
               <div className="text-gray-600">{artistData.genres[0]}</div>
               <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
               <button onClick={onChangeLiked}>
-                {like ? (
-                  <img src="/heart.svg" alt="플러스" width={40} height={40} />
+                {like && like.userId && like.artistId ? (
+                  <img src="/heart.svg" alt="꽉찬하트" width={40} height={40} />
                 ) : (
-                  <img src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
+                  <img src="/heart_plus.svg" alt="빈하트" width={40} height={40} />
                 )}
               </button>
             </div>

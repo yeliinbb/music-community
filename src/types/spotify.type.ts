@@ -58,11 +58,7 @@ export type SpotifyTrack = {
     id: string;
     name: string;
   }[];
-  album: {
-    id: string;
-    name: string;
-    images: { url: string }[];
-  };
+  album: Album;
 };
 
 export type SpotifyPlaylistTracks = {
@@ -127,6 +123,8 @@ export interface Image {
 }
 
 export interface Album {
+  id: string;
+  name: string;
   images: Image[];
 }
 
