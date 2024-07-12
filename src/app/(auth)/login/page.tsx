@@ -74,14 +74,14 @@ const Login = () => {
             <div className="flex justify-between items-center">
               <button
                 type="submit"
-                className="ml-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
+                className="ml-25 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
               >
                 Login
               </button>
               <Link href="/signup">
                 <button
                   type="button"
-                  className="mr-20 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
+                  className="mr-25 px-10 py-3 border border-black bg-[white] text-black-400 font-bold hover:bg-[#54b2d3] "
                 >
                   SignUp
                 </button>
