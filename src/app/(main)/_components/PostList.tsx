@@ -1,18 +1,18 @@
 "use client";
 
-import { useQuery } from "@tanstack/react-query";
-import { getAllPost } from "./getAllPost";
 import { PostgrestError } from "@supabase/supabase-js";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
+import { getAllPost } from "./getAllPost";
 
 import { PostType } from "@/types/posts.type";
 import PostCard from "./PostCard";
 
-
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import PostListSkeleton from "./PostListSkeleton";
 
 const PostList = () => {
   const {
@@ -25,7 +25,7 @@ const PostList = () => {
   });
 
   if (isPending) {
-    return <div>~~~</div>;
+    return <PostListSkeleton />;
   }
 
   if (error) {
@@ -51,9 +51,11 @@ const PostList = () => {
         <Slider {...settings}>
           {allPosts?.map((post) => (
             <div key={post.id} className="px-1">
-              <div className="shadow-md hover:shadow-lg transition-shadow duration-150 
+              <div
+                className="shadow-md hover:shadow-lg transition-shadow duration-150 
                 active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
-                border border-black rounded">
+                border border-black rounded"
+              >
                 <Link className="p-2 flex flex-col gap-y-4" href={`/detailpage/${post.id}`}>
                   <PostCard post={post} />
                 </Link>
@@ -64,6 +66,6 @@ const PostList = () => {
       </div>
     </div>
   );
-}
+};
 
 export default PostList;
