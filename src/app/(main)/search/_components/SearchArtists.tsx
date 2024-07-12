@@ -2,6 +2,7 @@
 
 import useSearch from "@/hooks/useSearch";
 import Image from "next/image";
+import Link from "next/link";
 import { useEffect, useRef } from "react";
 import SearchArtistsSkeleton from "./SearchArtistsSkeleton";
 
@@ -50,15 +51,17 @@ export default function SearchArtists() {
           >
             {artists?.map((artist) => (
               <li className="flex flex-col gap-y-2" key={artist.id}>
-                <div className="relative size-24 aspect-square p-2">
-                  <Image
-                    src={artist.images.length ? artist.images[0].url : "http://via.placeholder.com/640x480"}
-                    className="object-cover border-gray-300 border"
-                    fill
-                    alt={artist.name}
-                    sizes={artist.images.length ? `${artist.images[0].width}px` : "100px"}
-                  />
-                </div>
+                <Link href={`/artist/${artist.id}`}>
+                  <div className="cursor-pointer relative size-24 aspect-square p-2">
+                    <Image
+                      src={artist.images.length ? artist.images[0].url : "http://via.placeholder.com/640x480"}
+                      className="object-cover border-gray-300 border"
+                      fill
+                      alt={artist.name}
+                      sizes={artist.images.length ? `${artist.images[0].width}px` : "100px"}
+                    />
+                  </div>
+                </Link>
                 <div>
                   <p className="line-clamp-1 text-xs font-bold">{artist.name}</p>
                 </div>
