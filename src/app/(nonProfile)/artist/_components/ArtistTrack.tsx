@@ -25,7 +25,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
     queryFn: () => fetchArtistTrack(params.id)
   });
 
-  if (true) {
+  if (isLoading) {
     return (
       <div className="mt-4 animate-pulse">
         <div className="bg-gray-300 h-4 w-20 rounded-full mb-4" />
