@@ -40,5 +40,5 @@ export default function LogoutButton() {
     router.replace("/login"); // 로그인 페이지로 이동
   };
 
-  return <button onClick={isLogin ? handleLogout : handleLogin}>{isLogin ? "로그아웃" : "로그인"}</button>;
+  return <button onClick={isLogin ? handleLogout : handleLogin} className="font-bold">{isLogin ? "로그아웃" : "로그인"}</button>;
 }
