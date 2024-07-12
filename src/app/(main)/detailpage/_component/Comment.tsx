@@ -2,28 +2,29 @@
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
-// import { useLoginStore } from "@/store/auth";
+import { useLoginStore } from "@/store/auth";
 
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const [loginUser, setLoginUser] = useState("");
+  const userId = useLoginStore((state) => state.userId);
+  console.log("코멘트;", userId);
+  // useEffect(() => {
+  //   const user = async () => {
+  //     const supabase = createClient();
+  //     const {
+  //       data: { session }
+  //     } = await supabase.auth.getSession();
 
-  useEffect(() => {
-    const user = async () => {
-      const supabase = createClient();
-      const {
-        data: { session }
-      } = await supabase.auth.getSession();
-
-      if (!session) {
-        return;
-      }
-      const userId = session.user.id;
-      setLoginUser(userId);
-    };
-    user();
-  }, []);
+  //     if (!session) {
+  //       return;
+  //     }
+  //     const userId = session.user.id;
+  //     setLoginUser(userId);
+  //   };
+  //   user();
+  // }, []);
 
   // const userId = useLoginStore((state) => state.userId);
   // console.log(userId);
@@ -63,7 +64,7 @@ const Comment = ({ id }: { id: string }) => {
       return;
     }
 
-    const newComment = { content: comment, postId: id, userId: loginUser }; // userId 바꾸기
+    const newComment = { content: comment, postId: id, userId: userId }; // userId 바꾸기
     createComment(newComment);
   };
 

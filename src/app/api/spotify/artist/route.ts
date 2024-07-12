@@ -1,4 +1,4 @@
-import { getArtistIds } from "@/lib/getArtistIds";
+import { getArtistIds } from "@/lib/utils/getArtistIds";
 import { getAccessToken } from "@/lib/spotify";
 import { SpotifyArtist } from "@/types/spotify.type";
 import axios from "axios";
