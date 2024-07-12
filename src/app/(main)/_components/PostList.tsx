@@ -54,7 +54,7 @@ const PostList = () => {
               <div
                 className="shadow-md hover:shadow-lg transition-shadow duration-150 
               active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
-              border border-black rounded max-w-[250px] mx-auto"
+              border border-gray-300 rounded-lg max-w-[250px] mx-auto"
               >
                 <Link className="p-2 flex flex-col gap-y-2" href={`/post/${post.id}`}>
                   <PostCard post={post} />
