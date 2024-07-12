@@ -24,18 +24,17 @@ const Trending = () => {
     queryKey: ["trending"],
     queryFn: async () => {
       const response = await axios<SpotifyFeaturedPlaylist[]>("/api/spotify/featuredPlaylists");
-      console.log("trending response => ", response);
+
       return response.data;
     }
   });
 
   useEffect(() => {
     const randomIndex = Math.floor(Math.random() * 10);
-    // const selectedPlaylist = isSuccess ? featuredPlaylists[randomIndex] : [];
+
     if (isSuccess) {
       setSelectedPlaylist(featuredPlaylists[randomIndex]);
     } else return;
-    console.log(selectedPlaylist);
   }, [featuredPlaylists]);
 
   return (

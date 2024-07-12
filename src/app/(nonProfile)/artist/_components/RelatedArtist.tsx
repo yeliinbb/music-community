@@ -13,7 +13,7 @@ interface RelatedProps {
 const fetchRelated = async (id: string) => {
   const reponse = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
   const { artists } = await reponse.json();
-  console.log(artists);
+
   return artists;
 };
 

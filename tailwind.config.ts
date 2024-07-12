@@ -15,7 +15,8 @@ const config: Config = {
       },
       gridTemplateColumns: {
         "main-layout": "270px 4fr",
-        "profile-layout": "repeat(2, 1fr)"
+        "profile-layout": "repeat(2, 1fr)",
+        "post-layout": "400px 2.5fr"
       },
       boxShadow: {
         custom: "0 0 10px 3px rgba(116, 116, 116, 0.3)"

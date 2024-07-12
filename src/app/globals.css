@@ -10,6 +10,7 @@ body {
   height: 100vh; */
   background-color: #54b2d3;
   /* padding: 50px 130px 50px 50px; */
+  box-sizing: border-box;
 }
 
 button:hover {
@@ -28,7 +29,6 @@ button:hover {
   --rt-transition-closing-delay: 0.15s;
 }
 
-
 .custom-slider {
   position: relative;
   padding: 0 5px; /* 화살표를 위한 공간 확보 */
@@ -36,7 +36,7 @@ button:hover {
 
 .custom-slider .slick-arrow {
   position: absolute;
-  top: calc(50% - 15px); 
+  top: calc(50% - 15px);
 }
 
 .custom-slider .slick-arrow:before {

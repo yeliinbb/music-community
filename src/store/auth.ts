@@ -6,9 +6,7 @@ type LoginState = {
   login: () => void;
   logout: () => void;
   userId: string;
-  userNickname: string;
   setUserId: (userId: string) => void;
-  setUserNickname: (userNickname: string) => void;
 };
 
 export const useLoginStore = create(
@@ -18,8 +16,7 @@ export const useLoginStore = create(
       userId: "",
       login: () => set({ isLogin: true }),
       logout: () => set({ isLogin: false }),
-      setUserId: (userId) => set({ userId }),
-      setUserNickname: (userNickname) => set({ userNickname })
+      setUserId: (userId) => set({ userId })
     }),
     {
       name: "userIdStorage"

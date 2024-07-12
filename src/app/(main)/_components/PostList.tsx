@@ -43,23 +43,32 @@ const PostList = () => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 w-full">
       <p className="font-bold mb-5">게시글</p>
-      <div className="custom-slider ml-3 mr-3">
+      <div className="custom-slider">
         <Slider {...settings}>
           {allPosts?.map((post) => (
-            <div key={post.id} className="shadow-md hover:shadow-lg transition-shadow duration-150 
+            <div key={post.id} className="px-1">
+              <div
+                className="shadow-md hover:shadow-lg transition-shadow duration-150 
               active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
-              border border-black rounded">
-              <Link href={`/detailpage/${post.id}`}>
-                <PostCard post={post} />
-              </Link>
+              border border-black rounded max-w-[250px] mx-auto"
+              >
+                {" "}
+                {/* max-w-[250px] 추가 */}
+                <Link className="p-2 flex flex-col gap-y-2" href={`/detailpage/${post.id}`}>
+                  {" "}
+                  {/* gap-y-4를 gap-y-2로 변경 */}
+                  <PostCard post={post} />
+                </Link>
+              </div>
             </div>
           ))}
         </Slider>
       </div>
     </div>
   );
-}
+};
+
 
 export default PostList;

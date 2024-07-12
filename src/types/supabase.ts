@@ -14,7 +14,6 @@ export type Database = {
           content: string
           createdAt: string | null
           id: string
-          nickname: string
           postId: string
           userId: string
         }
@@ -22,7 +21,6 @@ export type Database = {
           content: string
           createdAt?: string | null
           id?: string
-          nickname: string
           postId: string
           userId: string
         }
@@ -30,7 +28,6 @@ export type Database = {
           content?: string
           createdAt?: string | null
           id?: string
-          nickname?: string
           postId?: string
           userId?: string
         }
@@ -49,7 +46,6 @@ export type Database = {
           content: string
           createdAt: string | null
           id: string
-          nickname: string | null
           postId: string
           userId: string
         }
@@ -57,7 +53,6 @@ export type Database = {
           content: string
           createdAt?: string | null
           id?: string
-          nickname?: string | null
           postId: string
           userId?: string
         }
@@ -65,7 +60,6 @@ export type Database = {
           content?: string
           createdAt?: string | null
           id?: string
-          nickname?: string | null
           postId?: string
           userId?: string
         }

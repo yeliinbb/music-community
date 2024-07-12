@@ -1,5 +1,5 @@
 import { useLoginStore } from "@/store/auth";
-import { CommonCommentType } from "@/types/comment.type";
+import { CommentType, CommonCommentType } from "@/types/comment.type";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
@@ -7,6 +7,7 @@ import { useRef, useState } from "react";
 interface UseCommentProps {
   queryKey: "comments" | "artistComments" | "likes" | "main_artist" | "main_playlist" | "posts" | "users";
   id: string;
+  tableName: "comments" | "artistComments" | "likes" | "main_artist" | "main_playlist" | "posts" | "users";
 }
 
 type NewCommentType = {
@@ -15,7 +16,23 @@ type NewCommentType = {
   userId: string;
 };
 
-export const useComment = ({ queryKey, id }: UseCommentProps) => {
+type CommentTypeTest = {
+  content: string;
+  postId: string;
+  userId: string;
+  createdAt: string;
+  nickname: string;
+};
+
+type selectedComment = {
+  content: string;
+  createdAt: string | null;
+  id: string;
+  postId: string;
+  userId: string;
+};
+
+const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
@@ -23,51 +40,74 @@ export const useComment = ({ queryKey, id }: UseCommentProps) => {
   const queryClient = useQueryClient();
   const supabase = createClient();
   const commentRef = useRef<HTMLInputElement | null>(null);
-  //   console.log(userId);
 
-  const { data, error, isPending, isSuccess } = useQuery({
-    queryKey: [queryKey, id],
-    queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from(queryKey)
-          .select("*,users(nickname, email)")
-          //   .select("*")
-          .eq("postId", id)
-          .order("createdAt", { ascending: false });
-
-        if (error) {
-          console.error("댓글 불러오기 실패", error);
-          throw new Error(error.message);
-        }
-        console.log("data", data);
-        return data;
-      } catch (error) {
-        console.log(error);
+  const fetchComments = async (id: string): Promise<CommonCommentType[]> => {
+    try {
+      const { data, error } = await supabase
+        .from(tableName)
+        .select("*,users(nickname, email)")
+        .eq("postId", id)
+        .order("createdAt", { ascending: false });
+      console.log("data", data);
+      if (error) {
+        console.error("댓글 불러오기 실패", error);
+        throw new Error(error.message);
       }
+      // 데이터가 없을 경우 빈 배열 반환
+      if (!data) {
+        return [];
+      }
+      return data as CommonCommentType[];
+    } catch (error) {
+      console.log(error);
+      // 오류 발생 시 빈 배열 반환
+      return [];
     }
+  };
+
+  const addComment = async (newComment: NewCommentType) => {
+    const response = await supabase.from(tableName).insert(newComment);
+    return response.data;
+  };
+
+  const editComment = async ({ content, id }: CommentType) => {
+    const { error } = await supabase.from(tableName).update({ content }).eq("id", id);
+    if (error) {
+      console.error("댓글 수정 실패", error);
+      throw new Error(error.message);
+    }
+    return;
+  };
+
+  const deleteComment = async (id: string) => {
+    const { error } = await supabase.from(tableName).delete().eq("id", id);
+    if (error) {
+      console.error("댓글 삭제 실패", error);
+      throw new Error("Failed to delete post");
+    }
+    return;
+  };
+
+  const { data, error, isPending, isSuccess } = useQuery<
+    CommonCommentType[],
+    Error,
+    CommonCommentType[],
+    [string, string]
+  >({
+    queryKey: [queryKey, id],
+    queryFn: () => fetchComments(id)
   });
 
   // 댓글 남기기
   const addMutation = useMutation({
-    mutationFn: async (newComment: CommonCommentType) => {
-      const response = await supabase.from(queryKey).insert(newComment);
-      return response.data;
-    },
+    mutationFn: addComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     }
   });
 
   const editMutation = useMutation({
-    mutationFn: async ({ content, id }: { content: string; id: string }) => {
-      const { error } = await supabase.from(queryKey).update({ content }).eq("id", id);
-      if (error) {
-        console.error("댓글 수정 실패", error);
-        throw new Error(error.message);
-      }
-      return;
-    },
+    mutationFn: editComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKey] });
       setIsEditing(false);
@@ -77,14 +117,7 @@ export const useComment = ({ queryKey, id }: UseCommentProps) => {
   });
 
   const deleteMutation = useMutation({
-    mutationFn: async (id: CommonCommentType["id"]) => {
-      const { error } = await supabase.from(queryKey).delete().eq("id", id);
-      if (error) {
-        console.error("댓글 삭제 실패", error);
-        throw new Error("Failed to delete post");
-      }
-      return;
-    },
+    mutationFn: deleteComment,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: [queryKey] });
     }
@@ -106,9 +139,9 @@ export const useComment = ({ queryKey, id }: UseCommentProps) => {
     }
   };
 
-  const handleEditComment = async (commentId: T["id"]) => {
-    const selectedComment = data?.find((comment: CommonCommentType) => comment.id === commentId);
-
+  const handleEditComment = async (commentId: string) => {
+    const selectedComment = data?.find((comment) => comment.id === commentId);
+    console.log("selectedComment", selectedComment);
     // 선택된 댓글이 없는 경우 반환
     if (!selectedComment) {
       return;
@@ -137,7 +170,7 @@ export const useComment = ({ queryKey, id }: UseCommentProps) => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    const selectedComment = data?.find((comment) => comment.id === commentId) as T | undefined;
+    const selectedComment = data?.find((comment) => comment.id === commentId);
 
     if (!selectedComment) {
       return;
@@ -160,6 +193,7 @@ export const useComment = ({ queryKey, id }: UseCommentProps) => {
       alert("댓글 삭제가 취소되었습니다.");
     }
   };
+
   return {
     data,
     error,
