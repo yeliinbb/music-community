@@ -6,8 +6,7 @@ import MyPostCard from "./MyPostCard";
 
 export default function MyPosts() {
   const { posts } = useMe();
-  // console.log("MY POSTS___", posts);
-  // console.log("postsIsFetching___", postsIsFetching, isLoading);
+
   return (
     <div>
       <ul className="grid grid-cols-4 gap-2 p-2">
@@ -18,7 +17,7 @@ export default function MyPosts() {
             border border-black rounded "
             key={post.id}
           >
-            <Link className="p-2 flex flex-col gap-y-4" href={`/detailpage/${post.id}`}>
+            <Link className="p-2 flex flex-col gap-y-4" href={`/post/${post.id}`}>
               <MyPostCard post={post} />
             </Link>
           </li>

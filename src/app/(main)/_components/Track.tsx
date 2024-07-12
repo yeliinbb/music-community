@@ -1,5 +1,4 @@
 import { SpotifyTrack } from "@/types/spotify.type";
-import Image from "next/image";
 import Link from "next/link";
 import { HiMiniPlay } from "react-icons/hi2";
 import { Tooltip } from "react-tooltip";
@@ -18,14 +17,7 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
       className="grow shrink-0 flex items-center px-[15px] py-[8px] bg-[#D9D9D9] min-w-[300px] max-w-[50%] basis-[45%] place-self-center rounded-xl justify-between gap-4"
     >
       <div className="flex items-center gap-3 w-full">
-        <Image
-          src={track.album.images[1].url}
-          alt={track.name}
-          width={35}
-          height={35}
-          className="w-[35px] h-[35px] object-fill"
-          priority
-        />
+        <img src={track.album.images[1].url} alt={track.name} className="w-[35px] h-[35px] object-fill" />
         <div className="w-full">
           <h4 className="h-[20px] overflow-hidden overflow-ellipsis font-semibold">{track.name}</h4>
           <div className="flex justify-between items-center w-full ">

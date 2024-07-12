@@ -1,17 +1,18 @@
 "use client";
 
-import { enableMutation } from "@/lib/getUserId";
 import { deletePost, editPost } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { useLoginStore } from "@/store/auth";
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+  const userId = useLoginStore((state) => state.userId);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -46,7 +47,6 @@ const Post = ({ id }: { id: string }) => {
   });
 
   const onEdit = async () => {
-    const userId = await enableMutation();
     if (userId !== post?.userId) {
       alert("작성자만 게시글을 수정할 수 있습니다");
       return;
@@ -71,7 +71,6 @@ const Post = ({ id }: { id: string }) => {
   };
 
   const onDelete = async () => {
-    const userId = await enableMutation();
     if (userId !== post?.userId) {
       alert("작성자만 게시글을 삭제할 수 있습니다.");
       return;
@@ -99,8 +98,8 @@ const Post = ({ id }: { id: string }) => {
   }
 
   return (
-    <div className="border-2 border-gray-300 h-56 rounded-lg p-3 mb-8 relative overflow-auto">
-      {isSuccess && isEditing ? (
+    <div className="border-2 border-gray-300 rounded-lg p-3 relative h-full ">
+      {isEditing ? (
         <>
           <div className="absolute top-[10px] right-[10px] flex gap-2 text-white">
             <button className="border border-gray-400 bg-[#CFCFCF] rounded-lg p-[3px] text-[15px]" onClick={onEdit}>
@@ -122,7 +121,7 @@ const Post = ({ id }: { id: string }) => {
           <textarea
             ref={contentRef}
             defaultValue={post?.content ?? undefined}
-            className="resize-none outline-none border border-gray-500 mt-5 w-full h-[80px] rounded-md p-1"
+            className="resize-none outline-none border border-gray-500 mt-5 w-full rounded-md p-1"
           ></textarea>
         </>
       ) : (
@@ -135,13 +134,15 @@ const Post = ({ id }: { id: string }) => {
               삭제
             </button>
           </div>
-
-          <div className="flex items-center">
-            <img src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
-            <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
-          </div>
-
-          <div className="mt-4">{post?.content}</div>
+          {isSuccess && (
+            <>
+              <div className="flex items-center">
+                <img src={post?.imageURL} alt="썸네일 이미지" className="rounded-md w-[100px] h-[100px]" />
+                <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
+              </div>
+              <div className="mt-4 h-full max-h-[200px] w-full overflow-y-scroll scrollbar-hide">{post?.content}</div>
+            </>
+          )}
         </>
       )}
     </div>

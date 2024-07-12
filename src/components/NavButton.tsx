@@ -9,11 +9,20 @@ interface ButtonProps extends PropsWithChildren {
 }
 const Button = ({ children, href }: ButtonProps) => {
   const pathname = usePathname();
-  const isPath = pathname === href;
+  const fixedPathName = "/" + pathname.split("/")[1];
+  let isPath = "";
+  if (pathname === href) {
+    isPath = href;
+  }
+  if (fixedPathName === href) {
+    isPath = "/" + pathname.split("/")[1];
+  }
 
   return (
     <Link href={href}>
-      <button className={`w-[150px] ${isPath ? 'bg-[#989898]' : 'bg-white' } text-black hover:bg-[#989898] active:bg-[#989898] py-[13px] px-[5px] rounded-xl border-solid border-black border-[1.5px]`}>
+      <button
+        className={`w-[150px] ${isPath ? "bg-[#ff8b8b]" : "bg-white"} text-black hover:bg-[#ff8b8b] active:bg-[#ff8b8b] py-[13px] px-[5px] rounded-xl shadow-2xl`}
+      >
         {children}
       </button>
     </Link>
