@@ -54,11 +54,7 @@ const PostList = () => {
               active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
               border border-black rounded max-w-[250px] mx-auto"
               >
-                {" "}
-                {/* max-w-[250px] 추가 */}
-                <Link className="p-2 flex flex-col gap-y-2" href={`/detailpage/${post.id}`}>
-                  {" "}
-                  {/* gap-y-4를 gap-y-2로 변경 */}
+                <Link className="p-2 flex flex-col gap-y-2" href={`/post/${post.id}`}>
                   <PostCard post={post} />
                 </Link>
               </div>
@@ -69,6 +65,5 @@ const PostList = () => {
     </div>
   );
 };
-
 
 export default PostList;
