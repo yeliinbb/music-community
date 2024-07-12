@@ -5,6 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useState } from "react";
+import TrendingSkeleton from "./TrendingSkeleton";
 
 const Trending = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
@@ -37,6 +38,8 @@ const Trending = () => {
     } else return;
     console.log(selectedPlaylist);
   }, [featuredPlaylists]);
+
+  if (isPending) return <TrendingSkeleton />;
 
   return (
     <div className="w-full flex flex-col p-2 gap-y-2">
