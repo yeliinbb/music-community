@@ -1,7 +1,6 @@
 "use client";
 
 import ProfileModal from "@/components/ProfileModal";
-
 import { IoPersonCircleOutline } from "react-icons/io5";
 import { useLoginStore } from "@/store/auth";
 import { MdOutlineMail } from "react-icons/md";
@@ -15,7 +14,8 @@ const Profile = () => {
   // console.log(userId);
   const { data: userProfileData, isPending, error } = useUserData(userId);
 
-  const defaultImg = 'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg'
+  const defaultImg =
+    "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
   return (
     <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
@@ -25,14 +25,9 @@ const Profile = () => {
           <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
-
         {
           <img
-            src={
-              userProfileData?.profileUrl
-                ? userProfileData.profileUrl
-                : defaultImg
-            }
+            src={userProfileData?.profileUrl ? userProfileData.profileUrl : defaultImg}
             alt="사용자 프로필 이미지"
             className="max-w-[180px] h-[180px] object-cover rounded-md self-center"
           />

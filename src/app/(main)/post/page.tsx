@@ -29,7 +29,6 @@ const DetailPage = () => {
     const filename = `_${Math.random().toString(36).slice(2, 16)}.${extension}`;
     const supabase = createClient();
     const response = await supabase.storage.from("postsImage").upload(`/${filename}`, file);
-    // console.log(response);
     if (!response.data) {
       console.log("업로드 실패");
       setIsUploading(false);
@@ -79,7 +78,7 @@ const DetailPage = () => {
             )}
           </div>
           {/* 이미지 파일 받는곳 */}
-          <div>
+          <div className="mb-5">
             <label
               className="cursor-pointer hover:shadow-md active:shadow-[inset_0_2px_8px_gray] 
             py-1.5 px-4 border border-black w-16 h-11 rounded-lg bg-[#2c2c2c] text-white font-bold text-sm"
@@ -97,14 +96,14 @@ const DetailPage = () => {
           </div>
         </div>
         <textarea
-          className="border border-black resize-none w-10/12 mx-auto outline-none rounded-lg p-5 h-[70%] mt-5"
+          className="border border-black resize-none w-10/12 mx-auto outline-none rounded-lg p-5 h-[70%]"
           ref={contentRef}
         ></textarea>
-        <div className="w-[144px] absolute bottom-[70px] right-[100px] text-white mr-4">
+        <div className="w-[144px] absolute bottom-[70px] right-[90px] text-white">
           <Link href={"/"}>
-            <button className="border border-black w-16 h-11 rounded-lg mr-4 bg-[#CFCFCF]">취소</button>
+            <button className="border border-black w-14 h-11 rounded-lg mr-2 bg-[#CFCFCF]">취소</button>
           </Link>
-          <button className="border border-black w-16 h-11 rounded-lg bg-[#2c2c2c]" onClick={submitFun}>
+          <button className="border border-black w-14 h-11 rounded-lg bg-[#2c2c2c]" onClick={submitFun}>
             게시
           </button>
         </div>

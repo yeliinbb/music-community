@@ -23,11 +23,3 @@ export const useLoginStore = create(
     }
   )
 );
-
-// export const useLoginStore = create<LoginState>(persist()(set) => ({
-//   isLogin: false,
-//   login: () => set({ isLogin: true }),
-//   logout: () => set({ isLogin: false }),
-//   userId: "",
-//   setUserId: (userId) => set({ userId })
-// }));

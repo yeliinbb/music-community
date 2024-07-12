@@ -5,7 +5,6 @@ import { deletePost, editPost } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
-import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 
@@ -25,7 +24,6 @@ const Post = ({ id }: { id: string }) => {
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
-      // console.log("posts", data);
       return data;
     }
   });
@@ -114,7 +112,7 @@ const Post = ({ id }: { id: string }) => {
           </div>
 
           <div className="flex items-center">
-            <Image src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
+            <img src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
             <input
               className="text-lg mb-3 ml-8 h-8 border border-gray-500 outline-none p-1 rounded-md"
               ref={titleRef}
@@ -139,7 +137,7 @@ const Post = ({ id }: { id: string }) => {
           </div>
 
           <div className="flex items-center">
-            <Image src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
+            <img src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
             <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
           </div>
 
