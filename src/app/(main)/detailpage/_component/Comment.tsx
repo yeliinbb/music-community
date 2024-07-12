@@ -33,6 +33,7 @@ const Comment = ({ id }: { id: string }) => {
     };
     user();
   });
+
   const {
     data: commentList,
     error,
@@ -68,9 +69,9 @@ const Comment = ({ id }: { id: string }) => {
 
       //   const updatedComments = oldData.map((comment) => (comment.id === updatedComment.id ? updatedComment : comment));
 
-      //   // 여기에 정렬 로직을 추가합니다
+      //   // 정렬 로직을 추가
       //   return updatedComments.sort((a, b) => {
-      //     // 예: 날짜순으로 정렬 (최신순)
+      //     // 날짜순으로 정렬 (최신순)
       //     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
       //   });
       // });

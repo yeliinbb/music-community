@@ -24,7 +24,7 @@ export const GET = async () => {
       trackLink: playlist.external_urls.spotify
     }));
 
-    console.log("response.data.playlists.items", response.data.playlists.items);
+    // console.log("response.data.playlists.items", response.data.playlists.items);
     return NextResponse.json(featuredPlaylists);
   } catch (error) {
     console.error("Error fetching track:", error);
