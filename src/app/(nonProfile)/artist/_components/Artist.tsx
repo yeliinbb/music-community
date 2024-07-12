@@ -85,15 +85,15 @@ const Artist = ({ params }: ArtistProps) => {
 
   return (
     <>
-      <div className="m-4">아티스트</div>
+      <div className="ml-4 mb-4 font-medium">Artist</div>
       <div className="flex items-center space-x-4">
         {isSuccess && (
           <>
             <Image
               src={artistData.images[0].url}
               alt="이미지"
-              width={500}
-              height={500}
+              width={300}
+              height={300}
               className=" object-cover rounded-lg shadow-lg"
             />
             <div className="flex flex-col">
