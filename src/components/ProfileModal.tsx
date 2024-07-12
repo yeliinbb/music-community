@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import { Modal, ModalContent, ModalBody, ModalFooter, Button, useDisclosure } from "@nextui-org/react";
+import { Modal, ModalContent, ModalBody, Button, useDisclosure } from "@nextui-org/react";
 import { IoIosSettings } from "react-icons/io";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
@@ -33,14 +33,13 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       }
 
       const data = await response.json();
-      console.log("Upload successful:", data);
 
       const profileUrl = `${SUPABASE_URL}/storage/v1/object/public/profile/${data.path}`;
 
       const updateResponse = await fetch(`/api/profile/${userId}`, {
         method: "PUT",
         headers: {
-          'Content-Type': 'application/json'
+          "Content-Type": "application/json"
         },
         body: JSON.stringify({ profileUrl })
       });
@@ -115,21 +114,19 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
             <>
               <ModalBody>
                 <div>
-                <p className="text-xl font-bold">📷 프로필 사진 변경하기</p>
-                <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5"/>
-                <div className="flex flex-row justify-end gap-x-5 mt-5">
-                <Button 
-                  className="bg-gray-300 rounded-lg"
-                variant="light" onPress={onClose}>
-                  닫기
-                </Button>
-                <Button
-                  className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg"
-                  onPress={handleProfileSubmit}
-                >
-                  확인
-                </Button>
-                </div>
+                  <p className="text-xl font-bold">📷 프로필 사진 변경하기</p>
+                  <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5" />
+                  <div className="flex flex-row justify-end gap-x-5 mt-5">
+                    <Button className="bg-gray-300 rounded-lg" variant="light" onPress={onClose}>
+                      닫기
+                    </Button>
+                    <Button
+                      className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg"
+                      onPress={handleProfileSubmit}
+                    >
+                      확인
+                    </Button>
+                  </div>
                 </div>
               </ModalBody>
             </>

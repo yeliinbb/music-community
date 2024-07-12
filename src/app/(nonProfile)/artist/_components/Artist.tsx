@@ -44,8 +44,8 @@ const editLike = async ({ id, isDelete, userId }: EditLikeParams & { userId: str
 };
 
 const Artist = ({ params }: ArtistProps) => {
-  const queryclient = useQueryClient();
   const userId = useLoginStore((state) => state.userId);
+  const queryClient = useQueryClient();
 
   const {
     data: artistData,
@@ -65,20 +65,34 @@ const Artist = ({ params }: ArtistProps) => {
   const { mutateAsync: editLikeMutate } = useMutation<void, Error, EditLikeParams>({
     mutationFn: async (mutationParam: EditLikeParams): Promise<void> => editLike(mutationParam),
     onSuccess: () => {
-      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
+      queryClient.invalidateQueries({ queryKey: ["artistLike"] });
     }
   });
 
   const onChangeLiked = async () => {
     try {
       await editLikeMutate({ id: params.id, isDelete: like ? true : false, userId });
+      queryClient.invalidateQueries({ queryKey: ["artistLike"] });
     } catch (error) {
       console.error(error);
     }
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="animate-pulse">
+        <div className="bg-gray-300 w-20 h-4 rounded-full mb-5" />
+        <div className="flex items-center gap-x-2">
+          <div className="size-[300px] rounded-lg bg-gray-300" />
+          <div className="flex flex-col gap-y-2">
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 size-[40px] rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (artistError) {

@@ -1,5 +1,5 @@
 import { MyPostsType } from "@/hooks/useMe";
-import { convertDateFormat } from "@/utils/convertDateFormet";
+import { convertDateFormat } from "@/lib/utils/convertDateFormat";
 import Image from "next/image";
 
 export default function MyPostCard({ post }: { post: MyPostsType }) {

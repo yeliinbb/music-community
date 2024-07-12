@@ -9,16 +9,33 @@ interface RelatedProps {
 }
 
 const fetchRelated = async (id: string) => {
-  const reponse = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
-  const { artists } = await reponse.json();
+  const response = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
+  const { artists } = await response.json();
   return artists;
 };
 
-const RelateedArtist = ({ params }: RelatedProps) => {
-  const { data = [], error } = useQuery<RelatedArtist[], Error>({
+const RelatedArtists = ({ params }: RelatedProps) => {
+  const {
+    data = [],
+    error,
+    isLoading
+  } = useQuery<RelatedArtist[], Error>({
     queryKey: ["relate", params.id],
     queryFn: () => fetchRelated(params.id)
   });
+
+  if (isLoading)
+    return (
+      <div className="animate-pulse">
+        <div className="bg-gray-300 w-20 h-4 rounded-full mb-5" />
+        <ul className="grid grid-cols-2 gap-y-4">
+          <li className="bg-gray-300 rounded-lg w-[280px] h-[150px]"></li>
+          <li className="bg-gray-300 rounded-lg w-[280px] h-[150px]"></li>
+          <li className="bg-gray-300 rounded-lg w-[280px] h-[150px]"></li>
+          <li className="bg-gray-300 rounded-lg w-[280px] h-[150px]"></li>
+        </ul>
+      </div>
+    );
 
   if (error) {
     console.error(error.message);
@@ -52,4 +69,4 @@ const RelateedArtist = ({ params }: RelatedProps) => {
   );
 };
 
-export default RelateedArtist;
+export default RelatedArtists;

@@ -14,8 +14,9 @@ const config: Config = {
         "gradient-conic": "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))"
       },
       gridTemplateColumns: {
-        "main-layout": "200px 4fr",
-        "profile-layout": "repeat(2, 1fr)"
+        "main-layout": "210px 4fr",
+        "profile-layout": "repeat(2, 1fr)",
+        "post-layout": "400px 2.5fr"
       },
       boxShadow: {
         custom: "0 0 10px 3px rgba(116, 116, 116, 0.3)"
