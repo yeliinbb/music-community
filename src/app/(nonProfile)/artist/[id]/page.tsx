@@ -1,7 +1,8 @@
 import React from "react";
 import Artist from "../_components/Artist";
 import ArtistTrack from "../_components/ArtistTrack";
-import RelateedArtist from "../_components/RelatedArtist";
+import RelatedArtist from "../_components/RelatedArtist";
+import ArtistComments from "../_components/ArtistComments";
 
 interface ArtistPageProps {
   params: { id: string };
@@ -17,7 +18,10 @@ const ArtistPage = ({ params }: ArtistPageProps) => {
         <ArtistTrack params={params} />
       </div>
       <div className="col-start-2 row-start-1 row-span-2">
-        <RelateedArtist params={params} />
+        <RelatedArtist params={params} />
+      </div>
+      <div className="col-start-2 row-start-2 row-span-2">
+        <ArtistComments params={params} />
       </div>
     </div>
   );

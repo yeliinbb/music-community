@@ -14,16 +14,15 @@ interface EditLikeParams {
 const fetchArtist = async (id: string) => {
   const response = await fetch(`/api/spotify/artist/${id}`);
   const data = await response.json();
-  // console.log(data);
+
   return data;
 };
 
 const likeState = async (id: string) => {
-  console.log(id);
+  // console.log(id);
   const res = await fetch(`/api/artist/likes/${id}`);
   const likeData = await res.json();
 
-  // console.log(likeData);
   return likeData;
 };
 
@@ -47,7 +46,7 @@ const editLike = async ({ id, isDelete }: EditLikeParams) => {
 };
 
 const Artist = ({ params }: ArtistProps) => {
-  const queryclient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const {
     data: artistData,
@@ -68,7 +67,7 @@ const Artist = ({ params }: ArtistProps) => {
   const onChangeLiked = async () => {
     try {
       await editLikeMutate({ id: params.id, isDelete: like ? true : false });
-      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
+      queryClient.invalidateQueries({ queryKey: ["artistLike"] });
     } catch (error) {
       console.error(error);
     }

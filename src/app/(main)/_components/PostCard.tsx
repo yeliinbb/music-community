@@ -1,6 +1,5 @@
+import { convertDateFormat } from "@/lib/utils/convertDateFormat";
 import { PostType } from "@/types/posts.type";
-import Image from "next/image";
-import { convertDateFormat } from "@/utils/convertDateFormet";
 
 interface PostCardProps {
   post: PostType;

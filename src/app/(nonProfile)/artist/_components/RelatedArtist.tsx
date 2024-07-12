@@ -9,13 +9,13 @@ interface RelatedProps {
 }
 
 const fetchRelated = async (id: string) => {
-  const reponse = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
-  const { artists } = await reponse.json();
+  const response = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
+  const { artists } = await response.json();
   console.log(artists);
   return artists;
 };
 
-const RelateedArtist = ({ params }: RelatedProps) => {
+const RelatedArtist = ({ params }: RelatedProps) => {
   const {
     data = [],
     error,
@@ -70,4 +70,4 @@ const RelateedArtist = ({ params }: RelatedProps) => {
   );
 };
 
-export default RelateedArtist;
+export default RelatedArtist;

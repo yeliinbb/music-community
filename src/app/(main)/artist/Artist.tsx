@@ -4,7 +4,7 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { SpotifyArtist } from "@/types/spotify.type";
 
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
+import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
 import Link from "next/link";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
@@ -27,7 +27,6 @@ const Artist = () => {
       return data;
     }
   });
-  // console.log("artistData =>", artistData);
 
   if (isPending) {
     return <ArtistSkeleton />;
