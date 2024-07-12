@@ -1,6 +1,7 @@
 "use client";
 
 import api from "@/api/api";
+import { useLoginStore } from "@/store/auth";
 import { ArtistsItems } from "@/types/spotify.type";
 import { useQueries, UseQueryResult } from "@tanstack/react-query";
 
@@ -18,15 +19,17 @@ type LikeType = {
 };
 
 export default function useMe() {
+  const { userId } = useLoginStore();
+  // console.log("USERID___", userId);
   const [posts, likes] = useQueries({
     queries: [
       {
-        queryKey: ["myPosts"],
-        queryFn: () => api.me.getMyPosts()
+        queryKey: ["myPosts", { userId }],
+        queryFn: () => api.me.getMyPosts(userId)
       },
       {
-        queryKey: ["myLikes"],
-        queryFn: () => api.me.getMyLikes()
+        queryKey: ["myLikes", { userId }],
+        queryFn: () => api.me.getMyLikes(userId)
       }
     ]
   }) as [UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>];

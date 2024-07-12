@@ -1,15 +1,15 @@
 "use client";
+import { useLoginStore } from "@/store/auth";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
-import { useLoginStore } from "@/store/auth";
+import React, { useRef, useState } from "react";
 
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const [loginUser, setLoginUser] = useState("");
   const userId = useLoginStore((state) => state.userId);
-  console.log("코멘트;", userId);
+  // console.log("코멘트;", userId);
   // useEffect(() => {
   //   const user = async () => {
   //     const supabase = createClient();
