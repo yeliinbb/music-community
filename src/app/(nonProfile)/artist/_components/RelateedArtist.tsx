@@ -4,7 +4,6 @@ import { RelatedArtist } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import React, { useEffect } from "react";
 
 interface RelatedProps {
   params: { id: string };
