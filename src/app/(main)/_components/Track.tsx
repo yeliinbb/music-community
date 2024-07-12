@@ -28,7 +28,7 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
         />
         <div className="w-full">
           <h4 className="h-[20px] overflow-hidden overflow-ellipsis font-semibold">{track.name}</h4>
-          <div className="flex justify-between items-center w-full">
+          <div className="flex justify-between items-center w-full ">
             <Link href={`http://localhost:3000/artist/${track.artists[0].id}`}>
               <span className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis hover:underline">
                 {track.artists[0].name}

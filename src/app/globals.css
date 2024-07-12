@@ -36,21 +36,19 @@ button:hover {
 
 .custom-slider .slick-arrow {
   position: absolute;
-  top: calc(50% - 15px); 
-}
+  top: calc(50% - 5px); 
 
-.custom-slider .slick-arrow:before {
-  content: none;
 }
 
 .custom-slider .slick-prev {
-  left: -20px;
-  width: 30px;
-  height: 30px;
+  left: -30px;
 }
 
 .custom-slider .slick-next {
-  right: -30px;
-  width: 30px;
-  height: 30px;
+  right: -35px;
+}
+
+.custom-slider .slick-prev:before,
+.custom-slider .slick-next:before {
+  content: none; /* 기본 화살표 아이콘 제거 */
 }

@@ -8,6 +8,7 @@ import Link from "next/link";
 import { PostType } from "@/types/posts.type";
 import PostCard from "./PostCard";
 
+
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
@@ -44,17 +45,19 @@ const PostList = () => {
   };
 
   return (
-    <div className="mt-10">
+    <div className="mt-10 w-full px-2">
       <p className="font-bold mb-5">게시글</p>
-      <div className="custom-slider ml-3 mr-3">
+      <div className="custom-slider">
         <Slider {...settings}>
           {allPosts?.map((post) => (
-            <div key={post.id} className="shadow-md hover:shadow-lg transition-shadow duration-150 
-              active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
-              border border-black rounded">
-              <Link href={`/detailpage/${post.id}`}>
-                <PostCard post={post} />
-              </Link>
+            <div key={post.id} className="px-1">
+              <div className="shadow-md hover:shadow-lg transition-shadow duration-150 
+                active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
+                border border-black rounded">
+                <Link className="p-2 flex flex-col gap-y-4" href={`/detailpage/${post.id}`}>
+                  <PostCard post={post} />
+                </Link>
+              </div>
             </div>
           ))}
         </Slider>
