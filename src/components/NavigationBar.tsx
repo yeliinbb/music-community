@@ -1,12 +1,11 @@
 import NavButton from "@/components/NavButton";
-import React from "react";
 
 const NavigationBar = () => {
   return (
-    <div className="flex flex-col gap-4 absolute right-[-85px] top-[140px] z-50">
-      <NavButton href="/">Home</NavButton>
-      <NavButton href="/my">My Page</NavButton>
-      <NavButton href="/post">Post</NavButton>
+    <div className="flex flex-col gap-4 absolute right-[-100px] top-[150px] z-50">
+      <NavButton path="/">Home</NavButton>
+      <NavButton path="/my">My Page</NavButton>
+      <NavButton path="/post">Post</NavButton>
     </div>
   );
 };

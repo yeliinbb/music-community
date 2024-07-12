@@ -55,8 +55,8 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
   });
 
   return (
-    <div className="w-full p-10 pt-[90px] h-full">
-      <div className="mx-auto max-w-[1024px] rounded-lg box-border p-10 gap-y-10 flex flex-col  h-full bg-white">
+    <div className="size-full">
+      <div className="mx-auto max-w-[1024px] rounded-lg box-border gap-y-10 flex flex-col  h-full bg-white">
         <HydrationBoundary state={dehydrate(queryClient)}>
           <SearchUser />
           <SearchAlbums />
