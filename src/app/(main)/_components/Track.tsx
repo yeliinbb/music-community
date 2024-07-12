@@ -2,8 +2,8 @@ import { SpotifyTrack } from "@/types/spotify.type";
 import Image from "next/image";
 import Link from "next/link";
 import { HiMiniPlay } from "react-icons/hi2";
-import "react-tooltip/dist/react-tooltip.css";
 import { Tooltip } from "react-tooltip";
+import "react-tooltip/dist/react-tooltip.css";
 
 interface TrackProps {
   track: SpotifyTrack;
@@ -29,7 +29,7 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
         <div className="w-full">
           <h4 className="h-[20px] overflow-hidden overflow-ellipsis font-semibold">{track.name}</h4>
           <div className="flex justify-between items-center w-full ">
-            <Link href={`http://localhost:3000/artist/${track.artists[0].id}`}>
+            <Link href={`/artist/${track.artists[0].id}`}>
               <span className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis hover:underline">
                 {track.artists[0].name}
               </span>
