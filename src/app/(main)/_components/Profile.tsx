@@ -26,11 +26,13 @@ const Profile = () => {
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
         {
-          <img
-            src={userProfileData?.profileUrl ? userProfileData.profileUrl : defaultImg}
-            alt="사용자 프로필 이미지"
-            className="w-[200px] h-[180px] object-cover rounded-md self-center"
-          />
+          <div className="w-[180px] h-[220px] overflow-hidden rounded-md self-center">
+            <img
+              src={userProfileData?.profileUrl ? userProfileData.profileUrl : defaultImg}
+              alt="사용자 프로필 이미지"
+              className="w-full h-full object-cover"
+            />
+          </div>
         }
         <div className="flex flex-col items-center gap-2">
           <div className="flex items-center gap-1.5 flex-row">
