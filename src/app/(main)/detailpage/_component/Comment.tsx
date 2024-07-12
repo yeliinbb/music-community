@@ -45,7 +45,7 @@ const Comment = ({ id }: { id: string }) => {
       return;
     }
 
-    const newComment = { content: comment, postId: id, userId: userId }; // userId 바꾸기
+    const newComment = { content: comment, postId: id, userId: userId };
     createComment(newComment);
   };
 
