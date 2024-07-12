@@ -1,4 +1,4 @@
-import { CommentType } from "@/types/posts.type";
+import { CommentType } from "@/types/comments";
 import { createClient } from "@/utils/supabase/client";
 
 const supabase = createClient();

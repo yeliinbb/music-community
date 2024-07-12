@@ -1,3 +1,4 @@
+export const dynamic = "force-dynamic";
 import api from "@/api/api";
 import { createClient } from "@/utils/supabase/server";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";

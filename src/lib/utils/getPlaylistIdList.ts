@@ -1,5 +1,4 @@
-import { Playlist } from "@/types/playlist.type";
-import { createClient } from "@/utils/supabase/server";
+import { createClient } from "@/utils/supabase/client";
 
 const getPlaylistIdList = async (): Promise<string[]> => {
   try {

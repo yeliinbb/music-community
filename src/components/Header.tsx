@@ -1,10 +1,13 @@
 import SearchInput from "@/app/(main)/search/_components/SearchInput";
+import Link from "next/link";
 import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   return (
     <header className="flex w-full gap-32 justify-between py-4 px-10">
-      <p className="text-2xl font-bold">CyTunes</p>
+      <Link href={"/"}>
+        <p className="cursor-pointer text-2xl font-bold">CyTunes</p>
+      </Link>
       <div className="flex flex-1 items-center justify-between">
         <div className="flex flex-grow max-w-[600px]">
           <SearchInput />
