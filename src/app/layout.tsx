@@ -10,8 +10,12 @@ export const metadata: Metadata = {
     template: "%s | Cytunes",
     default: "Cytunes"
   },
-  description: "Music Community"
+  description: "Music Community",
+  icons: {
+    icon: '/music.ico'
+  }
 };
+
 
 export default function RootLayout({
   children

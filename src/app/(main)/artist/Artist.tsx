@@ -1,15 +1,15 @@
 "use client";
 
-import React from "react";
-// import axios from "axios";
-
 import { useQuery } from "@tanstack/react-query";
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import type { SpotifyArtist } from "@/types/spotify.type";
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
+
+import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
+import Link from "next/link";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import ArtistSkeleton from "./ArtistSkeleton";
 
 const Artist = () => {
   const {
@@ -27,10 +27,9 @@ const Artist = () => {
       return data;
     }
   });
-  // console.log("artistData =>", artistData);
 
   if (isPending) {
-    return <div>--- 데이터 수집 중 ---</div>;
+    return <ArtistSkeleton />;
   }
 
   if (error) {
@@ -55,7 +54,7 @@ const Artist = () => {
       <div className="custom-slider ml-3 mr-3">
         <Slider {...settings}>
           {artistData.map((artist) => (
-            <div key={artist.id} className="flex flex-col items-center">
+            <Link href={`/artist/${artist.id}`} key={artist.id} className="flex flex-col items-center">
               <div className="flex justify-center">
                 {artist.images && artist.images ? (
                   <img
@@ -74,7 +73,7 @@ const Artist = () => {
               <p className="truncate text-center mt-2 w-full" title={artist.name}>
                 {artist.name}
               </p>
-            </div>
+            </Link>
           ))}
         </Slider>
       </div>

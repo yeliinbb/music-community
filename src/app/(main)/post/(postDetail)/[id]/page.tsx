@@ -1,4 +1,3 @@
-import React from "react";
 import Post from "../_component/Post";
 import Comment from "../_component/Comment";
 

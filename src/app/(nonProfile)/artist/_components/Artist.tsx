@@ -1,7 +1,6 @@
 "use client";
 
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Image from "next/image";
 
 interface ArtistProps {
   params: { id: string };
@@ -15,7 +14,7 @@ interface EditLikeParams {
 const fetchArtist = async (id: string) => {
   const response = await fetch(`/api/spotify/artist/${id}`);
   const data = await response.json();
-  // console.log(data);
+
   return data;
 };
 
@@ -24,7 +23,6 @@ const likeState = async (id: string) => {
   const res = await fetch(`/api/artist/likes/${id}`);
   const likeData = await res.json();
 
-  // console.log(likeData);
   return likeData;
 };
 
@@ -48,7 +46,7 @@ const editLike = async ({ id, isDelete }: EditLikeParams) => {
 };
 
 const Artist = ({ params }: ArtistProps) => {
-  const queryclient = useQueryClient();
+  const queryClient = useQueryClient();
 
   const {
     data: artistData,
@@ -69,14 +67,27 @@ const Artist = ({ params }: ArtistProps) => {
   const onChangeLiked = async () => {
     try {
       await editLikeMutate({ id: params.id, isDelete: like ? true : false });
-      queryclient.invalidateQueries({ queryKey: ["artistLike"] });
+      queryClient.invalidateQueries({ queryKey: ["artistLike"] });
     } catch (error) {
       console.error(error);
     }
   };
 
   if (isLoading) {
-    return <div>Loading...</div>;
+    return (
+      <div className="animate-pulse">
+        <div className="bg-gray-300 w-20 h-4 rounded-full mb-5" />
+        <div className="flex items-center gap-x-2">
+          <div className="size-[300px] rounded-lg bg-gray-300" />
+          <div className="flex flex-col gap-y-2">
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 w-20 h-4 rounded-full"></div>
+            <div className="bg-gray-300 size-[40px] rounded-lg"></div>
+          </div>
+        </div>
+      </div>
+    );
   }
 
   if (artistError) {
@@ -89,7 +100,7 @@ const Artist = ({ params }: ArtistProps) => {
       <div className="flex items-center space-x-4">
         {isSuccess && (
           <>
-            <Image
+            <img
               src={artistData.images[0].url}
               alt="이미지"
               width={300}
@@ -102,9 +113,9 @@ const Artist = ({ params }: ArtistProps) => {
               <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
               <button onClick={onChangeLiked}>
                 {like ? (
-                  <Image src="/heart.svg" alt="플러스" width={40} height={40} />
+                  <img src="/heart.svg" alt="플러스" width={40} height={40} />
                 ) : (
-                  <Image src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
+                  <img src="/heart_plus.svg" alt="플러스하트" width={40} height={40} />
                 )}
               </button>
             </div>

@@ -1,18 +1,19 @@
 "use client";
 
 import React from "react";
-import ProfileModal from "@/components/ProfileModal";
 import { IoPersonCircleOutline } from "react-icons/io5";
+import ProfileModal from "@/components/ProfileModal";
 import { useLoginStore } from "@/store/auth";
+import { MdOutlineMail } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
-import { MdOutlineMail } from "react-icons/md";
+
 import { useUserData } from "@/hooks/useUserData";
 
 const Profile = () => {
   const userId = useLoginStore((state) => state.userId);
 
-  const { data: userProfileData, isPending, error } = useUserData(userId);
+  const { data: userProfileData, isPending } = useUserData(userId);
   const defaultImg =
     "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
@@ -34,13 +35,21 @@ const Profile = () => {
           </div>
         }
         <div className="flex flex-col items-center gap-2">
-          <div className="flex items-center gap-1.5 flex-row">
+          <div className="flex items-end gap-1.5">
             <IoPersonCircleOutline className="mt-2" />
-            <span className="h-[15px]">{userProfileData?.nickname}</span>
+            {isPending ? (
+              <span className="w-20 h-4 bg-gray-300 rounded-full" />
+            ) : (
+              <span className="h-[15px]">{userProfileData?.nickname}</span>
+            )}
           </div>
-          <div className="flex items-center gap-1.5 flex-row">
+          <div className="flex items-end gap-1.5">
             <MdOutlineMail className="mt-2" />
-            <span className="h-[15px]">{userProfileData?.email}</span>
+            {isPending ? (
+              <span className="w-20 h-4 bg-gray-300 rounded-full" />
+            ) : (
+              <span className="h-[15px]">{userProfileData?.email}</span>
+            )}
           </div>
         </div>
       </div>

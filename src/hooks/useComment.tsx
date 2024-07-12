@@ -16,22 +16,6 @@ type NewCommentType = {
   userId: string;
 };
 
-type CommentTypeTest = {
-  content: string;
-  postId: string;
-  userId: string;
-  createdAt: string;
-  nickname: string;
-};
-
-type selectedComment = {
-  content: string;
-  createdAt: string | null;
-  id: string;
-  postId: string;
-  userId: string;
-};
-
 const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);

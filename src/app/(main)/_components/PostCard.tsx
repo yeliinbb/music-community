@@ -1,7 +1,5 @@
-import { PostType } from "@/types/posts.type";
-import React from "react";
-import Image from "next/image";
 import { convertDateFormat } from "@/lib/utils/convertDateFormat";
+import { PostType } from "@/types/posts.type";
 
 interface PostCardProps {
   post: PostType;
