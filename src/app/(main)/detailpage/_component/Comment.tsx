@@ -7,24 +7,8 @@ import React, { useRef, useState } from "react";
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
-  const [loginUser, setLoginUser] = useState("");
+  // const [loginUser, setLoginUser] = useState("");
   const userId = useLoginStore((state) => state.userId);
-  // console.log("코멘트;", userId);
-  // useEffect(() => {
-  //   const user = async () => {
-  //     const supabase = createClient();
-  //     const {
-  //       data: { session }
-  //     } = await supabase.auth.getSession();
-
-  //     if (!session) {
-  //       return;
-  //     }
-  //     const userId = session.user.id;
-  //     setLoginUser(userId);
-  //   };
-  //   user();
-  // }, []);
 
   const { data: commentList } = useQuery({
     queryKey: ["comments"],

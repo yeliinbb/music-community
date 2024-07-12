@@ -1,16 +1,17 @@
 "use client";
 
-import React from "react";
 import { useQuery } from "@tanstack/react-query";
 import { getAllPost } from "./getAllPost";
 import { PostgrestError } from "@supabase/supabase-js";
+import Link from "next/link";
+
 import { PostType } from "@/types/posts.type";
 import PostCard from "./PostCard";
+
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import Link from "next/link";
 
 const PostList = () => {
   const {

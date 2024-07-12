@@ -4,8 +4,8 @@ import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async (request: NextRequest, { params }: { params: { id: string } }) => {
   const userId = params.id;
-  console.log("userId test=>", userId);
   const supabase = createClient();
+
   try {
     const { data, error } = await supabase
       .from("users")
@@ -58,7 +58,6 @@ export const POST = async (request: NextRequest, { params }: { params: { id: str
 
 export const PUT = async (request: NextRequest, { params }: { params: { id: string } }) => {
   const userId = params.id;
-  console.log("userId test=>", userId);
   const supabase = createClient();
   const { profileUrl } = await request.json();
 
