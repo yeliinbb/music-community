@@ -11,11 +11,10 @@ interface RelatedProps {
 const fetchRelated = async (id: string) => {
   const response = await fetch(`/api/spotify/artist/${id}/relatedArtist`);
   const { artists } = await response.json();
-  console.log(artists);
   return artists;
 };
 
-const RelatedArtist = ({ params }: RelatedProps) => {
+const RelatedArtists = ({ params }: RelatedProps) => {
   const {
     data = [],
     error,
@@ -70,4 +69,4 @@ const RelatedArtist = ({ params }: RelatedProps) => {
   );
 };
 
-export default RelatedArtist;
+export default RelatedArtists;
