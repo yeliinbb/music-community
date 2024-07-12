@@ -1,8 +1,8 @@
 "use client";
+import { useLoginStore } from "@/store/auth";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
-import { useLoginStore } from "@/store/auth";
+import React, { useRef, useState } from "react";
 
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
