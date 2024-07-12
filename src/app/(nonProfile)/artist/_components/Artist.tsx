@@ -20,7 +20,7 @@ const fetchArtist = async (id: string) => {
 };
 
 const likeState = async (id: string) => {
-  console.log(id);
+  // console.log(id);
   const res = await fetch(`/api/artist/likes/${id}`);
   const likeData = await res.json();
 

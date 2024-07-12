@@ -9,27 +9,65 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      comments: {
+      artistComments: {
         Row: {
-          content: string | null
-          createdAt: string
+          content: string
+          createdAt: string | null
           id: string
+          nickname: string
           postId: string
-          userId: string | null
+          userId: string
         }
         Insert: {
-          content?: string | null
-          createdAt?: string
+          content: string
+          createdAt?: string | null
           id?: string
+          nickname: string
           postId: string
-          userId?: string | null
+          userId: string
         }
         Update: {
-          content?: string | null
-          createdAt?: string
+          content?: string
+          createdAt?: string | null
           id?: string
+          nickname?: string
           postId?: string
-          userId?: string | null
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "artistComments_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          content: string
+          createdAt: string | null
+          id: string
+          nickname: string | null
+          postId: string
+          userId: string
+        }
+        Insert: {
+          content: string
+          createdAt?: string | null
+          id?: string
+          nickname?: string | null
+          postId: string
+          userId?: string
+        }
+        Update: {
+          content?: string
+          createdAt?: string | null
+          id?: string
+          nickname?: string | null
+          postId?: string
+          userId?: string
         }
         Relationships: [
           {

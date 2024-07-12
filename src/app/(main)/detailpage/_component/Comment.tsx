@@ -1,84 +1,43 @@
 "use client";
-import { enableMutation } from "@/lib/getUserId";
-import { addComment, deleteComment, editComment } from "@/lib/utils/commentUtils";
+import { addComment, deleteComment, editComment, fetchComments } from "@/lib/utils/commentUtils";
 import { getDateTime } from "@/lib/utils/getDateTime";
-import { CommentWithUserType } from "@/types/comment.type";
-
-import { createClient } from "@/utils/supabase/client";
+import { CommentType } from "@/types/comment.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
+import { useLoginStore } from "@/store/auth";
 
 const Comment = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
-  const commentRef = useRef<HTMLInputElement | null>(null);
-  const [loginId, setLoginId] = useState();
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
+  const commentRef = useRef<HTMLInputElement | null>(null);
   const queryClient = useQueryClient();
-
-  useEffect(() => {
-    const user = async () => {
-      const supabase = createClient();
-      const {
-        data: { session }
-      } = await supabase.auth.getSession();
-
-      if (!session) {
-        return;
-      }
-      const userId = session.user.id;
-      setLoginId(userId);
-    };
-    user();
-  });
+  const userId = useLoginStore((state) => state.userId);
 
   const {
-    data: commentList,
+    data: commentList = [],
     error,
     isPending,
     isSuccess
-  } = useQuery<CommentWithUserType[], Error>({
+  } = useQuery<CommentType[], Error, CommentType[], [string, string]>({
     queryKey: ["comments", id],
-    queryFn: async () => {
-      try {
-        const supabase = createClient();
-        const { data } = await supabase
-          .from("comments")
-          .select("*,users(nickname, email)")
-          .order("createdAt", { ascending: false });
-        console.log("commentList", data);
-        return data;
-      } catch (error) {
-        console.log(error);
-      }
-    }
+    queryFn: () => fetchComments(id)
   });
 
   // 댓글 남기기
   const addMutation = useMutation({
     mutationFn: addComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
     }
   });
 
   const editMutation = useMutation({
     mutationFn: editComment,
-    onSuccess: (updatedComment: CommentWithUserType) => {
-      // queryClient.setQueryData<CommentWithUserType[]>(["comments", id], (oldData) => {
-      //   if (!oldData) return [];
-
-      //   const updatedComments = oldData.map((comment) => (comment.id === updatedComment.id ? updatedComment : comment));
-
-      //   // 정렬 로직을 추가
-      //   return updatedComments.sort((a, b) => {
-      //     // 날짜순으로 정렬 (최신순)
-      //     return new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime();
-      //   });
-      // });
-      queryClient.invalidateQueries(["comments", id]);
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
       setIsEditing(false);
       setEditingCommentId(null);
       setEditingContent("");
@@ -88,7 +47,7 @@ const Comment = ({ id }: { id: string }) => {
   const deleteMutation = useMutation({
     mutationFn: deleteComment,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["comments"] });
+      queryClient.invalidateQueries({ queryKey: ["comments", id] });
     }
   });
 
@@ -102,21 +61,25 @@ const Comment = ({ id }: { id: string }) => {
         alert("내용을 입력하세요!");
         return;
       }
-      const newComment = { content: comment, postId: id, userId: loginId }; // userId 바꾸기
+      const newComment: Omit<CommentType, "createdAt" | "id" | "users"> = {
+        content: comment,
+        postId: id,
+        userId: userId
+      }; // userId 바꾸기
       addMutation.mutate(newComment);
       commentRef.current.value = "";
     }
   };
 
-  const handleEditComment = async (commentId: CommentWithUserType["id"]) => {
-    const selectedComment: CommentWithUserType = commentList.find((comment) => comment.id === commentId);
+  const handleEditComment = async (commentId: CommentType["id"]) => {
+    const selectedComment = commentList?.find((comment: CommentType) => (comment.id === commentId ? comment : {}));
 
     // 선택된 댓글이 없는 경우 반환
     if (!selectedComment) {
       return;
     }
 
-    if (loginId !== selectedComment?.userId) {
+    if (userId !== selectedComment?.userId) {
       alert("작성자만 댓글을 수정할 수 있습니다");
       return;
     }
@@ -125,7 +88,7 @@ const Comment = ({ id }: { id: string }) => {
     if (isEditing && editingCommentId === commentId) {
       const content = editingContent;
       if (content !== undefined) {
-        const editedComment: CommentWithUserType = {
+        const editedComment: CommentType = {
           ...selectedComment,
           content: content
         };
@@ -139,13 +102,13 @@ const Comment = ({ id }: { id: string }) => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    const selectedComment: CommentWithUserType = commentList.find((comment) => comment.id === commentId);
+    const selectedComment = commentList?.find((comment: CommentType) => (comment.id === commentId ? comment : {}));
 
     if (!selectedComment) {
       return;
     }
 
-    if (loginId !== selectedComment?.userId) {
+    if (userId !== selectedComment?.userId) {
       alert("작성자만 댓글을 삭제할 수 있습니다.");
       return;
     }
@@ -190,8 +153,8 @@ const Comment = ({ id }: { id: string }) => {
                 <div className="shadow p-4 rounded-lg mb-2" key={comment.id}>
                   <div>
                     <li className="flex justify-between p-2">
-                      <span>{comment.users?.nickname}</span>
-                      <span>{getDateTime(comment.createdAt)}</span>
+                      <span>{comment.users.nickname}</span>
+                      <span>{getDateTime(comment.createdAt ?? "")}</span>
                       <button>
                         <RiEditFill onClick={() => handleEditComment(comment.id)} />
                       </button>

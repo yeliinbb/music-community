@@ -6,7 +6,9 @@ type LoginState = {
   login: () => void;
   logout: () => void;
   userId: string;
+  userNickname: string;
   setUserId: (userId: string) => void;
+  setUserNickname: (userNickname: string) => void;
 };
 
 export const useLoginStore = create(
@@ -16,18 +18,11 @@ export const useLoginStore = create(
       userId: "",
       login: () => set({ isLogin: true }),
       logout: () => set({ isLogin: false }),
-      setUserId: (userId) => set({ userId })
+      setUserId: (userId) => set({ userId }),
+      setUserNickname: (userNickname) => set({ userNickname })
     }),
     {
       name: "userIdStorage"
     }
   )
 );
-
-// export const useLoginStore = create<LoginState>(persist()(set) => ({
-//   isLogin: false,
-//   login: () => set({ isLogin: true }),
-//   logout: () => set({ isLogin: false }),
-//   userId: "",
-//   setUserId: (userId) => set({ userId })
-// }));

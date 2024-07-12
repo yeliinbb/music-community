@@ -1,19 +1,19 @@
 "use client";
 
-import { enableMutation } from "@/lib/getUserId";
 import { deletePost, editPost } from "@/lib/utils/postUtils";
 import { PostType } from "@/types/posts.type";
-import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
+import { useLoginStore } from "@/store/auth";
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+  const userId = useLoginStore((state) => state.userId);
   const queryClient = useQueryClient();
   const router = useRouter();
 
@@ -49,7 +49,6 @@ const Post = ({ id }: { id: string }) => {
   });
 
   const onEdit = async () => {
-    const userId = await enableMutation();
     if (userId !== post?.userId) {
       alert("작성자만 게시글을 수정할 수 있습니다");
       return;
@@ -74,7 +73,6 @@ const Post = ({ id }: { id: string }) => {
   };
 
   const onDelete = async () => {
-    const userId = await enableMutation();
     if (userId !== post?.userId) {
       alert("작성자만 게시글을 삭제할 수 있습니다.");
       return;

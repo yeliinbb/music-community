@@ -12,23 +12,6 @@ import type { SpotifyArtist } from "@/types/spotify.type";
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
 
 const Artist = () => {
-  //   const {
-  //   data: artistData,
-  //   isLoading: isArtistLoading,
-  //   isError: isArtistError,
-  //   error: artistError
-  // } = useQuery<SpotifyArtist[], Error>({
-  //   queryKey: ["artistData"],
-  //   queryFn: async () => {
-  //     const response = await fetch("/api/artist");
-  //     if (!response.ok) {
-  //       throw new Error("서버 응답이 올바르지 않습니다.");
-  //     }
-  //     const data = await response.json();
-  //     return data;
-  //   }
-  // });
-
   const {
     data: artistData,
     isPending,
@@ -54,15 +37,6 @@ const Artist = () => {
     console.error(error);
     return <div className="text-xl">에러가 발생했습니다: {error?.message}</div>;
   }
-
-  // if (isArtistDataError) {
-  //   console.error(artistDataError);
-  //   return <div className="text-xl">에러가 발생했습니다: {artistDataError.message}</div>;
-  // }
-
-  // if (!artistData || artistData.length === 0) {
-  //   return <div className="text-xl">트랙 데이터가 없습니다.</div>;
-  // }
 
   const settings = {
     infinite: true,

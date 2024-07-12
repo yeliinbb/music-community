@@ -17,7 +17,7 @@ const fetchRelated = async (id: string) => {
   return artists;
 };
 
-const RelateedArtist = ({ params }: RelatedProps) => {
+const RelatedArtist = ({ params }: RelatedProps) => {
   const router = useRouter();
 
   const { data = [], error } = useQuery<RelatedArtist[], Error>({
@@ -62,4 +62,4 @@ const RelateedArtist = ({ params }: RelatedProps) => {
   );
 };
 
-export default RelateedArtist;
+export default RelatedArtist;
