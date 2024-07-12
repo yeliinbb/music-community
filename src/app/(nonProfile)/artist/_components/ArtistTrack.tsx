@@ -41,8 +41,8 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
 
   return (
     <>
-      <div className="m-4">인기</div>
-      <div>
+      <div className="m-4 font-medium">Hot Track</div>
+      <div className="overflow-y-auto max-h-[300px]">
         <div className="grid gap-4 ">
           {data.map((track, index) => {
             return (
