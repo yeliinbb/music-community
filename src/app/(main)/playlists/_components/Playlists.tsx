@@ -64,35 +64,33 @@ const Playlists = () => {
   return (
     <div className="w-full h-full">
       <div className="custom-slider">
-      <Slider {...settings}>
-        {isSuccess &&
-          playlists.map((playlist, index) => (
-            <div key={playlist.id} className="w-full h-full self-center">
-              {index === currentIndex && (
-                <>
-                  <h2 className="mb-2 font-bold">{playlist.name}</h2>
-                  <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
-                    <Image
-                      width={500}
-                      height={500}
-                      src={currentTrack?.album.images[0].url || playlist.tracks[0].album.images[0].url}
-                      alt={currentTrack?.name || playlist.tracks[0].name}
-                      className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow-custom"
-                    />
-                    <ul className="grid grid-cols-2 gap-2 ">
-                      {playlist.tracks.map((track) => (
-                        <Track key={track.id} track={track} audioRef={audioRef} playTrack={playTrack} />
-                      ))}
-                    </ul>
-                  </div>
-                </>
-              )}
-            </div>
-          ))}
-      </Slider>
+        <Slider {...settings}>
+          {isSuccess &&
+            playlists.map((playlist, index) => (
+              <div key={playlist.id} className="w-full h-full self-center">
+                {index === currentIndex && (
+                  <>
+                    <h2 className="mb-2 font-bold">{playlist.name}</h2>
+                    <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
+                      <Image
+                        width={500}
+                        height={500}
+                        src={currentTrack?.album.images[0].url || playlist.tracks[0].album.images[0].url}
+                        alt={currentTrack?.name || playlist.tracks[0].name}
+                        className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow-custom"
+                      />
+                      <ul className="grid grid-cols-2 gap-2 ">
+                        {playlist.tracks.map((track) => (
+                          <Track key={track.id} track={track} audioRef={audioRef} playTrack={playTrack} />
+                        ))}
+                      </ul>
+                    </div>
+                  </>
+                )}
+              </div>
+            ))}
+        </Slider>
       </div>
-
-      
     </div>
   );
 };

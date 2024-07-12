@@ -1,7 +1,9 @@
 "use client";
 
-import { TracksItems } from "@/types/spotify.type";
+import { SpotifyTrack, TracksItems } from "@/types/spotify.type";
 import { useQuery } from "@tanstack/react-query";
+import PlayBtn from "./PlayBtn";
+import { useRef } from "react";
 
 interface ArtistTrackProps {
   params: { id: string };
@@ -24,6 +26,33 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
     queryKey: ["artistTrack", params.id],
     queryFn: () => fetchArtistTrack(params.id)
   });
+
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  const playTrack = (track: SpotifyTrack) => {
+    if (audioRef.current && track.preview_url) {
+      audioRef.current.src = track.preview_url;
+      audioRef.current.play();
+      console.log("재생");
+    } else {
+      audioRef.current?.pause();
+      console.log("멈춤");
+    }
+  };
+
+  // const playTrack = (track: SpotifyTrack) => {
+  //   if (audioRef.current) {
+  //     if (isPlaying && currentTrack?.id === track.id) {
+  //       audioRef.current.pause();
+  //       setIsPlaying(false);
+  //     } else {
+  //       audioRef.current.src = track.preview_url || "";
+  //       audioRef.current.play();
+  //       setIsPlaying(true);
+  //       setCurrentTrack(track);
+  //     }
+  //   }
+  // };
 
   if (isLoading) {
     return <div>Loading...</div>;
@@ -58,6 +87,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
                     <div className="mt-2">{track.name}</div>
                     <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
                   </div>
+                  <PlayBtn previewUrl={track.preview_url} playTrack={() => playTrack(track)} audioRef={audioRef} />
                 </div>
               </div>
             );

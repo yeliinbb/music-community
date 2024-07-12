@@ -111,6 +111,7 @@ export interface TracksItems {
   uri: string;
   duration_ms: number;
   popularity: number;
+  preview_url: string;
 }
 
 export interface Artist {

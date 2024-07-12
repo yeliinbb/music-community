@@ -5,13 +5,17 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
   const { id } = params;
   const supabase = createClient();
 
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
+
+  console.log("이게 바로 유저아이디지=>", user?.id);
+
   const { data: likeData, error: likeError } = await supabase
     .from("likes")
     .select("*")
-    .match({ artistId: id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" })
+    .match({ artistId: id, userId: user?.id })
     .single();
-
-  console.log(likeData);
 
   return NextResponse.json(likeData);
 }
@@ -19,11 +23,14 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 export async function DELETE(request: NextRequest, { params }: { params: { id: string } }) {
   const { id } = params;
   const supabase = createClient();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
 
   const { data: deleteData, error: deleteError } = await supabase
     .from("likes")
     .delete()
-    .match({ artistId: id, userId: "69a8c208-3941-43c2-acc6-8562129a2fc6" });
+    .match({ artistId: id, userId: user?.id });
 
   return NextResponse.json(deleteData);
 }
