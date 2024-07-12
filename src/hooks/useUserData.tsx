@@ -2,8 +2,17 @@
 
 import { useQuery } from "@tanstack/react-query";
 
-const fetchUserProfile = async (userId: string) => {
+export type UserProfile = {
+  id: string;
+  nickname: string;
+  email: string;
+  profileUrl: string;
+};
+
+
+const fetchUserProfile = async (userId: string): Promise<UserProfile> => {
   const response = await fetch(`/api/profile/${userId}`);
+
   if (!response.ok) {
     throw new Error("사용자 정보를 가져오는데 실패했습니다.");
   }
@@ -11,9 +20,14 @@ const fetchUserProfile = async (userId: string) => {
 };
 
 export const useUserData = (userId: string) => {
-  return useQuery({
+  const { data: userProfileData, isPending, error } = useQuery({
     queryKey: ["userData", userId],
     queryFn: () => fetchUserProfile(userId),
-    enabled: !userId
   });
+
+  return {
+    userProfileData,
+    isPending,
+    error
+  }
 };
