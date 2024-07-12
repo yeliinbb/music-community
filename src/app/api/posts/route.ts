@@ -1,6 +1,5 @@
 import { createClient } from "@/utils/supabase/server";
-import { NextResponse } from "next/server";
-import { Request } from "./../../../../node_modules/node-fetch/@types/index.d";
+import { NextRequest, NextResponse } from "next/server";
 
 interface Post {
   title: string;
@@ -8,7 +7,7 @@ interface Post {
   imageURL: string;
 }
 
-export const POST = async (request: Request) => {
+export const POST = async (request: NextRequest) => {
   const supabase = createClient();
   try {
     const { title, content, imageURL } = (await request.json()) as Post;
