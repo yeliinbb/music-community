@@ -44,7 +44,10 @@ const Comment = ({ id }: { id: string }) => {
     queryFn: async () => {
       try {
         const supabase = createClient();
-        const { data } = await supabase.from("comments").select("*,users(nickname, email)");
+        const { data } = await supabase
+          .from("comments")
+          .select("*,users(nickname, email)")
+          .order("createdAt", { ascending: false });
         console.log("commentList", data);
         return data;
       } catch (error) {
