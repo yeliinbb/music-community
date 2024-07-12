@@ -7,7 +7,7 @@ import { useLoginStore } from "@/store/auth";
 import { MdOutlineMail } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
-
+import "react-tooltip/dist/react-tooltip.css";
 import { useUserData } from "@/hooks/useUserData";
 
 const Profile = () => {
@@ -20,8 +20,8 @@ const Profile = () => {
   return (
     <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
       <div className="w-full max-h-[300px] flex flex-col gap-3 px-[10px] pt-[30px] ">
-        <div>
-          <span className="mr-1.5">마이 프로필</span>
+        <div className="flex items-center">
+          <span className="mr-1.5 text-base">마이 프로필</span>
           <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
@@ -34,21 +34,21 @@ const Profile = () => {
             />
           </div>
         }
-        <div className="flex flex-col items-center gap-2">
-          <div className="flex items-end gap-1.5">
+        <div className="flex flex-col justify-center gap-2 place-self-center">
+          <div className="flex gap-1.5 items-center">
             <IoPersonCircleOutline className="mt-2" />
             {isPending ? (
               <span className="w-20 h-4 bg-gray-300 rounded-full" />
             ) : (
-              <span className="h-[15px]">{userProfileData?.nickname}</span>
+              <span className="h-[15px] text-sm">{userProfileData?.nickname}</span>
             )}
           </div>
-          <div className="flex items-end gap-1.5">
+          <div className="flex gap-1.5 items-center">
             <MdOutlineMail className="mt-2" />
             {isPending ? (
               <span className="w-20 h-4 bg-gray-300 rounded-full" />
             ) : (
-              <span className="h-[15px]">{userProfileData?.email}</span>
+              <span className="h-[15px] text-sm">{userProfileData?.email}</span>
             )}
           </div>
         </div>

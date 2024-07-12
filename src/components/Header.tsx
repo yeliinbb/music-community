@@ -4,16 +4,16 @@ import LogoutButton from "./LogoutButton";
 
 const Header = () => {
   return (
-    <header className="flex w-full gap-32 justify-between py-4 px-10 items-center">
+    <header className="grid grid-cols-main-layout w-full gap-2.5 justify-between py-4 px-10 items-center">
       <Link href={"/"}>
         <img src="/logo.svg" alt="logo" className="w-[150px] cursor-pointer" />
       </Link>
       <div className="flex flex-1 items-center justify-between">
-        <div className="flex flex-grow max-w-[600px]">
+        <div className="flex flex-grow max-w-[400px]">
           <SearchInput />
         </div>
         <div className="flex items-center">
-          <div className="mr-5">
+          <div className="mr-0.5">
             <div>
               <LogoutButton />
             </div>

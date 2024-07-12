@@ -40,5 +40,12 @@ export default function LogoutButton() {
     router.replace("/login"); // 로그인 페이지로 이동
   };
 
-  return <button onClick={isLogin ? handleLogout : handleLogin} className="font-bold">{isLogin ? "로그아웃" : "로그인"}</button>;
+  return (
+    <button
+      onClick={isLogin ? handleLogout : handleLogin}
+      className=" bg-[#989898] text-white min-w-100px px-4 py-2.5 rounded-xl"
+    >
+      {isLogin ? "로그아웃" : "로그인"}
+    </button>
+  );
 }

@@ -72,12 +72,10 @@ const Playlists = () => {
                   <>
                     <h2 className="mb-2 font-bold">{playlist.name}</h2>
                     <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
-                      <Image
-                        width={500}
-                        height={500}
+                      <img
                         src={currentTrack?.album.images[0].url || playlist.tracks[0].album.images[0].url}
                         alt={currentTrack?.name || playlist.tracks[0].name}
-                        className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow-custom"
+                        className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow"
                       />
                       <ul className="grid grid-cols-2 gap-2 ">
                         {playlist.tracks.map((track) => (
