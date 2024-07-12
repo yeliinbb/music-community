@@ -13,6 +13,7 @@ const fetchUserProfile = async (userId: string) => {
 export const useUserData = (userId: string) => {
   return useQuery({
     queryKey: ["userData", userId],
-    queryFn: () => fetchUserProfile(userId)
+    queryFn: () => fetchUserProfile(userId),
+    enabled: !userId
   });
 };
