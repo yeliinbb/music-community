@@ -14,7 +14,7 @@ const MainLayout = ({ children }: PropsWithChildren) => {
           <NavigationBar />
           <section className="w-full h-[800px] grid grid-cols-main-layout gap-8 px-10 pb-10">
             <Profile />
-            <div className="w-full bg-white p-[20px] rounded-xl overflow-y-scroll scrollbar-hide scroll-smooth">
+            <div className="w-full bg-white p-[20px] rounded-xl overflow-y-scroll scrollbar-hide scroll-smooth z-10">
               {children}
             </div>
           </section>
