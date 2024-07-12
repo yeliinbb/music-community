@@ -98,6 +98,9 @@ export interface ArtistsItems {
 export interface TracksItems {
   album: Album;
   artists: Artist[];
+  external_urls: {
+    spotify: string;
+  };
   id: string;
   images: Image[];
   name: string;

@@ -1,5 +1,4 @@
 import { PostType } from '@/types/posts.type'
-import React from 'react'
 import Image from "next/image";import { convertDateFormat } from "@/utils/convertDateFormet";
 
 interface PostCardProps {

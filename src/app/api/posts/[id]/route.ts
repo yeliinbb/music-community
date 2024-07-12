@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
 
-export const GET = async (request: Request, { params }: { params: { id: string } }) => {
+export const GET = async (_: Request, { params }: { params: { id: string } }) => {
   const supabase = createClient();
   try {
     const { id } = params;
@@ -9,7 +9,7 @@ export const GET = async (request: Request, { params }: { params: { id: string }
 
     if (error) {
       console.error(error);
-      return null;
+      return NextResponse.json({ error: error });
     }
     return NextResponse.json(data);
   } catch (error) {
