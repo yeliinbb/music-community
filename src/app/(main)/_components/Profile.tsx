@@ -1,14 +1,13 @@
 "use client";
 
-import React from "react";
-import Link from "next/link";
 import ProfileModal from "@/components/ProfileModal";
 import { IoPersonCircleOutline } from "react-icons/io5";
 // import { useQuery } from "@tanstack/react-query";
 import { useLoginStore } from "@/store/auth";
+import { MdOutlineMail } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
 import Trending from "../playlists/_components/Trending";
-import { MdOutlineMail } from "react-icons/md";
+
 import { useUserData } from "@/hooks/useUserData";
 
 const Profile = () => {
@@ -41,7 +40,18 @@ const Profile = () => {
           <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
           <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: "#858585", color: "white" }} />
         </div>
+
         {
+          <img
+            src={
+              userProfileData?.profileUrl
+                ? userProfileData.profileUrl
+                : "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
+            }
+            alt="사용자 프로필 이미지"
+            className="max-w-[180px] h-[180px] object-cover rounded-md self-center"
+          />
+        }
           <img
             src={
               userProfileData?.profileUrl

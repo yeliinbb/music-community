@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useLoginStore } from "@/store/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useLoginStore } from "@/store/auth";
+import { useState } from "react";
 
 const Login = () => {
   const [email, setEmail] = useState("");
