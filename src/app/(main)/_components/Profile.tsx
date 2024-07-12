@@ -19,7 +19,7 @@ const Profile = () => {
 
   return (
     <div className=" bg-white rounded-2xl w-full h-full grid grid-rows-profile-layout grid-cols-1 mx-auto my-0 gap-3 ">
-      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[30px] pt-[30px] ">
+      <div className="w-full max-h-[300px] flex flex-col gap-3 px-[10px] pt-[30px] ">
         <div>
           <span className="mr-1.5">마이 프로필</span>
           <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
@@ -29,7 +29,7 @@ const Profile = () => {
           <img
             src={userProfileData?.profileUrl ? userProfileData.profileUrl : defaultImg}
             alt="사용자 프로필 이미지"
-            className="max-w-[180px] h-[180px] object-cover rounded-md self-center"
+            className="w-[200px] h-[180px] object-cover rounded-md self-center"
           />
         }
         <div className="flex flex-col items-center gap-2">

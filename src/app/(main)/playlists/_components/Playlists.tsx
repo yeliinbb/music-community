@@ -63,6 +63,7 @@ const Playlists = () => {
 
   return (
     <div className="w-full h-full">
+      <div className="custom-slider">
       <Slider {...settings}>
         {isSuccess &&
           playlists.map((playlist, index) => (
@@ -70,7 +71,7 @@ const Playlists = () => {
               {index === currentIndex && (
                 <>
                   <h2 className="mb-2 font-bold">{playlist.name}</h2>
-                  <div className="flex w-full h-full gap-2.5 pl-2">
+                  <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
                     <Image
                       width={500}
                       height={500}
@@ -89,6 +90,9 @@ const Playlists = () => {
             </div>
           ))}
       </Slider>
+      </div>
+
+      
     </div>
   );
 };

@@ -8,7 +8,6 @@ const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
   const userId = useLoginStore((state) => state.userId);
-  console.log("코멘트;", userId);
 
   const { data: commentList } = useQuery({
     queryKey: ["comments"],
