@@ -2,12 +2,11 @@
 import { useLoginStore } from "@/store/auth";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import React, { useRef, useState } from "react";
+import { useRef } from "react";
 
 const Comment = ({ id }: { id: string }) => {
   const commentRef = useRef<HTMLInputElement>(null);
   const queryClient = useQueryClient();
-  // const [loginUser, setLoginUser] = useState("");
   const userId = useLoginStore((state) => state.userId);
 
   const { data: commentList } = useQuery({
@@ -45,7 +44,7 @@ const Comment = ({ id }: { id: string }) => {
       return;
     }
 
-    const newComment = { content: comment, postId: id, userId: userId }; // userId 바꾸기
+    const newComment = { content: comment, postId: id, userId: userId };
     createComment(newComment);
   };
 
