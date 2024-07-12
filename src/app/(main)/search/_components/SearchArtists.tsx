@@ -42,17 +42,11 @@ export default function SearchArtists() {
         <h2 className="font-bold text-2xl">아티스트</h2>
         <div className="size-full flex-1">
           {!artists?.length && <h2 className="font-bold test-2xl select-none">앨범 검색 결과가 없습니다.</h2>}
-          <ul
-            className="flex gap-2 overflow-x-scroll p-2 
-          scrollbar
-          scrollbar-corner-sky-500  
-          scrollbar-thumb-slate-700
-           scrollbar-track-slate-300"
-          >
+          <ul className="flex gap-2 overflow-x-scroll p-2 ">
             {artists?.map((artist) => (
               <li className="flex flex-col gap-y-2" key={artist.id}>
                 <Link href={`/artist/${artist.id}`}>
-                  <div className="cursor-pointer relative size-24 aspect-square p-2">
+                  <div className="cursor-pointer hover:shadow-md relative size-24 aspect-square p-2">
                     <Image
                       src={artist.images.length ? artist.images[0].url : "http://via.placeholder.com/640x480"}
                       className="object-cover border-gray-300 border"
