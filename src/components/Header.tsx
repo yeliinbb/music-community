@@ -15,11 +15,11 @@ const Header = () => {
               <LogoutButton />
             </div>
           </div>
-          <img
+          {/* <img
             src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
             alt="profile image"
             className="w-10 h-10 object-cover rounded-full border-white border-[1.5px] border-solid"
-          />
+          /> */}
         </div>
       </div>
     </header>

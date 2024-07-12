@@ -66,7 +66,7 @@ const Artist = () => {
 
   const settings = {
     infinite: true,
-    slidesToShow: 4,
+    slidesToShow: 5,
     slidesToScroll: 3,
     arrows: true,
     autoplay: true,
@@ -87,7 +87,7 @@ const Artist = () => {
                   <img
                     src={artist.images[2].url}
                     alt={`${artist.name}`}
-                    className="w-20 h-20 rounded-md object-cover"
+                    className="w-[100px] h-[100px] rounded-md object-cover"
                   />
                 ) : (
                   <img

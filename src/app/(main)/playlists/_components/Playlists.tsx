@@ -69,7 +69,7 @@ const Playlists = () => {
             <div key={playlist.id} className="w-full h-full self-center">
               {index === currentIndex && (
                 <>
-                  <h2 className="mb-2">{playlist.name}</h2>
+                  <h2 className="mb-2 font-bold">{playlist.name}</h2>
                   <div className="flex w-full h-full gap-2.5 pl-2">
                     <Image
                       width={500}
