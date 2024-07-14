@@ -7,6 +7,7 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useLoginStore } from "@/store/auth";
+import PostSkeleton from "./PostSkeleton";
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -91,14 +92,14 @@ const Post = ({ id }: { id: string }) => {
   };
 
   if (isPending) {
-    return <div>게시글 불러오는 중...</div>;
+    return <PostSkeleton />;
   }
   if (error) {
     return <div>게시글 불러오기 실패</div>;
   }
 
   return (
-    <div className="border-2 border-gray-300 rounded-lg p-3 relative h-full ">
+    <div className="border-2 border-gray-300 rounded-lg p-3 relative h-full max-h-[940px]">
       {isEditing ? (
         <>
           <div className="absolute top-[10px] right-[10px] flex gap-2 text-white">
@@ -110,7 +111,7 @@ const Post = ({ id }: { id: string }) => {
             </button>
           </div>
 
-          <div className="flex items-center">
+          <div className="flex items-center h-full w-full max-h-[100px]">
             <img src={post?.imageURL} alt="썸네일 이미지" width={100} height={100} className="rounded-md" />
             <input
               className="text-lg mb-3 ml-8 h-8 border border-gray-500 outline-none p-1 rounded-md"
@@ -121,7 +122,7 @@ const Post = ({ id }: { id: string }) => {
           <textarea
             ref={contentRef}
             defaultValue={post?.content ?? undefined}
-            className="resize-none outline-none border border-gray-500 mt-5 w-full rounded-md p-1"
+            className="resize-none outline-none border border-gray-500 mt-5 w-full rounded-md p-1 h-full max-h-[150px]"
           ></textarea>
         </>
       ) : (
