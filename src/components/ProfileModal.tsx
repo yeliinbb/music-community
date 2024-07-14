@@ -80,7 +80,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
 
   const handleProfileSubmit = () => {
     if (!file) {
-      alert("프로필 사진을 선택해주세요.");
+      toast.warn("프로필 사진을 선택해주세요.");
       return;
     }
 
