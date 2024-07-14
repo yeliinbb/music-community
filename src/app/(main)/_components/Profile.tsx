@@ -35,18 +35,18 @@ const Profile = () => {
           </div>
         }
         <div className="flex flex-col justify-center gap-2 place-self-center">
-          <div className="flex gap-1.5 items-center">
-            <IoPersonCircleOutline className="mt-2" />
+          <div className="flex gap-1.5 items-center ">
+            <IoPersonCircleOutline className="mt-1.5" />
             {isPending ? (
-              <span className="w-20 h-4 bg-gray-300 rounded-full" />
+              <span className="w-40 h-4 bg-gray-300 rounded-full" />
             ) : (
               <span className="h-[15px] text-sm">{userProfileData?.nickname}</span>
             )}
           </div>
           <div className="flex gap-1.5 items-center">
-            <MdOutlineMail className="mt-2" />
+            <MdOutlineMail className="mt-1.5" />
             {isPending ? (
-              <span className="w-20 h-4 bg-gray-300 rounded-full" />
+              <span className="w-40 h-4 bg-gray-300 rounded-full flex" />
             ) : (
               <span className="h-[15px] text-sm">{userProfileData?.email}</span>
             )}

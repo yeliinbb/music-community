@@ -8,7 +8,12 @@ import SearchAlbumsSkeleton from "./SearchAlbumsSkeleton";
 
 export default function SearchAlbums() {
   const obsRef = useRef<HTMLDivElement>(null);
-  const { albums, albumsIsFetching, albumsHasNextPage, albumsFetchNextPage } = useSearch();
+  const {
+    spotifyDatas: { albums },
+    albumsIsFetching,
+    albumsHasNextPage,
+    albumsFetchNextPage
+  } = useSearch();
   // 최대 40개 일단은..
   const length = albums?.length ?? 41;
   // console.log("SPOTIFY DATA___", albums);
@@ -37,7 +42,7 @@ export default function SearchAlbums() {
     };
   }, [albums, albumsFetchNextPage, albumsHasNextPage]);
 
-  console.log(albums);
+  // console.log(albums);
 
   return (
     <div className="flex flex-col gap-y-10">

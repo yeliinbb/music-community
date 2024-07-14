@@ -17,7 +17,7 @@ const PlayBtn = ({ previewUrl, playTrack, audioRef, isPlaying }: PlayBtnProps) =
       {previewUrl !== "none" ? (
         <>
           <button
-            className="bg-black rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center"
+            className="bg-black rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center mr-5"
             onClick={playTrack}
           >
             <HiMiniPlay color="white" />
@@ -28,7 +28,7 @@ const PlayBtn = ({ previewUrl, playTrack, audioRef, isPlaying }: PlayBtnProps) =
       ) : (
         <>
           <button
-            className="bg-black  rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-default"
+            className="bg-black  rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-default mr-5"
             disabled
             data-tooltip-id="플레이버튼"
             data-tooltip-content="미리 듣기를 지원하지 않는 곡입니다."

@@ -1,9 +1,24 @@
 "use client";
 
 import api from "@/api/api";
-import { ArtistsItems, TracksItems } from "@/types/spotify.type";
+import { ArtistsItems, TracksItems, SpotifyAlbums } from "@/types/spotify.type";
+import { User } from "@/types/users.type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
+
+// export type UseSearchResult = {
+//   spotifyDatas: { albums?: SpotifyAlbums[]; artists?: ArtistsItems[] };
+//   users?: User[];
+
+//   albumsIsFetching: boolean;
+//   albumsHasNextPage: boolean;
+//   albumsFetchNextPage: () => void;
+
+//   artistsIsFetching: boolean;
+//   artistsHasNextPage: boolean;
+//   artistsFetchNextPage: () => void;
+//   params?: string | null;
+// };
 
 export default function useSearch() {
   const searchParams = useSearchParams();
@@ -48,14 +63,13 @@ export default function useSearch() {
   });
 
   return {
+    spotifyDatas: { albums, artists },
     users,
 
-    albums,
     albumsIsFetching,
     albumsHasNextPage,
     albumsFetchNextPage,
 
-    artists,
     artistsIsFetching,
     artistsHasNextPage,
     artistsFetchNextPage,

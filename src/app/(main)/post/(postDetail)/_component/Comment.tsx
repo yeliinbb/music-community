@@ -5,6 +5,7 @@ import { RiEditFill } from "react-icons/ri";
 import useComment from "@/hooks/useComment";
 import { BsPencilSquare } from "react-icons/bs";
 import { convertDateFormat } from "@/lib/utils/convertDateFormat";
+import CommentSkeleton from "./CommentSkeleton";
 
 interface CommentProps {
   params: { id: string };
@@ -35,14 +36,14 @@ const Comment = ({ params }: CommentProps) => {
   });
 
   if (isPending) {
-    return <div>댓글 불러오는 중...</div>;
+    return <CommentSkeleton />;
   }
   if (error) {
     return <div>댓글 불러오기 실패</div>;
   }
 
   return (
-    <div className="w-full border-2 border-gray-300 h-[400px] rounded-lg p-5 min-h-[400px]">
+    <div className="w-full border-2 border-gray-300 h-full rounded-lg p-5 min-h-[200px] max-h-[400px]">
       <h3 className="text-xl mb-2">Comment</h3>
       <div className="flex flex-col px-10 pb-4 justify-center items-center h-full w-full">
         <form
