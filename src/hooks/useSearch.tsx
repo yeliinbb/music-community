@@ -6,20 +6,6 @@ import { User } from "@/types/users.type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
-// export type UseSearchResult = {
-//   spotifyDatas: { albums?: SpotifyAlbums[]; artists?: ArtistsItems[] };
-//   users?: User[];
-
-//   albumsIsFetching: boolean;
-//   albumsHasNextPage: boolean;
-//   albumsFetchNextPage: () => void;
-
-//   artistsIsFetching: boolean;
-//   artistsHasNextPage: boolean;
-//   artistsFetchNextPage: () => void;
-//   params?: string | null;
-// };
-
 export default function useSearch() {
   const searchParams = useSearchParams();
   const params = searchParams.get("params");
