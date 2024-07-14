@@ -25,7 +25,7 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
               href={`/artist/${track.artists[0].id}`}
               className="w-[130px] overflow-hidden overflow-ellipsis whitespace-nowrap"
             >
-              <span className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis hover:underline">
+              <span className="w-[230px] h-[20px] hover:underline">
                 {track.artists[0].name}
               </span>
             </Link>
