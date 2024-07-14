@@ -4,6 +4,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
 import { BsPencilSquare } from "react-icons/bs";
 import { convertDateFormat } from "@/lib/utils/convertDateFormat";
+import ArtistCommentSkeleton from "./ArtistCommentSkeleton";
 
 interface ArtistCommentsProps {
   params: { id: string };
@@ -34,18 +35,18 @@ const ArtistComments = ({ params }: ArtistCommentsProps) => {
   });
 
   if (isPending) {
-    return <div>댓글 불러오는 중...</div>;
+    return <ArtistCommentSkeleton />;
   }
   if (error) {
     return <div>댓글 불러오기 실패</div>;
   }
   return (
     <>
-      <h3 className="font-medium mb-2 mt-4">Comment</h3>
-      <div className="w-full border-2 border-gray-300 h-full rounded-lg p-5 max-h-[310px]">
+      <div className="m-4 font-medium">Comment</div>
+      <div className="w-full border h-full rounded-lg p-5 max-h-[300px]">
         <div className="flex flex-col px-10 pb-4 justify-center items-center h-full w-full">
           <form
-            className="w-full min-h-300px rounded-lg border-2 border-gray-300 bg-inherit flex mb-3 p-4"
+            className="w-full min-h-300px rounded-lg border bg-inherit flex mb-3 p-4"
             onSubmit={(e) => handleSubmitComment(e)}
           >
             <input

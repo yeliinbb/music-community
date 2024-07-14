@@ -46,18 +46,18 @@ const Trending = () => {
       {isSuccess && (
         <>
           <span className="text-base">추천 플레이리스트 🎵</span>
-          <div className="flex flex-col text-sm gap-2 place-self-center">
-            {selectedPlaylist?.imageUrl ? (
-              <img
-                src={selectedPlaylist.imageUrl || ""}
-                alt={selectedPlaylist.name}
-                height={200}
-                width={200}
-                className="w-[200px] h-[200px] max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
-              />
-            ) : null}
-            <div className="flex flex-col text-sm gap-2 text-center">
-              <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
+          <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
+            <div className="flex flex-col text-sm gap-2 place-self-center">
+              {selectedPlaylist?.imageUrl ? (
+                <img
+                  src={selectedPlaylist.imageUrl || ""}
+                  alt={selectedPlaylist.name}
+                  height={200}
+                  width={200}
+                  className="w-[200px] h-[200px] max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
+                />
+              ) : null}
+              <div className="flex flex-col text-sm gap-2 text-center">
                 <p
                   className="h-[15px] text-base hover:underline"
                   data-tooltip-id="플레이리스트 바로가기"
@@ -65,17 +65,18 @@ const Trending = () => {
                 >
                   {selectedPlaylist.name}
                 </p>
-                <Tooltip
+                {/* <Tooltip
                   id="플레이리스트 바로가기"
                   place="bottom"
                   style={{ backgroundColor: "#ffffff", color: "black" }}
-                />
-              </Link>
-              {/* <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
+                /> */}
+
+                {/* <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
               <p className="h-[15px] text-center hover:underline">(바로가기)</p>
             </Link> */}
+              </div>
             </div>
-          </div>
+          </Link>
         </>
       )}
     </div>
