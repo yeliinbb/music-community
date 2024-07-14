@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [email, setEmail] = useState("");
@@ -14,7 +15,7 @@ const Signup = () => {
     e.preventDefault();
 
     if (!email || !password || !nickname) {
-      alert("모든 필드를 입력해주세요.");
+      toast.warn("모든 필드를 입력해주세요.");
       return;
     }
 
@@ -29,10 +30,10 @@ const Signup = () => {
     const data = await response.json();
 
     if (!data.errorMsg) {
-      alert("회원가입이 성공적으로 완료되었습니다!");
+      toast.success("회원가입이 성공적으로 완료되었습니다!");
       router.replace("/login");
     } else {
-      alert(`회원가입 에러: ${data.errorMsg}`);
+      toast.warn(`회원가입 중 오류가 생겼습니다 : ${data.errorMsg}`);
     }
   };
 
