@@ -1,13 +1,9 @@
-<<<<<<< HEAD
 import { CommentType } from "@/types/comment.type";
-=======
-import { CommentType } from "@/types/comments";
->>>>>>> 76349c54c1a96bac54bfa3244a6a2f5eefce4d3d
 import { createClient } from "@/utils/supabase/client";
 
 const supabase = createClient();
 
-export const fetchComments = async (id : string) => {
+export const fetchComments = async (id: string) => {
   try {
     const { data, error } = await supabase
       .from("comments")

@@ -8,7 +8,12 @@ import SearchArtistsSkeleton from "./SearchArtistsSkeleton";
 
 export default function SearchArtists() {
   const obsRef = useRef<HTMLDivElement>(null);
-  const { artists, artistsIsFetching, artistsHasNextPage, artistsFetchNextPage } = useSearch();
+  const {
+    spotifyDatas: { artists },
+    artistsIsFetching,
+    artistsHasNextPage,
+    artistsFetchNextPage
+  } = useSearch();
   const length = artists?.length ?? 41;
   // console.log("SPOTIFY ARTISTS DATA___", artists);
 
