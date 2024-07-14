@@ -9,7 +9,7 @@ export default function MyPosts() {
 
   return (
     <div>
-      <ul className="grid grid-cols-4 gap-2 p-2">
+      <ul className="grid grid-cols-4 gap-10 p-2">
         {posts?.map((post) => (
           <li
             className="shadow-md hover:shadow-lg transition-shadow duration-150 

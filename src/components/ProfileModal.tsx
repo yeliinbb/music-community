@@ -79,10 +79,15 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
   };
 
   const handleProfileSubmit = () => {
-    if (file) {
-      profileUpdateMutation.mutate({ userId, file });
-      onClose();
+
+    if (!file) {
+      toast.warn("프로필 사진을 선택해주세요.");
+      return;
+
     }
+
+    profileUpdateMutation.mutate({ userId, file });
+    onClose();
   };
 
   return (
@@ -124,6 +129,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
                     <Button
                       className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg"
                       onPress={handleProfileSubmit}
+                      // isDisabled={!file}
                     >
                       확인
                     </Button>
