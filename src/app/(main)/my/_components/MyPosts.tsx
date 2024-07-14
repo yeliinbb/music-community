@@ -14,7 +14,7 @@ export default function MyPosts() {
           <li
             className="shadow-md hover:shadow-lg transition-shadow duration-150 
             active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
-            border border-black rounded "
+            border border-gray-300 rounded-lg"
             key={post.id}
           >
             <Link className="p-2 flex flex-col gap-y-4" href={`/post/${post.id}`}>
