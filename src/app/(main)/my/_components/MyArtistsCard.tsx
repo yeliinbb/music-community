@@ -6,7 +6,7 @@ export default function MyArtistsCard({ artist }: { artist: ArtistsItems }) {
       <div className="relative w-full aspect-video border border-gray-300 rounded-lg">
         <img
           src={artist.images.length ? artist.images[0].url : "http://via.placeholder.com/640x480"}
-          className="object-cover w-[100px] h-[100px] "
+          className="object-cover  w-full h-[130px]"
           alt={artist.name}
         />
       </div>
