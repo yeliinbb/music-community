@@ -76,13 +76,13 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
             return (
               <div
                 key={track.id}
-                className="p-4 border rounded-lg max-w-lg "
-                style={{ width: "500px", height: "100px" }}
+                className="p-4 border rounded-lg max-w-lg bg-[#d9d9d9]"
+                style={{ width: "500px", height: "85px" }}
               >
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex flex-row gap-x-5 items-center ">
                     <div className="font-bold">{index + 1}</div>
-                    <img src={track.album.images[2].url} alt="앨범 이미지" />
+                    <img src={track.album.images[2].url} alt="앨범 이미지" width={50} height={50} />
                     <div>
                       <div className="mt-2">{track.name}</div>
                       <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
