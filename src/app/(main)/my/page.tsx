@@ -31,12 +31,12 @@ export default async function MyPage() {
   });
 
   return (
-    <main className="w-[800px] p-8 pt-0">
+    <main className="w-[930px] p-8 pt-0">
       <div className="flex flex-col gap-y-4">
         <HydrationBoundary state={dehydrate(queryClient)}>
-          <h2 className="font-bold text-2xl">좋아요 한 아티스트</h2>
+          <h2 className="font-bold text-2xl mt-5">좋아요 한 아티스트</h2>
           <MyArtists />
-          <h2 className="font-bold text-2xl">내 게시글</h2>
+          <h2 className="font-bold text-2xl mt-5">내 게시글</h2>
           <MyPosts />
         </HydrationBoundary>
       </div>
