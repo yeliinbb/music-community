@@ -1,7 +1,7 @@
 "use client";
 
 import { deletePost, editPost } from "@/lib/utils/postUtils";
-import { PostType } from "@/types/posts.type";
+import { PostType, CommonPostType } from "@/types/posts.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -23,13 +23,15 @@ const Post = ({ id }: { id: string }) => {
     error,
     isPending,
     isSuccess
-  } = useQuery<PostType, Error>({
+  } = useQuery<CommonPostType, Error>({
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
       return data;
     }
   });
+
+  console.log("post", post);
 
   const editMutation = useMutation({
     mutationFn: editPost,
@@ -140,7 +142,10 @@ const Post = ({ id }: { id: string }) => {
             <>
               <div className="flex items-center">
                 <img src={post?.imageURL} alt="썸네일 이미지" className="rounded-md w-[100px] h-[100px]" />
-                <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
+                <div className="flex flex-col gap-y-1">
+                  <div className="text-lg ml-8 h-8 font-bold">{post?.users?.nickname}</div>
+                  <div className="text-md mb-3 ml-8 h-8">{post?.title}</div>
+                </div>
               </div>
               <div className="mt-4 h-full max-h-[200px] w-full overflow-y-scroll scrollbar-hide">{post?.content}</div>
             </>
