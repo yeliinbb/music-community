@@ -9,8 +9,14 @@ import { useRef, useState } from "react";
 import { useLoginStore } from "@/store/auth";
 import PostSkeleton from "./PostSkeleton";
 import { toast } from "react-toastify";
+import { usePostCommentData } from "@/hooks/usePostCommentData";
 
-const Post = ({ id }: { id: string }) => {
+interface PostProps {
+  params: { id: string };
+}
+
+const Post = ({ params }: PostProps) => {
+  const postId = params.id;
   const [isEditing, setIsEditing] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
@@ -18,20 +24,7 @@ const Post = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
 
-  const {
-    data: post,
-    error,
-    isPending,
-    isSuccess
-  } = useQuery<CommonPostType, Error>({
-    queryKey: ["posts", id],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/posts/${id}`);
-      return data;
-    }
-  });
-
-  console.log("post", post);
+  const { post, isPending, isSuccess, error } = usePostCommentData({ postId });
 
   const editMutation = useMutation({
     mutationFn: editPost,
@@ -61,7 +54,7 @@ const Post = ({ id }: { id: string }) => {
         const content: PostType["content"] = contentRef.current?.value;
         if (title !== undefined && content !== undefined) {
           const editedPost: PostType = {
-            id: id,
+            id: postId,
             title: title,
             content: content,
             created_at: post?.created_at ?? "",
@@ -82,7 +75,7 @@ const Post = ({ id }: { id: string }) => {
 
     if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
       try {
-        deleteMutation.mutate(id);
+        deleteMutation.mutate(postId);
         router.push("/my");
         console.log("게시글 삭제가 완료되었습니다.");
       } catch (error) {

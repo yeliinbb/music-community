@@ -24,7 +24,7 @@ export function useMainPageData() {
   });
 
   const [allPostsQuery, playlistsQuery, artistDataQuery] = queries;
-  const isSuccess = queries.some((query) => query.isSuccess);
+  const isSuccess = queries.every((query) => query.isSuccess);
   const isPending = queries.some((query) => query.isPending);
   const error = queries.some((query) => query.isError);
 

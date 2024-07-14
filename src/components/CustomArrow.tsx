@@ -6,7 +6,7 @@ type CustomArrowProps = {
 
 export const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
   <div
-    className={`custom-arrow custom-prev-arrow ${className}`}
+    className={`custom-arrow custom-prev-arrow  absolute top-[calc(50%-15px)] ${className}`}
     onClick={onClick}
     style={{ width: "30px", height: "30px" }}
   >
@@ -16,7 +16,7 @@ export const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
 
 export const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
   <div
-    className={`custom-arrow custom-next-arrow ${className}`}
+    className={`custom-arrow custom-next-arrow  absolute top-[calc(50%-15px)]  ${className}`}
     onClick={onClick}
     style={{ width: "30px", height: "30px" }}
   >
