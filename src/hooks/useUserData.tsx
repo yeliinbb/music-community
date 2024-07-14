@@ -23,6 +23,7 @@ export const useUserData = (userId: string) => {
   const { data: userProfileData, isPending, error } = useQuery({
     queryKey: ["userData", userId],
     queryFn: () => fetchUserProfile(userId),
+    enabled: !!userId,
   });
 
   return {
