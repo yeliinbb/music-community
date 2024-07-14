@@ -11,7 +11,7 @@ export default function MyArtists() {
     <div>
       {!likes?.artists && <div className="h-[150px]">아직 좋아요 한 아티스트가 없습니다.</div>}
       {likes?.artists && (
-        <ul className="grid grid-cols-4 gap-2 p-2">
+        <ul className="grid grid-cols-4 gap-10 p-2">
           {likes?.artists.map((artist) => (
             <li
               className="shadow-md hover:shadow-lg transition-shadow duration-150 
