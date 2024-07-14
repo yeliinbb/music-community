@@ -84,7 +84,9 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
                     <div className="font-bold">{index + 1}</div>
                     <img src={track.album.images[2].url} alt="앨범 이미지" width={50} height={50} />
                     <div>
-                      <div className="mt-2">{track.name}</div>
+                      <div className="mt-2 overflow-hidden overflow-ellipsis whitespace-nowrap w-[300px]">
+                        {track.name}
+                      </div>
                       <div className="text-sm text-gray-500">{formatDuration(track.duration_ms)}</div>
                     </div>
                   </div>
