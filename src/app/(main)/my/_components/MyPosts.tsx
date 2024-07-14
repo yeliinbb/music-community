@@ -3,9 +3,14 @@
 import useMe from "@/hooks/useMe";
 import Link from "next/link";
 import MyPostCard from "./MyPostCard";
+import MyPostSkeleton from "../../_components/MyPostSkeleton";
 
 export default function MyPosts() {
-  const { posts } = useMe();
+  const { posts, isPending } = useMe();
+
+  if (isPending) {
+    return <MyPostSkeleton />;
+  }
 
   return (
     <div>

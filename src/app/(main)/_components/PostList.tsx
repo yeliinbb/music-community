@@ -13,24 +13,17 @@ import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import PostListSkeleton from "./PostListSkeleton";
+import { useMainPageData } from "@/hooks/useMainPageData";
 
 const PostList = () => {
-  const {
-    data: allPosts,
-    isPending,
-    error
-  } = useQuery<PostType[], PostgrestError>({
-    queryKey: ["allPosts"],
-    queryFn: getAllPost
-  });
-
+  const { allPosts, isPending, error } = useMainPageData();
   if (isPending) {
     return <PostListSkeleton />;
   }
 
   if (error) {
     console.error(error);
-    return <div className="text-xl">에러가 발생했습니다: {error?.message}</div>;
+    return <div className="text-xl">에러가 발생했습니다.</div>;
   }
 
   const settings = {

@@ -21,7 +21,7 @@ type LikeType = {
 export default function useMe() {
   const { userId } = useLoginStore();
 
-  const [posts, likes] = useQueries({
+  const queries = useQueries({
     queries: [
       {
         queryKey: ["myPosts", { userId }],
@@ -32,7 +32,14 @@ export default function useMe() {
         queryFn: () => api.me.getMyLikes(userId)
       }
     ]
-  }) as [UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>];
+  });
+  // as[(UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>)];
+  const [posts, likes] = queries;
+  const isPending = queries.some((query) => query.isPending);
 
-  return { posts: posts.data, likes: likes.data };
+  return {
+    posts: posts.data as MyPostsType[] | undefined,
+    likes: likes.data as LikeType | undefined,
+    isPending
+  };
 }

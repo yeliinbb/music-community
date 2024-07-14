@@ -21,14 +21,25 @@ export default async function MyPage() {
   const supabase = createClient();
   const user = await supabase.auth.getUser();
 
-  await queryClient.prefetchQuery({
-    queryKey: ["myPosts", { userId: user.data.user?.id! }],
-    queryFn: () => api.me.getMyPosts(user.data.user?.id!)
-  });
-  await queryClient.prefetchQuery({
-    queryKey: ["myLikes", { userId: user.data.user?.id! }],
-    queryFn: () => api.me.getMyLikes(user.data.user?.id!)
-  });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["myPosts", { userId: user.data.user?.id! }],
+  //   queryFn: () => api.me.getMyPosts(user.data.user?.id!)
+  // });
+  // await queryClient.prefetchQuery({
+  //   queryKey: ["myLikes", { userId: user.data.user?.id! }],
+  //   queryFn: () => api.me.getMyLikes(user.data.user?.id!)
+  // });
+
+  await Promise.all([
+    queryClient.prefetchQuery({
+      queryKey: ["myPosts", { userId: user.data.user?.id! }],
+      queryFn: () => api.me.getMyPosts(user.data.user?.id!)
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["myLikes", { userId: user.data.user?.id! }],
+      queryFn: () => api.me.getMyLikes(user.data.user?.id!)
+    })
+  ]);
 
   return (
     <main className="w-[930px] p-8 pt-0">
