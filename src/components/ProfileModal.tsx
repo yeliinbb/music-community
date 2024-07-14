@@ -84,7 +84,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       return;
     }
 
-    profleUpdateMutation.mutate({ userId, file });
+    profileUpdateMutation.mutate({ userId, file });
     onClose();
   };
 
