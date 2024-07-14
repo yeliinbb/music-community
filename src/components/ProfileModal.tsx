@@ -7,6 +7,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserProfile } from "@/types/users.type";
+import { toast } from "react-toastify";
 
 interface ProfileModalProps {
   userId: string;
@@ -58,15 +59,15 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
     }
   };
 
-  const profleUpdateMutation = useMutation({
+  const profileUpdateMutation = useMutation({
     mutationFn: updateProfilePicture,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userData", userId] });
-      alert("프로필 사진이 업데이트되었습니다.");
+      toast.success("프로필 사진이 업데이트되었습니다.");
     },
     onError: (error) => {
       console.error("프로필 사진 업데이트 오류:", error);
-      alert("프로필 사진 업데이트에 실패했습니다.");
+      toast.warn("프로필 사진 업데이트에 실패했습니다.");
     }
   });
 
@@ -78,12 +79,14 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
   };
 
   const handleProfileSubmit = () => {
+
     if (!file) {
-      alert("프로필 사진을 선택해주세요.");
+      toast.warn("프로필 사진을 선택해주세요.");
       return;
+
     }
 
-    profleUpdateMutation.mutate({ userId, file });
+    profileUpdateMutation.mutate({ userId, file });
     onClose();
   };
 

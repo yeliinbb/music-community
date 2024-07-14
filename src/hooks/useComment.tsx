@@ -1,8 +1,11 @@
+"use client";
+
 import { useLoginStore } from "@/store/auth";
 import { CommentType, CommonCommentType } from "@/types/comment.type";
 import { createClient } from "@/utils/supabase/client";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
+import { toast } from "react-toastify";
 
 interface UseCommentProps {
   queryKey: "comments" | "artistComments" | "likes" | "main_artist" | "main_playlist" | "posts" | "users";
@@ -32,7 +35,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
         .select("*,users(nickname, email)")
         .eq("postId", id)
         .order("createdAt", { ascending: false });
-      console.log("data", data);
+
       if (error) {
         console.error("댓글 불러오기 실패", error);
         throw new Error(error.message);
@@ -114,7 +117,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
     if (commentRef.current) {
       const comment = commentRef.current?.value;
       if (!comment.trim()) {
-        alert("내용을 입력하세요!");
+        toast.warn("내용을 입력하세요!");
         return;
       }
       const newComment: NewCommentType = { content: comment, postId: id, userId: userId }; // userId 바꾸기
@@ -132,7 +135,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
     }
 
     if (userId !== selectedComment?.userId) {
-      alert("작성자만 댓글을 수정할 수 있습니다");
+      toast.warn("작성자만 댓글을 수정할 수 있습니다");
       return;
     }
 
@@ -161,7 +164,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
     }
 
     if (userId !== selectedComment?.userId) {
-      alert("작성자만 댓글을 삭제할 수 있습니다.");
+      toast.warn("작성자만 댓글을 삭제할 수 있습니다.");
       return;
     }
 
@@ -171,10 +174,10 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
         console.log("댓글 삭제가 완료되었습니다.");
       } catch (error) {
         console.error("댓글 삭제 중 오류 발생", error);
-        alert("댓글 삭제 중 오류가 발생했습니다.");
+        toast.warn("댓글 삭제 중 오류가 발생했습니다.");
       }
     } else {
-      alert("댓글 삭제가 취소되었습니다.");
+      toast.success("댓글 삭제가 취소되었습니다.");
     }
   };
 

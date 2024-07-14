@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useLoginStore } from "@/store/auth";
 import PostSkeleton from "./PostSkeleton";
+import { toast } from "react-toastify";
 
 const Post = ({ id }: { id: string }) => {
   const [isEditing, setIsEditing] = useState(false);
@@ -34,7 +35,7 @@ const Post = ({ id }: { id: string }) => {
     mutationFn: editPost,
     onSuccess: () => {
       setIsEditing(false);
-      alert("수정되었습니다!");
+      toast.success("수정되었습니다!");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     }
   });
@@ -42,14 +43,14 @@ const Post = ({ id }: { id: string }) => {
   const deleteMutation = useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
-      alert("삭제되었습니다!");
+      toast.success("삭제되었습니다!");
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     }
   });
 
   const onEdit = async () => {
     if (userId !== post?.userId) {
-      alert("작성자만 게시글을 수정할 수 있습니다");
+      toast.warn("작성자만 게시글을 수정할 수 있습니다");
       return;
     } else {
       setIsEditing(true);
@@ -73,7 +74,7 @@ const Post = ({ id }: { id: string }) => {
 
   const onDelete = async () => {
     if (userId !== post?.userId) {
-      alert("작성자만 게시글을 삭제할 수 있습니다.");
+      toast.warn("작성자만 게시글을 삭제할 수 있습니다.");
       return;
     }
 
@@ -84,10 +85,10 @@ const Post = ({ id }: { id: string }) => {
         console.log("게시글 삭제가 완료되었습니다.");
       } catch (error) {
         console.error("게시글 삭제 중 오류 발생", error);
-        alert("게시글 삭제 중 오류가 발생했습니다.");
+        toast.warn("게시글 삭제 중 오류가 발생했습니다.");
       }
     } else {
-      alert("게시글 삭제가 취소되었습니다.");
+      toast.success("게시글 삭제가 취소되었습니다.");
     }
   };
 
