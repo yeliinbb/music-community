@@ -10,7 +10,7 @@ export default function SearchUser() {
   "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
   return (
-    <div className="flex flex-col gap-y-4 min-h-[200px] ">
+    <div className="flex flex-col gap-y-4 min-h-[200px]">
       <h2 className="font-bold text-2xl">사용자</h2>
       <div className="size-full flex-1">
         {!users?.length && <h2 className="font-bold test-2xl select-none">유저 검색 결과가 없습니다.</h2>}
@@ -20,7 +20,7 @@ export default function SearchUser() {
               <div className="relative aspect-square p-2">
                 <img
                   src={user.profileUrl ?? defaultImg}
-                  className="object-cover w-full h-full rounded-lg"
+                  className="object-cover w-[100px] h-[100px] rounded-lg"
                   alt={user.nickname ?? "사용자 프로필"}
                   width={100}
                   height={100}
