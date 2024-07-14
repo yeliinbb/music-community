@@ -9,27 +9,59 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      comments: {
+      artistComments: {
         Row: {
-          content: string | null
-          createdAt: string
+          content: string
+          createdAt: string | null
           id: string
-          postId: string | null
-          userId: string | null
+          postId: string
+          userId: string
         }
         Insert: {
-          content?: string | null
-          createdAt?: string
+          content: string
+          createdAt?: string | null
           id?: string
-          postId?: string | null
-          userId?: string | null
+          postId: string
+          userId: string
         }
         Update: {
-          content?: string | null
-          createdAt?: string
+          content?: string
+          createdAt?: string | null
           id?: string
-          postId?: string | null
-          userId?: string | null
+          postId?: string
+          userId?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "artistComments_userId_fkey"
+            columns: ["userId"]
+            isOneToOne: false
+            referencedRelation: "users"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      comments: {
+        Row: {
+          content: string
+          createdAt: string | null
+          id: string
+          postId: string
+          userId: string
+        }
+        Insert: {
+          content: string
+          createdAt?: string | null
+          id?: string
+          postId: string
+          userId?: string
+        }
+        Update: {
+          content?: string
+          createdAt?: string | null
+          id?: string
+          postId?: string
+          userId?: string
         }
         Relationships: [
           {
@@ -74,33 +106,74 @@ export type Database = {
           },
         ]
       }
+      main_artist: {
+        Row: {
+          artistId: string | null
+          artistName: string | null
+          created_at: string
+          id: number
+        }
+        Insert: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Update: {
+          artistId?: string | null
+          artistName?: string | null
+          created_at?: string
+          id?: number
+        }
+        Relationships: []
+      }
+      main_playlist: {
+        Row: {
+          created_at: string
+          id: number
+          playlistId: string | null
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          playlistId?: string | null
+          title?: string | null
+        }
+        Relationships: []
+      }
       posts: {
         Row: {
           content: string | null
-          createdAt: string | null
+          created_at: string
           id: string
+          imageURL: string
+          title: string | null
           userId: string | null
         }
         Insert: {
           content?: string | null
-          createdAt?: string | null
-          id: string
+          created_at?: string
+          id?: string
+          imageURL: string
+          title?: string | null
           userId?: string | null
         }
         Update: {
           content?: string | null
-          createdAt?: string | null
+          created_at?: string
           id?: string
+          imageURL?: string
+          title?: string | null
           userId?: string | null
         }
         Relationships: [
-          {
-            foreignKeyName: "posts_id_fkey"
-            columns: ["id"]
-            isOneToOne: true
-            referencedRelation: "users"
-            referencedColumns: ["id"]
-          },
           {
             foreignKeyName: "posts_userId_fkey"
             columns: ["userId"]
@@ -115,19 +188,19 @@ export type Database = {
           email: string | null
           id: string
           nickname: string | null
-          password: string | null
+          profileUrl: string | null
         }
         Insert: {
           email?: string | null
           id: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Update: {
           email?: string | null
           id?: string
           nickname?: string | null
-          password?: string | null
+          profileUrl?: string | null
         }
         Relationships: [
           {

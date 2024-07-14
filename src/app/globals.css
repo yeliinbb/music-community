@@ -2,10 +2,52 @@
 @tailwind components;
 @tailwind utilities;
 
+@import "~slick-carousel/slick/slick.css";
+@import "~slick-carousel/slick/slick-theme.css";
+
 body {
+  /* width: 100vw;
+  height: 100vh; */
   background-color: #54b2d3;
+  /* padding: 50px 130px 50px 50px; */
+  box-sizing: border-box;
 }
 
 button:hover {
   cursor: pointer;
+}
+
+:root {
+  --rt-color-white: #fff;
+  --rt-color-dark: #222;
+  --rt-color-success: #8dc572;
+  --rt-color-error: #be6464;
+  --rt-color-warning: #f0ad4e;
+  --rt-color-info: #337ab7;
+  --rt-opacity: 0.9;
+  --rt-transition-show-delay: 0.15s;
+  --rt-transition-closing-delay: 0.15s;
+}
+
+.custom-slider {
+  position: relative;
+  padding: 0 5px; /* 화살표를 위한 공간 확보 */
+}
+
+.custom-slider .slick-arrow {
+  position: absolute;
+  top: calc(50% - 5px);
+}
+
+.custom-slider .slick-prev {
+  left: -30px;
+}
+
+.custom-slider .slick-next {
+  right: -35px;
+}
+
+.custom-slider .slick-prev:before,
+.custom-slider .slick-next:before {
+  content: none; /* 기본 화살표 아이콘 제거 */
 }
