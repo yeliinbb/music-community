@@ -20,9 +20,12 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
         <img src={track.album.images[1].url} alt={track.name} className="w-[35px] h-[35px] object-fill" />
         <div className="w-full">
           <h4 className="h-[20px] overflow-hidden overflow-ellipsis font-semibold">{track.name}</h4>
-          <div className="flex justify-between items-center w-full ">
-            <Link href={`/artist/${track.artists[0].id}`}>
-              <span className="w-[230px] h-[20px] overflow-hidden overflow-ellipsis hover:underline">
+          <div className="flex justify-between items-center w-full">
+            <Link
+              href={`/artist/${track.artists[0].id}`}
+              className="w-[130px] overflow-hidden overflow-ellipsis whitespace-nowrap"
+            >
+              <span className="w-[230px] h-[20px] hover:underline">
                 {track.artists[0].name}
               </span>
             </Link>

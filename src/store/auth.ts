@@ -7,6 +7,7 @@ type LoginState = {
   logout: () => void;
   userId: string;
   setUserId: (userId: string) => void;
+  clearStorage: () => void;
 };
 
 export const useLoginStore = create(
@@ -16,7 +17,10 @@ export const useLoginStore = create(
       userId: "",
       login: () => set({ isLogin: true }),
       logout: () => set({ isLogin: false }),
-      setUserId: (userId) => set({ userId })
+      setUserId: (userId) => set({ userId }),
+      clearStorage: () => {
+        localStorage.removeItem("userIdStorage");
+      }
     }),
     {
       name: "userIdStorage"
