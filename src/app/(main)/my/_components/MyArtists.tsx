@@ -3,16 +3,20 @@
 import useMe from "@/hooks/useMe";
 import Link from "next/link";
 import MyArtistsCard from "./MyArtistsCard";
+import MyArtistsSkeleton from "../../_components/MyArtistsSkeleton";
 
 export default function MyArtists() {
-  const { likes } = useMe();
+  const { likes, isPending } = useMe();
 
+  if (isPending) {
+    return <MyArtistsSkeleton />;
+  }
   return (
     <div>
-      {!likes?.artists && <div className="h-[150px]">아직 좋아요 한 아티스트가 없습니다.</div>}
+      {!likes?.artists && !isPending && <div className="h-[150px]">아직 좋아요 한 아티스트가 없습니다.</div>}
       {likes?.artists && (
         <ul className="grid grid-cols-4 gap-10 p-2">
-          {likes?.artists.map((artist) => (
+          {likes?.artists?.map((artist) => (
             <li
               className="shadow-md hover:shadow-lg transition-shadow duration-150 
             active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer

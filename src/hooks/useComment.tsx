@@ -1,25 +1,26 @@
 "use client";
 
 import { useLoginStore } from "@/store/auth";
-import { CommentType, CommonCommentType } from "@/types/comment.type";
+import { CommentType } from "@/types/comment.type";
 import { createClient } from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
+import { usePostCommentData } from "@/hooks/usePostCommentData";
 
 interface UseCommentProps {
-  queryKey: "comments" | "artistComments" | "likes" | "main_artist" | "main_playlist" | "posts" | "users";
-  id: string;
-  tableName: "comments" | "artistComments" | "likes" | "main_artist" | "main_playlist" | "posts" | "users";
+  queryKey: "comments" | "posts" | "artistComments";
+  postId: string;
+  tableName: "comments" | "posts" | "artistComments";
 }
 
-type NewCommentType = {
+export type NewCommentType = {
   content: string;
   postId: string;
   userId: string;
 };
 
-const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
+const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
   const [isEditing, setIsEditing] = useState(false);
   const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
   const [editingContent, setEditingContent] = useState<string>("");
@@ -28,29 +29,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
   const supabase = createClient();
   const commentRef = useRef<HTMLInputElement | null>(null);
 
-  const fetchComments = async (id: string): Promise<CommonCommentType[]> => {
-    try {
-      const { data, error } = await supabase
-        .from(tableName)
-        .select("*,users(nickname, email)")
-        .eq("postId", id)
-        .order("createdAt", { ascending: false });
-
-      if (error) {
-        console.error("댓글 불러오기 실패", error);
-        throw new Error(error.message);
-      }
-      // 데이터가 없을 경우 빈 배열 반환
-      if (!data) {
-        return [];
-      }
-      return data as CommonCommentType[];
-    } catch (error) {
-      console.log(error);
-      // 오류 발생 시 빈 배열 반환
-      return [];
-    }
-  };
+  const { commentList, isSuccess, isPending, error } = usePostCommentData({ postId, queryKey, tableName });
 
   const addComment = async (newComment: NewCommentType) => {
     const response = await supabase.from(tableName).insert(newComment);
@@ -74,16 +53,6 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
     }
     return;
   };
-
-  const { data, error, isPending, isSuccess } = useQuery<
-    CommonCommentType[],
-    Error,
-    CommonCommentType[],
-    [string, string]
-  >({
-    queryKey: [queryKey, id],
-    queryFn: () => fetchComments(id)
-  });
 
   // 댓글 남기기
   const addMutation = useMutation({
@@ -120,14 +89,14 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
         toast.warn("내용을 입력하세요!");
         return;
       }
-      const newComment: NewCommentType = { content: comment, postId: id, userId: userId }; // userId 바꾸기
+      const newComment: NewCommentType = { content: comment, postId, userId: userId }; // userId 바꾸기
       addMutation.mutate(newComment);
       commentRef.current.value = "";
     }
   };
 
   const handleEditComment = async (commentId: string) => {
-    const selectedComment = data?.find((comment) => comment.id === commentId);
+    const selectedComment = commentList?.find((comment) => comment.id === commentId);
     console.log("selectedComment", selectedComment);
     // 선택된 댓글이 없는 경우 반환
     if (!selectedComment) {
@@ -157,7 +126,7 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
   };
 
   const handleDeleteComment = async (commentId: string) => {
-    const selectedComment = data?.find((comment) => comment.id === commentId);
+    const selectedComment = commentList?.find((comment) => comment.id === commentId);
 
     if (!selectedComment) {
       return;
@@ -182,10 +151,10 @@ const useComment = ({ queryKey, id, tableName }: UseCommentProps) => {
   };
 
   return {
-    data,
-    error,
-    isPending,
+    commentList,
     isSuccess,
+    isPending,
+    error,
     commentRef,
     isEditing,
     editingCommentId,

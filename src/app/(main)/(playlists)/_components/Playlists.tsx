@@ -11,6 +11,7 @@ import "slick-carousel/slick/slick-theme.css";
 import "slick-carousel/slick/slick.css";
 import Track from "../../_components/Track";
 import PlayListSkeleton from "./PlayListSkeleton";
+import { useMainPageData } from "@/hooks/useMainPageData";
 
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -18,19 +19,7 @@ const Playlists = () => {
   const [currentTrack, setCurrentTrack] = useState<SpotifyTrack | null>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const {
-    data: playlists,
-    isPending,
-    isError,
-    isSuccess
-  } = useQuery({
-    queryKey: ["playlists"],
-    queryFn: async () => {
-      const response = await axios.get<SpotifyPlaylistTracks[]>(`/api/spotify/playlists`);
-
-      return response.data;
-    }
-  });
+  const { playlists, isSuccess, isPending, error } = useMainPageData();
 
   const playTrack = (track: SpotifyTrack) => {
     if (audioRef.current) {
@@ -59,14 +48,14 @@ const Playlists = () => {
   };
 
   if (isPending) return <PlayListSkeleton />;
-  if (isError) return <div>Error loading playlists</div>;
+  if (error) return <div>Error loading playlists</div>;
 
   return (
     <div className="w-full h-full">
       <div className="custom-slider">
         <Slider {...settings}>
           {isSuccess &&
-            playlists.map((playlist, index) => (
+            playlists?.map((playlist, index) => (
               <div key={playlist.id} className="w-full h-full self-center">
                 {index === currentIndex && (
                   <>
