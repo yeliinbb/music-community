@@ -19,7 +19,7 @@ const PostCard = ({ post }: PostCardProps) => {
             <h2 className="font-bold text-lg text-gray-800 line-clamp-1 overflow-hidden overflow-ellipsis whitespace-nowrap w-[160px]">
               {title}
             </h2>
-            <p className="font-base overflow-hidden overflow-ellipsis whitespace-nowrap w-[70px] text-right">
+            <p className="text-sm overflow-hidden overflow-ellipsis whitespace-nowrap w-[70px] text-right text-gray-500">
               {users?.nickname}
             </p>
           </div>
