@@ -15,7 +15,7 @@ const PostCard = ({ post }: PostCardProps) => {
       </div>
       <div className="flex flex-col gap-y-2 divide-y-2">
         <div className="flex flex-col ">
-          <h2 className="font-bold text-xl text-gray-800 line-clamp-1 mt-0.5">{title}</h2>
+          <h2 className="font-bold text-xl text-gray-800 line-clamp-1 mt-2">{title}</h2>
           <p className="ml-auto text-xs text-gray-500">{convertDateFormat(created_at)}</p>
         </div>
         <p className="text-sm line-clamp-2 pt-2 min-h-[3rem]">{content}</p>
