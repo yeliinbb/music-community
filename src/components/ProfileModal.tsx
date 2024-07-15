@@ -79,11 +79,9 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
   };
 
   const handleProfileSubmit = () => {
-
     if (!file) {
       toast.warn("프로필 사진을 선택해주세요.");
       return;
-
     }
 
     profileUpdateMutation.mutate({ userId, file });
@@ -121,7 +119,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
               <ModalBody>
                 <div>
                   <p className="text-xl font-bold">📷 프로필 사진 변경하기</p>
-                  <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5" />
+                  <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5" accept='image/*' />
                   <div className="flex flex-row justify-end gap-x-5 mt-5">
                     <Button className="bg-gray-300 rounded-lg" variant="light" onPress={onClose}>
                       닫기
@@ -129,7 +127,6 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
                     <Button
                       className="bg-black text-white shadow-lg shadow-indigo-500/20 rounded-lg"
                       onPress={handleProfileSubmit}
-                      // isDisabled={!file}
                     >
                       확인
                     </Button>
