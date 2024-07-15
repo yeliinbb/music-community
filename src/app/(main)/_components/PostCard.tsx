@@ -1,12 +1,12 @@
 import { convertDateFormat } from "@/lib/utils/convertDateFormat";
-import { PostType } from "@/types/posts.type";
+import { MainPostType } from "@/types/posts.type";
 
 interface PostCardProps {
-  post: PostType;
+  post: MainPostType;
 }
 
 const PostCard = ({ post }: PostCardProps) => {
-  const { id, created_at, title, content, imageURL } = post;
+  const { id, created_at, title, content, imageURL, users } = post;
 
   return (
     <div>
@@ -14,8 +14,16 @@ const PostCard = ({ post }: PostCardProps) => {
         <img src={imageURL} className="w-full h-32 object-cover" alt={`${id}${created_at}`} />
       </div>
       <div className="flex flex-col gap-y-2 divide-y-2">
-        <div className="flex flex-col ">
-          <h2 className="font-bold text-xl text-gray-800 line-clamp-1 mt-2">{title}</h2>
+        <div className="flex flex-col">
+          <div className="flex flex-row items-center justify-between mt-1.5">
+            <h2 className="font-bold text-lg text-gray-800 line-clamp-1 overflow-hidden overflow-ellipsis whitespace-nowrap w-[160px]">
+              {title}
+            </h2>
+            <p className="font-base overflow-hidden overflow-ellipsis whitespace-nowrap w-[70px] text-right">
+              {users?.nickname}
+            </p>
+          </div>
+
           <p className="ml-auto text-xs text-gray-500">{convertDateFormat(created_at)}</p>
         </div>
         <p className="text-sm line-clamp-2 pt-2 min-h-[3rem]">{content}</p>
