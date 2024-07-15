@@ -106,7 +106,7 @@ const Artist = ({ params }: ArtistProps) => {
         {isSuccess && (
           <>
             <img
-              src={artistData.images[0].url}
+              src={artistData.images.length ? artistData.images[0].url : "http://via.placeholder.com/640x480"}
               alt="이미지"
               width={300}
               height={300}
