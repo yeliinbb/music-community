@@ -50,7 +50,6 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
       }
 
       const updateData = await updateResponse.json();
-      console.log("유저의 프로필 정보를 업데이트하는 데 성공했습니다.", updateData);
 
       return { uploadData: data, updateData };
     } catch (error) {
