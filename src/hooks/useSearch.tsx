@@ -1,8 +1,7 @@
 "use client";
 
 import api from "@/api/api";
-import { ArtistsItems, TracksItems, SpotifyAlbums } from "@/types/spotify.type";
-import { User } from "@/types/users.type";
+import { ArtistsItems, TracksItems } from "@/types/spotify.type";
 import { useInfiniteQuery, useQuery } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
 
@@ -22,14 +21,15 @@ export default function useSearch() {
     hasNextPage: albumsHasNextPage,
     fetchNextPage: albumsFetchNextPage
   } = useInfiniteQuery({
-    queryKey: ["albums"],
+    queryKey: ["albums", { keyword: params }],
     queryFn: ({ pageParam }) => api.search.searchSpotifyAlbums(params, pageParam),
     getNextPageParam: (lastPage: TracksItems[], allPage: TracksItems[][]) => {
       const nextPage = lastPage.length ? allPage.length : undefined;
       return nextPage;
     },
     initialPageParam: 0,
-    select: (data) => data.pages.flatMap((p) => p)
+    select: (data) => data.pages.flatMap((p) => p),
+    gcTime: 0
   });
 
   const {
@@ -38,14 +38,15 @@ export default function useSearch() {
     hasNextPage: artistsHasNextPage,
     fetchNextPage: artistsFetchNextPage
   } = useInfiniteQuery({
-    queryKey: ["artists"],
+    queryKey: ["artists", { keyword: params }],
     queryFn: ({ pageParam }) => api.search.searchSpotifyArtists(params, pageParam),
     getNextPageParam: (lastPage: ArtistsItems[], allPage: ArtistsItems[][]) => {
       const nextPage = lastPage.length ? allPage.length : undefined;
       return nextPage;
     },
     initialPageParam: 0,
-    select: (data) => data.pages.flatMap((p) => p)
+    select: (data) => data.pages.flatMap((p) => p),
+    gcTime: 0
   });
 
   return {

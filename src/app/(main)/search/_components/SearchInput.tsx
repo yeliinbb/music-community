@@ -11,6 +11,7 @@ export default function SearchInput() {
   const onClickHandler = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (inputRef.current) {
+      // console.log("INPUT___", inputRef.current.value);
       const encodeURL = encodeURIComponent(inputRef.current.value);
       router.push(`/search?params=${encodeURL}`, { scroll: false });
       inputRef.current.value = "";
