@@ -1,7 +1,7 @@
 "use client";
 
 import { deletePost, editPost, uploadImg } from "@/lib/utils/postUtils";
-import { PostType } from "@/types/posts.type";
+import { CommonPostType, PostType } from "@/types/posts.type";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { useRouter } from "next/navigation";
@@ -26,7 +26,7 @@ const Post = ({ id }: { id: string }) => {
     error,
     isPending,
     isSuccess
-  } = useQuery<PostType, Error>({
+  } = useQuery<CommonPostType, Error>({
     queryKey: ["posts", id],
     queryFn: async () => {
       const { data } = await axios.get(`/api/posts/${id}`);
@@ -145,7 +145,12 @@ const Post = ({ id }: { id: string }) => {
             <button className="border border-black rounded-lg bg-[#2c2c2c] p-[3px] text-[15px]" onClick={onDelete}>
               삭제
             </button>
-            <button className="border border-gray-400 rounded-lg bg-[#CFCFCF] p-[3px] text-[15px]" onClick={() => {setIsEditing(false)}}>
+            <button
+              className="border border-gray-400 rounded-lg bg-[#CFCFCF] p-[3px] text-[15px]"
+              onClick={() => {
+                setIsEditing(false);
+              }}
+            >
               취소
             </button>
           </div>
@@ -191,7 +196,10 @@ const Post = ({ id }: { id: string }) => {
             <>
               <div className="flex items-center">
                 <img src={post?.imageURL} alt="썸네일 이미지" className="rounded-md w-[100px] h-[100px]" />
-                <div className="text-lg mb-3 ml-8 h-8">{post?.title}</div>
+                <div className="flex flex-col gap-y-1">
+                  <div className="text-lg ml-8 h-8 font-bold">{post?.users?.nickname}</div>
+                  <div className="text-md mb-3 ml-8 h-8">{post?.title}</div>
+                </div>
               </div>
               <div className="mt-4 h-full max-h-[200px] w-full overflow-y-scroll scrollbar-hide">{post?.content}</div>
             </>
