@@ -7,3 +7,10 @@ export type CommonPostType = PostType & {
     email: string | null;
   } | null;
 };
+
+export type MainPostType = PostType & {
+  users: {
+    nickname: string | null;
+    email: string | null;
+  } | null;
+}

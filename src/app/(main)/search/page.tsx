@@ -17,6 +17,7 @@ export const metadata: Metadata = {
 };
 
 export default async function SearchPage({ searchParams }: { searchParams: { [key: string]: string } }) {
+  // console.log("!searchParams.param", searchParams, searchParams.params);
   if (!searchParams.params) {
     return (
       <div className="w-full p-10 pt-[90px] h-full">
@@ -41,17 +42,19 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
   // });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["artists"],
+    queryKey: ["artists", { keywrod: searchParams.params }],
     queryFn: ({ pageParam }) => api.search.searchSpotifyArtists(searchParams.params, pageParam),
     getNextPageParam: (lastPage: SpotifyAlbums[]) => lastPage.length + 1,
-    initialPageParam: 0
+    initialPageParam: 0,
+    gcTime: 0
   });
 
   await queryClient.prefetchInfiniteQuery({
-    queryKey: ["albums"],
+    queryKey: ["albums", { keywrod: searchParams.params }],
     queryFn: ({ pageParam }) => api.search.searchSpotifyAlbums(searchParams.params, pageParam),
     getNextPageParam: (lastPage: SpotifyAlbums[]) => lastPage.length + 1,
-    initialPageParam: 0
+    initialPageParam: 0,
+    gcTime: 0
   });
 
   return (
