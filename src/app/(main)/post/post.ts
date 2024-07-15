@@ -24,9 +24,8 @@ export const postingPost = async ({
       console.error("Server response error:", errorData);
       throw new Error(`HTTP error! status: ${response.status}`);
     }
-    console.log(response);
     return await response.json();
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };

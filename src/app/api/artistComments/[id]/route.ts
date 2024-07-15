@@ -15,7 +15,7 @@ export const GET = async (_: Request, { params }: { params: { id: string } }) =>
       console.error(error);
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
-    // 데이터가 없을 경우 빈 배열 반환
+
     return NextResponse.json(data || []);
   } catch (error) {
     console.error("Error:", error);

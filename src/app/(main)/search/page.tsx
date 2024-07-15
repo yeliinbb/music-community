@@ -6,8 +6,6 @@ import SearchAlbums from "./_components/SearchAlbums";
 import SearchArtists from "./_components/SearchArtists";
 import SearchUser from "./_components/SearchUser";
 
-// const TestUser = React.lazy(() => import("./_components/SearchUser"));
-
 export const metadata: Metadata = {
   title: {
     default: "뮤직 커뮤니티",
@@ -17,7 +15,6 @@ export const metadata: Metadata = {
 };
 
 export default async function SearchPage({ searchParams }: { searchParams: { [key: string]: string } }) {
-  // console.log("!searchParams.param", searchParams, searchParams.params);
   if (!searchParams.params) {
     return (
       <div className="w-full p-10 pt-[90px] h-full">
@@ -29,17 +26,6 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
   }
 
   const queryClient = new QueryClient();
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["searchUsers", { params: searchParams.params }],
-  //   queryFn: () => api.search.searchUsers(searchParams.params),
-  //   retry: 0
-  // });
-
-  // await queryClient.prefetchQuery({
-  //   queryKey: ["searchSpotify", { params: searchParams.params }],
-  //   queryFn: () => api.search.searchSpotify(searchParams.params),
-  //   retry: 0
-  // });
 
   await queryClient.prefetchInfiniteQuery({
     queryKey: ["artists", { keywrod: searchParams.params }],
@@ -66,7 +52,6 @@ export default async function SearchPage({ searchParams }: { searchParams: { [ke
           <SearchArtists />
         </HydrationBoundary>
       </div>
-      {/* <SearchSpotify /> */}
     </div>
   );
 }

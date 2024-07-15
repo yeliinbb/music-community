@@ -13,10 +13,7 @@ export async function GET(req: NextRequest, context: Context) {
   const page = params.get("page");
   const offset = Number(page) * OFFSET;
 
-  // console.log("PAGE___", page);
-
   const { keyword } = context.params;
-  // console.log("ARTISTS SEARCH___", keyword);
   const token = await getAccessToken();
 
   if (!token || !keyword || !keyword.length) {
@@ -37,7 +34,7 @@ export async function GET(req: NextRequest, context: Context) {
 
     return NextResponse.json(data);
   } catch (error) {
-    console.log("API ERROR___", error);
+    console.error("API ERROR___", error);
     return new Response(JSON.stringify(error), { status: 500 });
   }
 }

@@ -9,8 +9,6 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
     data: { user }
   } = await supabase.auth.getUser();
 
-  console.log("이게 바로 유저아이디지=>", user?.id);
-
   const { data: likeData, error: likeError } = await supabase
     .from("likes")
     .select("*")

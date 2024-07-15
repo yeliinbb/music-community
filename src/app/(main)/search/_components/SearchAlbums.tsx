@@ -14,9 +14,8 @@ export default function SearchAlbums() {
     albumsHasNextPage,
     albumsFetchNextPage
   } = useSearch();
-  // 최대 40개 일단은..
+
   const length = albums?.length ?? 41;
-  // console.log("SPOTIFY ALBUMS DATA___", albums);
 
   useEffect(() => {
     const obs = new IntersectionObserver(
@@ -41,8 +40,6 @@ export default function SearchAlbums() {
       }
     };
   }, [albums, albumsFetchNextPage, albumsHasNextPage]);
-
-  // console.log(albums);
 
   return (
     <div className="flex flex-col gap-y-10">

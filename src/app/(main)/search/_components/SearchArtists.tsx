@@ -15,7 +15,6 @@ export default function SearchArtists() {
     artistsFetchNextPage
   } = useSearch();
   const length = artists?.length ?? 41;
-  // console.log("SPOTIFY ARTISTS DATA___", artists);
 
   useEffect(() => {
     const obs = new IntersectionObserver(

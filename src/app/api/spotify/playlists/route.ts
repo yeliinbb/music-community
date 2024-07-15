@@ -5,11 +5,9 @@ import axios from "axios";
 import { NextResponse } from "next/server";
 
 export const GET = async () => {
-  // const {searchParams} = new URL(request.url)
   const accessToken = await getAccessToken();
   const playlistsIds = await getPlaylistIdList();
-  // console.log("accessToken", accessToken)
-  // console.log(playlistsIds);
+
   if (!accessToken) {
     console.error("Access token is missing");
     return NextResponse.json({ error: "Access token is missing" }, { status: 500 });
@@ -54,8 +52,6 @@ export const GET = async () => {
             }))
           };
 
-          // console.log("processedPlaylist", processedPlaylist);
-
           return processedPlaylist;
         } catch (error) {
           console.error(`Error fetching playlist ${playlistId}:`, error);
@@ -63,7 +59,7 @@ export const GET = async () => {
         }
       })
     );
-    // null 값 (오류 발생한 플레이리스트) 제거
+
     const validPlaylists = playlistsWithTracks.filter((playlist) => playlist !== null);
 
     return NextResponse.json(validPlaylists);
