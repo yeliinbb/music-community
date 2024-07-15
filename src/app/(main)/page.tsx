@@ -33,9 +33,9 @@ const MainPage = async () => {
   return (
     <div className="p-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
-      <Playlists />
-      <PostList />
-      <Artist />
+        <Playlists />
+        <PostList />
+        <Artist />
       </HydrationBoundary>
     </div>
   );

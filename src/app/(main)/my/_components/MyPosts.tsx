@@ -14,13 +14,12 @@ export default function MyPosts() {
 
   return (
     <div>
-      <ul className="grid grid-cols-4 gap-2 p-2">
+      <ul className="grid grid-cols-4 gap-10 p-2">
         {posts &&
           posts.length > 0 &&
           posts?.map((post) => (
             <li
               className="shadow-md hover:shadow-lg transition-shadow duration-150 
-
             active:shadow-[inset_0_2px_8px_gray] select-none cursor-pointer
             border border-gray-300 rounded-lg"
               key={post.id}
