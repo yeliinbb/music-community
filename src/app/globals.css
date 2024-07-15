@@ -34,10 +34,10 @@ button:hover {
   padding: 0 5px; /* 화살표를 위한 공간 확보 */
 }
 
-.custom-slider .slick-arrow {
+/* .custom-slider .slick-arrow {
   position: absolute;
   top: calc(50% - 5px);
-}
+} */
 
 .custom-slider .slick-prev {
   left: -30px;

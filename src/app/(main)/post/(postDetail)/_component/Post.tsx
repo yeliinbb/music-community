@@ -1,18 +1,22 @@
 "use client";
 
 import { deletePost, editPost, uploadImg } from "@/lib/utils/postUtils";
-import { CommonPostType, PostType } from "@/types/posts.type";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
+import { PostType } from "@/types/posts.type";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { useLoginStore } from "@/store/auth";
 import PostSkeleton from "./PostSkeleton";
 import { toast } from "react-toastify";
+import { usePostCommentData } from "@/hooks/usePostCommentData";
 
-const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+interface PostProps {
+  params: { id: string };
+}
 
-const Post = ({ id }: { id: string }) => {
+const Post = ({ params }: PostProps) => {
+  const postId = params.id;
+  const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
   const [isEditing, setIsEditing] = useState(false);
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
@@ -20,19 +24,10 @@ const Post = ({ id }: { id: string }) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
+  const queryKey = "posts";
+  const tableName = "posts";
 
-  const {
-    data: post,
-    error,
-    isPending,
-    isSuccess
-  } = useQuery<CommonPostType, Error>({
-    queryKey: ["posts", id],
-    queryFn: async () => {
-      const { data } = await axios.get(`/api/posts/${id}`);
-      return data;
-    }
-  });
+  const { post, isPending, isSuccess, error } = usePostCommentData({ postId, queryKey, tableName });
 
   const editMutation = useMutation({
     mutationFn: editPost,
@@ -83,7 +78,7 @@ const Post = ({ id }: { id: string }) => {
 
         if ((title !== undefined && content !== undefined) || uploadImageURL !== undefined) {
           const editedPost: PostType = {
-            id: id,
+            id: postId,
             title: title,
             content: content,
             created_at: post?.created_at ?? "",
@@ -108,7 +103,7 @@ const Post = ({ id }: { id: string }) => {
 
     if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
       try {
-        deleteMutation.mutate(id);
+        deleteMutation.mutate(postId);
         router.push("/my");
         console.log("게시글 삭제가 완료되었습니다.");
       } catch (error) {

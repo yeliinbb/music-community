@@ -1,5 +1,5 @@
 "use client";
-import useComment from "@/hooks/useComment";
+import useComment, { NewCommentType } from "@/hooks/useComment";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { RiEditFill } from "react-icons/ri";
 import { BsPencilSquare } from "react-icons/bs";
@@ -16,10 +16,10 @@ const ArtistComments = ({ params }: ArtistCommentsProps) => {
   const tableName = "artistComments";
 
   const {
-    data: artistCommentList,
-    error,
-    isPending,
+    commentList,
     isSuccess,
+    isPending,
+    error,
     commentRef,
     isEditing,
     editingCommentId,
@@ -30,7 +30,7 @@ const ArtistComments = ({ params }: ArtistCommentsProps) => {
     handleDeleteComment
   } = useComment({
     queryKey,
-    id: artistId,
+    postId: artistId,
     tableName
   });
 
@@ -61,7 +61,7 @@ const ArtistComments = ({ params }: ArtistCommentsProps) => {
           </form>
           <ul className="w-full max-h-[250px] h-full overflow-y-scroll scrollbar-hide px-2">
             {isSuccess &&
-              artistCommentList?.map((comment) => {
+              commentList?.map((comment) => {
                 return (
                   <li className="shadow rounded-lg mb-2 p-1" key={comment.id}>
                     <div className="flex flex-col p-2 gap-3">

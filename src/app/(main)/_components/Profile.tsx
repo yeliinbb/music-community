@@ -6,7 +6,7 @@ import ProfileModal from "@/components/ProfileModal";
 import { useLoginStore } from "@/store/auth";
 import { MdOutlineMail } from "react-icons/md";
 import { Tooltip } from "react-tooltip";
-import Trending from "../playlists/_components/Trending";
+import Trending from "../(playlists)/_components/Trending";
 import "react-tooltip/dist/react-tooltip.css";
 import { useUserData } from "@/hooks/useUserData";
 

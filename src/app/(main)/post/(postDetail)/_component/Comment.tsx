@@ -17,10 +17,10 @@ const Comment = ({ params }: CommentProps) => {
   const tableName = "comments";
 
   const {
-    data: commentList,
-    error,
-    isPending,
+    commentList,
     isSuccess,
+    isPending,
+    error,
     commentRef,
     isEditing,
     editingCommentId,
@@ -31,7 +31,7 @@ const Comment = ({ params }: CommentProps) => {
     handleDeleteComment
   } = useComment({
     queryKey,
-    id: postId,
+    postId,
     tableName
   });
 

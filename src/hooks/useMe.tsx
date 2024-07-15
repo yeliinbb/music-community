@@ -3,7 +3,7 @@
 import api from "@/api/api";
 import { useLoginStore } from "@/store/auth";
 import { ArtistsItems } from "@/types/spotify.type";
-import { useQueries, UseQueryResult } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 
 export type MyPostsType = {
   id: string;
@@ -21,7 +21,7 @@ type LikeType = {
 export default function useMe() {
   const { userId } = useLoginStore();
 
-  const [posts, likes] = useQueries({
+  const queries = useQueries({
     queries: [
       {
         queryKey: ["myPosts"],
@@ -34,7 +34,14 @@ export default function useMe() {
         gcTime: 0
       }
     ]
-  }) as [UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>];
+  });
+  // as[(UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>)];
+  const [posts, likes] = queries;
+  const isPending = queries.some((query) => query.isPending);
 
-  return { posts: posts.data, likes: likes.data };
+  return {
+    posts: posts.data as MyPostsType[] | undefined,
+    likes: likes.data as LikeType | undefined,
+    isPending
+  };
 }
