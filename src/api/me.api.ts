@@ -5,7 +5,7 @@ class MeAPI {
 
   async getMyLikes(userId: string) {
     const response = await fetch(`/api/me/likes?userId=${userId}`, {
-      cache: "no-store"
+      cache: "no-cache"
     });
     // console.log("GET MY LIKESS___", response);
     const data = await response.json();
@@ -15,7 +15,7 @@ class MeAPI {
 
   async getMyPosts(userId: string) {
     const response = await fetch(`/api/me/posts?userId=${userId}`, {
-      cache: "no-store"
+      cache: "no-cache"
     });
     // console.log("GET MY POSTS___", response);
     const data = await response.json();
