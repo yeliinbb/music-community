@@ -13,7 +13,7 @@ class SearchAPI {
   }
 
   async searchSpotifyArtists(query: string | null, pageParam: number) {
-    const response = await fetch(`/api/search/spotify/artists/${query}?page=${pageParam}`);
+    const response = await fetch(`/api/search/spotify/artists/${query}?page=${pageParam}`, { cache: "no-store" });
     // console.log("GET SPOTIFY ARTISTS INFINITY___", response);
     const data = await response.json();
     // console.log("GET SPOTIFY ARTISTS INFINITY DATA___", data);
@@ -21,7 +21,7 @@ class SearchAPI {
   }
 
   async searchSpotifyAlbums(query: string | null, pageParam: number) {
-    const response = await fetch(`/api/search/spotify/albums/${query}?page=${pageParam}`);
+    const response = await fetch(`/api/search/spotify/albums/${query}?page=${pageParam}`, { cache: "no-store" });
     // console.log("GET SPOTIFY ALBUMS INFINITY___", response);
     const data = await response.json();
     // console.log("GET SPOTIFY ALBUMS INFINITY DATA___", data);
@@ -29,7 +29,7 @@ class SearchAPI {
   }
 
   async searchUsers(query: string | null) {
-    const response = await fetch(`/api/search/user/${query}`);
+    const response = await fetch(`/api/search/user/${query}`, { cache: "no-store" });
     // console.log("GET SEARCH USERS___", response);
     const data: User[] = await response.json();
 

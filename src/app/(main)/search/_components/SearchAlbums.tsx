@@ -16,7 +16,7 @@ export default function SearchAlbums() {
   } = useSearch();
   // 최대 40개 일단은..
   const length = albums?.length ?? 41;
-  // console.log("SPOTIFY DATA___", albums);
+  // console.log("SPOTIFY ALBUMS DATA___", albums);
 
   useEffect(() => {
     const obs = new IntersectionObserver(

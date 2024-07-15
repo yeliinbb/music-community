@@ -16,6 +16,7 @@ export async function GET(req: NextRequest, context: Context) {
   // console.log("PAGE___", page);
 
   const { keyword } = context.params;
+  // console.log("ARTISTS SEARCH___", keyword);
   const token = await getAccessToken();
 
   if (!token || !keyword || !keyword.length) {
