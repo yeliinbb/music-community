@@ -9,7 +9,6 @@ export async function GET(req: NextRequest) {
   if (!userId) return NextResponse.json({ message: "API GET POSTS No User Id" });
 
   const supabase = createClient();
-  const user = await supabase.auth.getSession();
 
   const response = await supabase
     .from("posts")

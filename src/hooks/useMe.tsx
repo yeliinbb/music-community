@@ -24,12 +24,14 @@ export default function useMe() {
   const [posts, likes] = useQueries({
     queries: [
       {
-        queryKey: ["myPosts", { userId }],
-        queryFn: () => api.me.getMyPosts(userId)
+        queryKey: ["myPosts"],
+        queryFn: () => api.me.getMyPosts(userId),
+        gcTime: 0
       },
       {
-        queryKey: ["myLikes", { userId }],
-        queryFn: () => api.me.getMyLikes(userId)
+        queryKey: ["myLikes"],
+        queryFn: () => api.me.getMyLikes(userId),
+        gcTime: 0
       }
     ]
   }) as [UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>];
