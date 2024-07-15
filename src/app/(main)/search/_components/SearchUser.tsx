@@ -6,6 +6,8 @@ import Image from "next/image";
 export default function SearchUser() {
   const { users } = useSearch();
   // console.log("USER DATA___", users);
+  const defaultImg =
+  "https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg";
 
   return (
     <div className="flex flex-col gap-y-4 min-h-[200px] ">
@@ -16,16 +18,16 @@ export default function SearchUser() {
           {users?.map((user) => (
             <li className="flex flex-col gap-y-2" key={user.id}>
               <div className="relative aspect-square p-2">
-                <Image
-                  src={"http://via.placeholder.com/640x480"}
-                  className="object-cover"
-                  fill
-                  alt={user.nickname!}
-                  sizes={"100px"}
+                <img
+                  src={user.profileUrl ?? defaultImg}
+                  className="object-cover w-full h-full rounded-lg"
+                  alt={user.nickname ?? "사용자 프로필"}
+                  width={100}
+                  height={100}
                 />
               </div>
               <div>
-                <p className="line-clamp-1 text-sm font-bold">{user.nickname}</p>
+                <p className="line-clamp-1 text-sm font-bold ml-2">{user.nickname}</p>
               </div>
             </li>
           ))}

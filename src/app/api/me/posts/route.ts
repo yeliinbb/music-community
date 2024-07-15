@@ -16,7 +16,7 @@ export async function GET(req: NextRequest) {
     .select("*")
     .eq("userId", userId)
     .order("created_at", { ascending: false });
-  // console.log("/API/ME/ROUTE___", response);
+
   const data = response.data;
 
   return NextResponse.json(data);

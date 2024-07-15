@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
 export default function LogoutButton() {
-  const { isLogin, login, logout } = useLoginStore();
+  const { isLogin, login, logout, clearStorage } = useLoginStore();
   const supabase = createClient();
   const router = useRouter();
 
@@ -28,7 +28,7 @@ export default function LogoutButton() {
 
       // 로그아웃 성공 시 클라이언트 상태 업데이트
       logout();
-
+      clearStorage();
       // 로그인 페이지로 리다이렉트
       router.replace("/login");
     } catch (error) {
@@ -40,5 +40,12 @@ export default function LogoutButton() {
     router.replace("/login"); // 로그인 페이지로 이동
   };
 
-  return <button onClick={isLogin ? handleLogout : handleLogin} className="font-bold">{isLogin ? "로그아웃" : "로그인"}</button>;
+  return (
+    <button
+      onClick={isLogin ? handleLogout : handleLogin}
+      className=" bg-[#989898] text-white min-w-100px px-4 py-2.5 rounded-xl"
+    >
+      {isLogin ? "로그아웃" : "로그인"}
+    </button>
+  );
 }

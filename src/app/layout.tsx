@@ -7,15 +7,14 @@ const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Cytunes",
-    default: "Cytunes"
+    template: "%s | CYTunes",
+    default: "CYTunes"
   },
   description: "Music Community",
   icons: {
-    icon: '/music.ico'
+    icon: "/music.ico"
   }
 };
-
 
 export default function RootLayout({
   children

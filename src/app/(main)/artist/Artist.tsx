@@ -4,11 +4,12 @@ import { useQuery } from "@tanstack/react-query";
 
 import type { SpotifyArtist } from "@/types/spotify.type";
 
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CutomArrow";
+import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
 import Link from "next/link";
+import Slider from "react-slick";
+import "slick-carousel/slick/slick-theme.css";
+import "slick-carousel/slick/slick.css";
+import ArtistSkeleton from "./ArtistSkeleton";
 
 const Artist = () => {
   const {
@@ -26,10 +27,9 @@ const Artist = () => {
       return data;
     }
   });
-  // console.log("artistData =>", artistData);
 
   if (isPending) {
-    return <div>--- 데이터 수집 중 ---</div>;
+    return <ArtistSkeleton />;
   }
 
   if (error) {
