@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useRef, useState } from "react";
 import { postingPost } from "./post";
+import { toast } from "react-toastify";
 
 const DetailPage = () => {
-  // 이미지 상태
   const [imageURL, setImageURL] = useState<string>("");
   const [isUploading, setIsUploading] = useState<boolean>(false);
   const titleRef = useRef<HTMLInputElement>(null);
@@ -18,23 +18,21 @@ const DetailPage = () => {
 
   const onClickFileUpload = async (file: File | null) => {
     if (!file) {
-      console.log("이미지 없");
       return;
     }
     setIsUploading(true);
-    // 확장자 구하기 (jps, png, ...)
+
     const extension = file.name.split(".").slice(-1);
-    // 랜덤값 만들어서 확장자 붙인 후 파일이름 정하기
-    // 랜덤값은 uuid나 nanoid 써도되는데 설치한게 없어서 난수로만듬
+
     const filename = `_${Math.random().toString(36).slice(2, 16)}.${extension}`;
     const supabase = createClient();
     const response = await supabase.storage.from("postsImage").upload(`/${filename}`, file);
     if (!response.data) {
-      console.log("업로드 실패");
+      toast.error("업로드 실패");
       setIsUploading(false);
       return;
     }
-    // 업로드한 이미지 url
+
     const url = `https://fjudnzlhchschbqcanpw.supabase.co/storage/v1/object/public/${response.data.fullPath}`;
     setImageURL(url);
     setIsUploading(false);
@@ -45,7 +43,6 @@ const DetailPage = () => {
     const content = contentRef.current?.value;
 
     if (imageURL.length < 0) {
-      console.log("썸네일 없");
       return;
     }
 
@@ -53,7 +50,7 @@ const DetailPage = () => {
       try {
         await postingPost({ title, content, imageURL });
       } catch (error) {
-        console.log(error);
+        console.error(error);
       }
     }
     router.push("/my");
@@ -69,7 +66,6 @@ const DetailPage = () => {
           ref={titleRef}
         />
         <div className="w-4/5 mx-auto flex flex-col items-center gap-y-2 select-none">
-          {/* 이미지 파일 */}
           <div className="size-40  border border-gray-300 relative aspect-square flex items-center justify-center">
             {isUploading && <div className="font-bold">이미지 업로드중...</div>}
             {!isUploading && !imageURL.length && <div className="font-bold">썸네일 올려주세요..</div>}
@@ -77,7 +73,6 @@ const DetailPage = () => {
               <Image fill className="object-cover" src={imageURL} alt="Thumbnail" sizes="100px" />
             )}
           </div>
-          {/* 이미지 파일 받는곳 */}
           <div className="mb-5">
             <label
               className="cursor-pointer hover:shadow-md active:shadow-[inset_0_2px_8px_gray] 

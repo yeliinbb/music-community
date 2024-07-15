@@ -9,7 +9,6 @@ export const getArtistIds = async (): Promise<string[]> => {
     throw new Error("Failed to fetch artist IDs");
   }
 
-  // artistId 값 추출
   const artistIds = data.filter((artist) => artist.artistId !== null).map((artist) => artist.artistId as string);
 
   return artistIds;

@@ -89,7 +89,7 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
         toast.warn("내용을 입력하세요!");
         return;
       }
-      const newComment: NewCommentType = { content: comment, postId, userId: userId }; // userId 바꾸기
+      const newComment: NewCommentType = { content: comment, postId, userId: userId }; 
       addMutation.mutate(newComment);
       commentRef.current.value = "";
     }
@@ -97,8 +97,7 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
 
   const handleEditComment = async (commentId: string) => {
     const selectedComment = commentList?.find((comment) => comment.id === commentId);
-    console.log("selectedComment", selectedComment);
-    // 선택된 댓글이 없는 경우 반환
+
     if (!selectedComment) {
       return;
     }
@@ -108,7 +107,6 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
       return;
     }
 
-    // 이미 편집 중인 경우, 저장 로직 실행
     if (isEditing && editingCommentId === commentId) {
       const content = editingContent;
       if (content !== undefined) {
@@ -140,7 +138,7 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
     if (confirm("정말로 댓글을 삭제하시겠습니까?")) {
       try {
         deleteMutation.mutate(commentId);
-        console.log("댓글 삭제가 완료되었습니다.");
+        toast.success("댓글 삭제가 완료되었습니다.");
       } catch (error) {
         console.error("댓글 삭제 중 오류 발생", error);
         toast.warn("댓글 삭제 중 오류가 발생했습니다.");

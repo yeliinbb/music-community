@@ -21,7 +21,7 @@ export const POST = async (request: NextRequest) => {
     }
     return NextResponse.json({ message: "등록성공" }, { status: 200 });
   } catch (error) {
-    console.log(error);
+    console.error(error);
     return NextResponse.json({ error: "Internal Server Error", message: error }, { status: 500 });
   }
 };
