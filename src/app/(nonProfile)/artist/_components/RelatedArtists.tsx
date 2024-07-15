@@ -53,7 +53,12 @@ const RelatedArtists = ({ params }: RelatedProps) => {
                 className="p-4 border rounded-lg max-w-lg flex"
                 style={{ width: "278px", height: "150px" }}
               >
-                <img src={artist.images[2].url} alt="앨범 이미지" width={110} height={110} />
+                <img
+                  src={artist.images[2] ? artist.images[2].url : "http://via.placeholder.com/640x480"}
+                  alt="앨범 이미지"
+                  width={110}
+                  height={110}
+                />
                 <div className="flex items-center ">
                   <div className="ml-4">
                     <div className="mt-2 font-bold ">{artist.name}</div>
