@@ -3,7 +3,7 @@ import axios from "axios";
 
 interface FetchCommentProps {
   postId: string;
-  tableName: "comments" | "artistComments";
+  tableName: "comments" | "artistComments" | "posts";
 }
 
 export const fetchComments = async ({ postId, tableName }: FetchCommentProps): Promise<CommonCommentType[]> => {

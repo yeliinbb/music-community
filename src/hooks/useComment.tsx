@@ -9,9 +9,9 @@ import { toast } from "react-toastify";
 import { usePostCommentData } from "@/hooks/usePostCommentData";
 
 interface UseCommentProps {
-  queryKey: "comments" | "artistComments";
+  queryKey: "comments" | "posts" | "artistComments";
   postId: string;
-  tableName: "comments" | "artistComments";
+  tableName: "comments" | "posts" | "artistComments";
 }
 
 export type NewCommentType = {

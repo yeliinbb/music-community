@@ -6,8 +6,8 @@ import { fetchComments } from "@/lib/utils/fetchComments";
 
 interface usePostCommentDataProps {
   postId: string;
-  queryKey: "comments" | "artistComments";
-  tableName: "comments" | "artistComments";
+  queryKey: "comments" | "artistComments" | "posts";
+  tableName: "comments" | "artistComments" | "posts";
 }
 
 export function usePostCommentData({ postId, queryKey, tableName }: usePostCommentDataProps) {

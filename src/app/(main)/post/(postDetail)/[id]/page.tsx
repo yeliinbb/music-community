@@ -15,12 +15,12 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ["comments", params.id],
-      queryFn: () => fetchComments(params.id)
-    }),
-    queryClient.prefetchQuery({
       queryKey: ["posts", params.id],
       queryFn: () => fetchPosts(params.id)
+    }),
+    queryClient.prefetchQuery({
+      queryKey: ["comments", params.id],
+      queryFn: () => fetchComments({ postId: params.id, tableName: "comments" })
     })
   ]);
 
