@@ -4,6 +4,7 @@ import { useLoginStore } from "@/store/auth";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -15,7 +16,7 @@ const Login = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      alert("이메일과 비밀번호를 입력해주세요.");
+      toast.warn("이메일과 비밀번호를 입력해주세요.");
       return;
     }
 
@@ -30,12 +31,12 @@ const Login = () => {
     const data = await response.json();
 
     if (!data.errorMsg) {
-      alert("로그인 성공!");
+      toast.success("로그인 성공!");
       login();
       setUserId(data.user.id);
       router.replace("/");
     } else {
-      alert(`로그인 에러: ${data.errorMsg}`);
+      toast.warn(`로그인 에러: ${data.errorMsg}`);
     }
   };
 
