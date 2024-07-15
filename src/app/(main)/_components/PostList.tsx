@@ -5,7 +5,7 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { getAllPost } from "./getAllPost";
 
-import { PostType } from "@/types/posts.type";
+import { MainPostType } from "@/types/posts.type";
 import PostCard from "./PostCard";
 
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
@@ -19,7 +19,7 @@ const PostList = () => {
     data: allPosts,
     isPending,
     error
-  } = useQuery<PostType[], PostgrestError>({
+  } = useQuery<MainPostType[], PostgrestError>({
     queryKey: ["allPosts"],
     queryFn: getAllPost
   });
