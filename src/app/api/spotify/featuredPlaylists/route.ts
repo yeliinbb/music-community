@@ -14,7 +14,7 @@ export const GET = async () => {
         locale: "ko_KR"
       }
     });
-    console.log("=============================");
+
     const featuredPlaylists = response.data.playlists.items.map((playlist) => ({
       id: playlist.id,
       name: playlist.name,
@@ -24,7 +24,6 @@ export const GET = async () => {
       trackLink: playlist.external_urls.spotify
     }));
 
-    // console.log("response.data.playlists.items", response.data.playlists.items);
     return NextResponse.json(featuredPlaylists);
   } catch (error) {
     console.error("Error fetching track:", error);
