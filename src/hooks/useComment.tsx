@@ -1,9 +1,9 @@
 "use client";
 
 import { useLoginStore } from "@/store/auth";
-import { CommentType, CommonCommentType } from "@/types/comment.type";
+import { CommentType } from "@/types/comment.type";
 import { createClient } from "@/utils/supabase/client";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { usePostCommentData } from "@/hooks/usePostCommentData";
@@ -29,7 +29,7 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
   const supabase = createClient();
   const commentRef = useRef<HTMLInputElement | null>(null);
 
-  const { commentList, isSuccess, isPending, error } = usePostCommentData({ postId });
+  const { commentList, isSuccess, isPending, error } = usePostCommentData({ postId, queryKey, tableName });
 
   const addComment = async (newComment: NewCommentType) => {
     const response = await supabase.from(tableName).insert(newComment);

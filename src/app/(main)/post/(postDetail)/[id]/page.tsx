@@ -2,8 +2,8 @@ import Post from "../_component/Post";
 import Comment from "../_component/Comment";
 import { createClient } from "@/utils/supabase/server";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { fetchComments } from "@/lib/utils/commentUtils";
 import { fetchPosts } from "@/lib/utils/fetchPosts";
+import { fetchComments } from "@/lib/utils/fetchComments";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const queryClient = new QueryClient();

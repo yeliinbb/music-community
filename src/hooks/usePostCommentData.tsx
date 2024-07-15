@@ -1,14 +1,16 @@
 import { useQueries } from "@tanstack/react-query";
-import { fetchComments } from "@/lib/utils/commentUtils";
 import { fetchPosts } from "@/lib/utils/fetchPosts";
 import { CommonPostType } from "@/types/posts.type";
 import { CommonCommentType } from "@/types/comment.type";
+import { fetchComments } from "@/lib/utils/fetchComments";
 
 interface usePostCommentDataProps {
   postId: string;
+  queryKey: "comments" | "artistComments";
+  tableName: "comments" | "artistComments";
 }
 
-export function usePostCommentData({ postId }: usePostCommentDataProps) {
+export function usePostCommentData({ postId, queryKey, tableName }: usePostCommentDataProps) {
   const results = useQueries({
     queries: [
       {
@@ -16,8 +18,8 @@ export function usePostCommentData({ postId }: usePostCommentDataProps) {
         queryFn: () => fetchPosts(postId)
       },
       {
-        queryKey: ["comments", postId],
-        queryFn: () => fetchComments(postId)
+        queryKey: [queryKey, postId],
+        queryFn: () => fetchComments({ postId, tableName })
       }
     ]
   });

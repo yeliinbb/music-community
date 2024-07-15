@@ -3,7 +3,7 @@
 import api from "@/api/api";
 import { useLoginStore } from "@/store/auth";
 import { ArtistsItems } from "@/types/spotify.type";
-import { useQueries, UseQueryResult } from "@tanstack/react-query";
+import { useQueries } from "@tanstack/react-query";
 
 export type MyPostsType = {
   id: string;
