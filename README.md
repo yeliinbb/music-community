@@ -68,4 +68,7 @@
 
 - 메인에서 플레이리스트 추천해주고 미리듣기 음원 제공
 
-# 페이지 소개
+# 메인 페이지
+
+![main](https://github.com/user-attachments/assets/2bd1c71f-e857-46aa-b632-cbee5c730348)
+
