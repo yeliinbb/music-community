@@ -1,13 +1,7 @@
 "use client";
 
-import { PostgrestError } from "@supabase/supabase-js";
-import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
-import { getAllPost } from "./getAllPost";
-
-import { PostType } from "@/types/posts.type";
 import PostCard from "./PostCard";
-
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
 import Slider from "react-slick";
 import "slick-carousel/slick/slick-theme.css";

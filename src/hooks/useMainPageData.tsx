@@ -2,7 +2,7 @@ import { useQueries } from "@tanstack/react-query";
 import { getAllPost } from "@/app/(main)/_components/getAllPost";
 import { getPlaylists } from "@/app/(main)/_components/getPlaylists";
 import { getSpotifyArtists } from "@/app/(main)/_components/getSpotifyArtists";
-import { PostType } from "@/types/posts.type";
+import { MainPostType } from "@/types/posts.type";
 import { SpotifyArtist, SpotifyPlaylistTracks } from "@/types/spotify.type";
 
 export function useMainPageData() {
@@ -29,7 +29,7 @@ export function useMainPageData() {
   const error = queries.some((query) => query.isError);
 
   return {
-    allPosts: allPostsQuery.data as PostType[] | undefined,
+    allPosts: allPostsQuery.data as MainPostType[] | undefined,
     playlists: playlistsQuery.data as SpotifyPlaylistTracks[] | undefined,
     artistData: artistDataQuery.data as SpotifyArtist[] | undefined,
     isSuccess,
