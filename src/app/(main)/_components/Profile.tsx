@@ -34,7 +34,7 @@ const Profile = () => {
             />
           </div>
         }
-        <div className="flex flex-col justify-center gap-2 place-self-center">
+        <div className="flex flex-col justify-center gap-2 place-self-start ml-1">
           <div className="flex gap-1.5 items-center ">
             <IoPersonCircleOutline className="mt-1.5" />
             {isPending ? (

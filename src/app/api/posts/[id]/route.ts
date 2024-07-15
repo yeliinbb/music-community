@@ -5,7 +5,7 @@ export const GET = async (_: Request, { params }: { params: { id: string } }) =>
   const supabase = createClient();
   try {
     const { id } = params;
-    const { data, error } = await supabase.from("posts").select("*").eq("id", id).single();
+    const { data, error } = await supabase.from("posts").select("*,users(nickname, email)").eq("id", id).single();
 
     if (error) {
       console.error(error);

@@ -7,6 +7,7 @@ import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { UserProfile } from "@/types/users.type";
+import { toast } from "react-toastify";
 
 interface ProfileModalProps {
   userId: string;
@@ -58,15 +59,15 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
     }
   };
 
-  const profleUpdateMutation = useMutation({
+  const profileUpdateMutation = useMutation({
     mutationFn: updateProfilePicture,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["userData", userId] });
-      alert("프로필 사진이 업데이트되었습니다.");
+      toast.success("프로필 사진이 업데이트되었습니다.");
     },
     onError: (error) => {
       console.error("프로필 사진 업데이트 오류:", error);
-      alert("프로필 사진 업데이트에 실패했습니다.");
+      toast.warn("프로필 사진 업데이트에 실패했습니다.");
     }
   });
 
@@ -78,10 +79,13 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
   };
 
   const handleProfileSubmit = () => {
-    if (file) {
-      profleUpdateMutation.mutate({ userId, file });
-      onClose();
+    if (!file) {
+      toast.warn("프로필 사진을 선택해주세요.");
+      return;
     }
+
+    profileUpdateMutation.mutate({ userId, file });
+    onClose();
   };
 
   return (
@@ -115,7 +119,7 @@ const ProfileModal = ({ userId }: ProfileModalProps) => {
               <ModalBody>
                 <div>
                   <p className="text-xl font-bold">📷 프로필 사진 변경하기</p>
-                  <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5" />
+                  <input onChange={handleFileInputChange} type="file" id="hiddenFileInput" className="mt-5" accept='image/*' />
                   <div className="flex flex-row justify-end gap-x-5 mt-5">
                     <Button className="bg-gray-300 rounded-lg" variant="light" onPress={onClose}>
                       닫기
