@@ -105,7 +105,6 @@ const Post = ({ params }: PostProps) => {
       try {
         deleteMutation.mutate(postId);
         router.push("/my");
-        console.log("게시글 삭제가 완료되었습니다.");
       } catch (error) {
         console.error("게시글 삭제 중 오류 발생", error);
         toast.warn("게시글 삭제 중 오류가 발생했습니다.");

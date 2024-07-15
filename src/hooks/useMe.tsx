@@ -35,7 +35,7 @@ export default function useMe() {
       }
     ]
   });
-  // as[(UseQueryResult<MyPostsType[]>, UseQueryResult<LikeType>)];
+
   const [posts, likes] = queries;
   const isPending = queries.some((query) => query.isPending);
 

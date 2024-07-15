@@ -11,7 +11,7 @@ export async function POST(request: Request) {
   });
 
   if (error) {
-    console.log("error message:", error.message);
+    console.error("error message:", error.message);
     return Response.json({ errorMsg: error.message }, { status: 400 });
   }
 

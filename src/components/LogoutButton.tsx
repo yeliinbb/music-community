@@ -37,7 +37,7 @@ export default function LogoutButton() {
   };
 
   const handleLogin = () => {
-    router.replace("/login"); // 로그인 페이지로 이동
+    router.replace("/login"); 
   };
 
   return (
