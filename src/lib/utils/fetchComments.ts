@@ -7,12 +7,12 @@ interface FetchCommentProps {
 
 export const fetchComments = async ({ postId, tableName }: FetchCommentProps): Promise<CommonCommentType[]> => {
   try {
-    const response = await fetch(`/api/${tableName}/${postId}`, {
+    const response = await fetch(`https://music-community-pearl.vercel.app/api/${tableName}/${postId}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json"
       },
-      cache: "no-store" // 이 옵션은 필요에 따라 조정할 수 있습니다
+      cache: "no-store"
     });
 
     if (!response.ok) {

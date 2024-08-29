@@ -31,10 +31,13 @@ const Trending = () => {
     }
   });
 
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * 10);
+  function getRandomNumber(arrLength: number) {
+    return Math.floor(Math.random() * (arrLength + 1));
+  }
 
-    if (isSuccess) {
+  useEffect(() => {
+    if (isSuccess && featuredPlaylists?.length > 0 && featuredPlaylists !== undefined) {
+      const randomIndex = getRandomNumber(featuredPlaylists?.length);
       setSelectedPlaylist(featuredPlaylists[randomIndex]);
     } else return;
   }, [featuredPlaylists]);
@@ -65,15 +68,6 @@ const Trending = () => {
                 >
                   {selectedPlaylist.name}
                 </p>
-                {/* <Tooltip
-                  id="플레이리스트 바로가기"
-                  place="bottom"
-                  style={{ backgroundColor: "#ffffff", color: "black" }}
-                /> */}
-
-                {/* <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
-              <p className="h-[15px] text-center hover:underline">(바로가기)</p>
-            </Link> */}
               </div>
             </div>
           </Link>
