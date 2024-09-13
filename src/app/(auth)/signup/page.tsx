@@ -25,17 +25,17 @@ const SignUpPage = () => {
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.error(CLIENT_ERROR_MESSAGES.INVALID_EMAIL_FORMAT);
+      toast.warn(CLIENT_ERROR_MESSAGES.INVALID_EMAIL_FORMAT);
       return false;
     }
 
     if (password.length < 8) {
-      toast.error(CLIENT_ERROR_MESSAGES.PASSWORD_TOO_SHORT);
+      toast.warn(CLIENT_ERROR_MESSAGES.PASSWORD_TOO_SHORT);
       return false;
     }
 
     if (nickname.length < 2 || nickname.length > 20) {
-      toast.error(CLIENT_ERROR_MESSAGES.INVALID_NICKNAME_LENGTH);
+      toast.warn(CLIENT_ERROR_MESSAGES.INVALID_NICKNAME_LENGTH);
       return false;
     }
     return true;
