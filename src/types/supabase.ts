@@ -83,16 +83,19 @@ export type Database = {
       likes: {
         Row: {
           artistId: string | null
+          created_at: string | null
           id: string
           userId: string | null
         }
         Insert: {
           artistId?: string | null
+          created_at?: string | null
           id?: string
           userId?: string | null
         }
         Update: {
           artistId?: string | null
+          created_at?: string | null
           id?: string
           userId?: string | null
         }

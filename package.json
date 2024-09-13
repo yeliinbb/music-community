@@ -7,7 +7,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "genTypes": "supabase gen types typescript --project-id fjudnzlhchschbqcanpw --schema public > src/types/supabase.ts"
+    "genTypes": "supabase gen types --lang=typescript --project-id fjudnzlhchschbqcanpw --schema public > src/types/supabase.ts"
   },
   "dependencies": {
     "@nextui-org/modal": "^2.0.36",
