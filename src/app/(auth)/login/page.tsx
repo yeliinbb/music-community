@@ -1,12 +1,16 @@
 "use client";
 
+import authAxios from "@/lib/axios/authAxios";
+import { CLIENT_ERROR_MESSAGES } from "@/lib/constants/clientErrorMessages";
+import { SUCCESS_MESSAGES } from "@/lib/constants/successMessages";
 import { useLoginStore } from "@/store/auth";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const Login = () => {
+const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { login, setUserId } = useLoginStore();
@@ -16,27 +20,18 @@ const Login = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.warn("이메일과 비밀번호를 입력해주세요.");
+      toast.warn(CLIENT_ERROR_MESSAGES.EMPTY_CREDENTIALS);
       return;
     }
 
-    const response = await fetch("/api/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password })
-    });
-
-    const data = await response.json();
-
-    if (!data.errorMsg) {
-      toast.success("로그인 성공!");
+    try {
+      const { data } = await authAxios.post("/api/login", { email, password });
+      toast.success(`${SUCCESS_MESSAGES.LOGIN} ${data.user.nickname}님 환영합니다.`);
       login();
       setUserId(data.user.id);
       router.replace("/");
-    } else {
-      toast.warn(`로그인 에러: ${data.errorMsg}`);
+    } catch (error) {
+      console.error("Login error:", error);
     }
   };
 
@@ -95,4 +90,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginPage;

@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/lib/spotify";
+import { getAccessToken } from "@/app/api/utils/spotify";
 import { SpotifyFeaturedPlaylists } from "@/types/spotify.type";
 import axios from "axios";
 import { NextResponse } from "next/server";

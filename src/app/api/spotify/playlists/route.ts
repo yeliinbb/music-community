@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/lib/spotify";
+import { getAccessToken } from "@/app/api/utils/spotify";
 import getPlaylistIdList from "@/lib/utils/getPlaylistIdList";
 import { SpotifyPlaylist, SpotifyTrack, SpotifyPlaylistTracks } from "@/types/spotify.type";
 import axios from "axios";

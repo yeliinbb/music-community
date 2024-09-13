@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/lib/spotify";
+import { getAccessToken } from "@/app/api/utils/spotify";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Context {

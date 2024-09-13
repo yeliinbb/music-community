@@ -1,5 +1,5 @@
 import { getArtistIds } from "@/lib/utils/getArtistIds";
-import { getAccessToken } from "@/lib/spotify";
+import { getAccessToken } from "@/app/api/utils/spotify";
 import { SpotifyArtist } from "@/types/spotify.type";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";

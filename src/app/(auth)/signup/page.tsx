@@ -1,39 +1,67 @@
 "use client";
 
+import authAxios from "@/lib/axios/authAxios";
+import { CLIENT_ERROR_MESSAGES } from "@/lib/constants/clientErrorMessages";
+import { COMMON_ERROR_MESSAGES } from "@/lib/constants/commonErrorMessages";
+import { SUCCESS_MESSAGES } from "@/lib/constants/successMessages";
+import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 
-const Signup = () => {
+const SignUpPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [nickname, setNickname] = useState("");
   const router = useRouter();
 
-  const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-
+  const validateInputs = () => {
     if (!email || !password || !nickname) {
-      toast.warn("모든 필드를 입력해주세요.");
-      return;
+      toast.warn(CLIENT_ERROR_MESSAGES.EMPTY_FIELDS);
+      return false;
     }
 
-    const response = await fetch("/api/signUp", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, password, nickname })
-    });
+    // 이메일 형식 검사
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      toast.error(CLIENT_ERROR_MESSAGES.INVALID_EMAIL_FORMAT);
+      return false;
+    }
 
-    const data = await response.json();
+    if (password.length < 8) {
+      toast.error(CLIENT_ERROR_MESSAGES.PASSWORD_TOO_SHORT);
+      return false;
+    }
 
-    if (!data.errorMsg) {
-      toast.success("회원가입이 성공적으로 완료되었습니다!");
-      router.replace("/login");
-    } else {
-      toast.warn(`회원가입 중 오류가 생겼습니다 : ${data.errorMsg}`);
+    if (nickname.length < 2 || nickname.length > 20) {
+      toast.error(CLIENT_ERROR_MESSAGES.INVALID_NICKNAME_LENGTH);
+      return false;
+    }
+    return true;
+  };
+
+  const handleSignUp = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    if (!validateInputs()) return;
+
+    try {
+      const { data } = await authAxios.post("/api/signUp", { email, password, nickname });
+      if (data.success) {
+        toast.success(SUCCESS_MESSAGES.SIGNUP);
+        router.replace("/login");
+      }
+    } catch (error) {
+      if (axios.isAxiosError(error)) {
+        if (error.response && ![400, 401, 409, 500].includes(error.response.status)) {
+          console.error("Unhandled error:", error.response?.data?.error);
+          toast.error(COMMON_ERROR_MESSAGES.SIGNUP_ERROR);
+        }
+      } else {
+        console.error("Unexpected error:", error);
+        toast.error(COMMON_ERROR_MESSAGES.UNEXPECTED_ERROR);
+      }
     }
   };
 
@@ -44,7 +72,7 @@ const Signup = () => {
           <div className="text-center mb-8">
             <h2 className="mt-4 text-2xl font-bold text-black-200">Welcome!</h2>
           </div>
-          <form onSubmit={handleSignup}>
+          <form onSubmit={handleSignUp}>
             <div className="mb-6">
               <label className="block text-black-400 text-sm font-bold mb-2" htmlFor="nickname">
                 UserName
@@ -104,4 +132,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignUpPage;

@@ -6,6 +6,7 @@ import useComment from "@/hooks/useComment";
 import { BsPencilSquare } from "react-icons/bs";
 import { convertDateFormat } from "@/lib/utils/convertDateFormat";
 import CommentSkeleton from "./CommentSkeleton";
+import { QUERY_KEYS } from "@/lib/constants/queryKeys";
 
 interface CommentProps {
   params: { id: string };
@@ -13,7 +14,6 @@ interface CommentProps {
 
 const Comment = ({ params }: CommentProps) => {
   const postId = params.id;
-  const queryKey = "comments";
   const tableName = "comments";
 
   const {
@@ -30,7 +30,7 @@ const Comment = ({ params }: CommentProps) => {
     handleEditComment,
     handleDeleteComment
   } = useComment({
-    queryKey,
+    queryKey: QUERY_KEYS.comments,
     postId,
     tableName
   });

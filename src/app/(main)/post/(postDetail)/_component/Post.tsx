@@ -9,6 +9,7 @@ import { useLoginStore } from "@/store/auth";
 import PostSkeleton from "./PostSkeleton";
 import { toast } from "react-toastify";
 import { usePostCommentData } from "@/hooks/usePostCommentData";
+import { QUERY_KEYS } from "@/lib/constants/queryKeys";
 
 interface PostProps {
   params: { id: string };
@@ -24,10 +25,9 @@ const Post = ({ params }: PostProps) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   const [file, setFile] = useState<File | null>(null);
-  const queryKey = "posts";
   const tableName = "posts";
 
-  const { post, isPending, isSuccess, error } = usePostCommentData({ postId, queryKey, tableName });
+  const { post, isPending, isSuccess, error } = usePostCommentData({ postId, queryKey: QUERY_KEYS.posts, tableName });
 
   const editMutation = useMutation({
     mutationFn: editPost,
