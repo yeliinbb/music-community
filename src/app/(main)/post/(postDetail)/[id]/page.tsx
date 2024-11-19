@@ -1,9 +1,9 @@
 import Post from "../_component/Post";
-import Comment from "../_component/Comment";
 import { createClient } from "@/utils/supabase/server";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
 import { fetchPosts } from "@/lib/utils/fetchPosts";
 import { fetchComments } from "@/lib/utils/fetchComments";
+import CommentList from "@/components/CommentList";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const queryClient = new QueryClient();
@@ -28,7 +28,7 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
     <div className="rounded-xl flex flex-col h-full w-full gap-4">
       <HydrationBoundary state={dehydrate(queryClient)}>
         <Post params={params} />
-        <Comment params={params} />
+        <CommentList params={params} type="regular" />
       </HydrationBoundary>
     </div>
   );

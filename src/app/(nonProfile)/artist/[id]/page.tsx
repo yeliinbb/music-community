@@ -2,7 +2,7 @@ import React from "react";
 import Artist from "../_components/Artist";
 import ArtistTrack from "../_components/ArtistTrack";
 import RelatedArtist from "../_components/RelatedArtists";
-import ArtistComments from "../_components/ArtistComments";
+import CommentList from "@/components/CommentList";
 
 interface ArtistPageProps {
   params: { id: string };
@@ -21,7 +21,7 @@ const ArtistPage = ({ params }: ArtistPageProps) => {
         <RelatedArtist params={params} />
       </div>
       <div className="col-start-2 row-start-2 row-span-2">
-        <ArtistComments params={params} />
+        <CommentList params={params} type="artist" />
       </div>
     </div>
   );

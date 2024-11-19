@@ -129,7 +129,7 @@ const Post = ({ params }: PostProps) => {
   }
 
   return (
-    <div className="border-2 border-gray-300 rounded-lg p-3 relative h-full max-h-[940px]">
+    <div className="border border-gray-300 rounded-lg p-3 relative h-full max-h-[940px]">
       {isEditing ? (
         <>
           <div className="absolute top-[10px] right-[10px] flex gap-2 text-white">

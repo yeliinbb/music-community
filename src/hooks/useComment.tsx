@@ -7,12 +7,10 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { usePostCommentData } from "@/hooks/usePostCommentData";
+import { QUERY_KEYS } from "@/lib/constants/queryKeys";
 
-interface UseCommentProps {
-  queryKey: "comments" | "posts" | "artistComments";
-  postId: string;
-  tableName: "comments" | "posts" | "artistComments";
-}
+type TableName = "comments" | "posts" | "artistComments";
+type QueryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];
 
 export type NewCommentType = {
   content: string;
@@ -20,10 +18,24 @@ export type NewCommentType = {
   userId: string;
 };
 
-const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [editingCommentId, setEditingCommentId] = useState<string | null>(null);
-  const [editingContent, setEditingContent] = useState<string>("");
+type CommentEditState = {
+  isEditing: boolean;
+  commentId: string | null;
+  content: string;
+};
+
+type UseCommentParams = {
+  queryKey: QueryKey;
+  postId: string;
+  tableName: TableName;
+};
+
+const useComment = ({ queryKey, postId, tableName }: UseCommentParams) => {
+  const [editState, setEditState] = useState<CommentEditState>({
+    isEditing: false,
+    commentId: null,
+    content: ""
+  });
   const userId = useLoginStore((state) => state.userId);
   const queryClient = useQueryClient();
   const supabase = createClient();
@@ -31,55 +43,90 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
 
   const { commentList, isSuccess, isPending, error } = usePostCommentData({ postId, queryKey, tableName });
 
-  const addComment = async (newComment: NewCommentType) => {
-    const response = await supabase.from(tableName).insert(newComment);
-    return response.data;
+  const handleError = (error: Error, action: string) => {
+    console.error(`댓글 ${action} 실패`, error);
+    toast.warn(`댓글 ${action} 중 오류가 발생했습니다.`);
+    return null;
   };
 
-  const editComment = async ({ content, id }: CommentType) => {
-    const { error } = await supabase.from(tableName).update({ content }).eq("id", id);
-    if (error) {
-      console.error("댓글 수정 실패", error);
-      throw new Error(error.message);
+  // DB 작업 함수들
+  const commentService = {
+    add: async (newComment: NewCommentType) => {
+      try {
+        const { data, error } = await supabase.from(tableName).insert(newComment);
+        if (error) throw new Error(error.message);
+        return data;
+      } catch (error) {
+        return handleError(error as Error, "추가");
+      }
+    },
+
+    edit: async ({ content, id }: CommentType) => {
+      try {
+        const { error } = await supabase.from(tableName).update({ content }).eq("id", id);
+        if (error) throw new Error(error.message);
+        return true;
+      } catch (error) {
+        return handleError(error as Error, "수정");
+      }
+    },
+
+    delete: async (id: string) => {
+      try {
+        const { error } = await supabase.from(tableName).delete().eq("id", id);
+        if (error) throw new Error(error.message);
+        return true;
+      } catch (error) {
+        return handleError(error as Error, "삭제");
+      }
     }
-    return;
   };
 
-  const deleteComment = async (id: string) => {
-    const { error } = await supabase.from(tableName).delete().eq("id", id);
-    if (error) {
-      console.error("댓글 삭제 실패", error);
-      throw new Error("Failed to delete post");
-    }
-    return;
+  // mutation 관련 로직
+  const mutations = {
+    add: useMutation({
+      mutationFn: commentService.add,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [queryKey] });
+      },
+      onError: (error: Error) => handleError(error, "추가")
+    }),
+
+    edit: useMutation({
+      mutationFn: commentService.edit,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [queryKey] });
+        setEditState({
+          isEditing: false,
+          commentId: null,
+          content: ""
+        });
+      },
+      onError: (error: Error) => handleError(error, "수정")
+    }),
+
+    delete: useMutation({
+      mutationFn: commentService.delete,
+      onSuccess: () => {
+        queryClient.invalidateQueries({ queryKey: [queryKey] });
+      },
+      onError: (error: Error) => handleError(error, "삭제")
+    })
   };
 
-  // 댓글 남기기
-  const addMutation = useMutation({
-    mutationFn: addComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [queryKey] });
+  const validateUserPermission = (selectedComment: CommentType | undefined, action: string) => {
+    if (!selectedComment) {
+      return false;
     }
-  });
 
-  const editMutation = useMutation({
-    mutationFn: editComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [queryKey] });
-      setIsEditing(false);
-      setEditingCommentId(null);
-      setEditingContent("");
+    if (userId !== selectedComment?.userId) {
+      toast.warn(`작성자만 댓글을 ${action}할 수 있습니다.`);
+      return false;
     }
-  });
 
-  const deleteMutation = useMutation({
-    mutationFn: deleteComment,
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: [queryKey] });
-    }
-  });
+    return true;
+  };
 
-  // 댓글 제출
   const handleSubmitComment = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
@@ -89,8 +136,8 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
         toast.warn("내용을 입력하세요!");
         return;
       }
-      const newComment: NewCommentType = { content: comment, postId, userId: userId }; 
-      addMutation.mutate(newComment);
+      const newComment: NewCommentType = { content: comment, postId, userId: userId };
+      mutations.add.mutate(newComment);
       commentRef.current.value = "";
     }
   };
@@ -98,50 +145,40 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
   const handleEditComment = async (commentId: string) => {
     const selectedComment = commentList?.find((comment) => comment.id === commentId);
 
-    if (!selectedComment) {
+    if (!validateUserPermission(selectedComment, "수정")) {
       return;
     }
 
-    if (userId !== selectedComment?.userId) {
-      toast.warn("작성자만 댓글을 수정할 수 있습니다");
-      return;
-    }
-
-    if (isEditing && editingCommentId === commentId) {
-      const content = editingContent;
-      if (content !== undefined) {
-        const editedComment = {
-          ...selectedComment,
-          content: content
-        };
-        editMutation.mutate(editedComment);
+    if (editState.isEditing && editState.commentId === commentId) {
+      const { content } = editState;
+      if (content.trim()) {
+        mutations.edit.mutate({
+          ...selectedComment!,
+          content
+        });
       }
     } else {
-      setIsEditing(true);
-      setEditingCommentId(commentId);
-      setEditingContent(selectedComment.content || "");
+      setEditState({
+        isEditing: true,
+        commentId: commentId,
+        content: selectedComment?.content || ""
+      });
     }
   };
 
   const handleDeleteComment = async (commentId: string) => {
     const selectedComment = commentList?.find((comment) => comment.id === commentId);
 
-    if (!selectedComment) {
-      return;
-    }
-
-    if (userId !== selectedComment?.userId) {
-      toast.warn("작성자만 댓글을 삭제할 수 있습니다.");
+    if (!validateUserPermission(selectedComment, "삭제")) {
       return;
     }
 
     if (confirm("정말로 댓글을 삭제하시겠습니까?")) {
       try {
-        deleteMutation.mutate(commentId);
+        await mutations.delete.mutateAsync(commentId);
         toast.success("댓글 삭제가 완료되었습니다.");
       } catch (error) {
-        console.error("댓글 삭제 중 오류 발생", error);
-        toast.warn("댓글 삭제 중 오류가 발생했습니다.");
+        handleError(error as Error, "삭제");
       }
     } else {
       toast.success("댓글 삭제가 취소되었습니다.");
@@ -154,10 +191,8 @@ const useComment = ({ queryKey, postId, tableName }: UseCommentProps) => {
     isPending,
     error,
     commentRef,
-    isEditing,
-    editingCommentId,
-    editingContent,
-    setEditingContent,
+    editState,
+    setEditState,
     handleSubmitComment,
     handleEditComment,
     handleDeleteComment
