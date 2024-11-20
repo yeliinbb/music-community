@@ -1,6 +1,6 @@
 import axios from "axios";
 import { toast } from "react-toastify";
-import { COMMON_ERROR_MESSAGES } from "../constants/commonErrorMessages";
+import { ERROR_MESSAGES } from "../constants/errorMessages";
 
 const authAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
@@ -11,7 +11,7 @@ authAxios.interceptors.response.use(
   (response) => response,
   (error) => {
     if (axios.isAxiosError(error) && error.response) {
-      const errorMessage = error.response.data.error || COMMON_ERROR_MESSAGES.BAD_REQUEST;
+      const errorMessage = error.response.data.error || ERROR_MESSAGES.SERVER.BAD_REQUEST;
       switch (error.response.status) {
         case 400:
         case 401:

@@ -1,5 +1,5 @@
 export const QUERY_KEYS = {
-  posts: "posts" as const,
-  comments: "comments" as const,
-  artistComments: "artistComments" as const
-};
+  posts: "posts",
+  comments: "comments",
+  artistComments: "artistComments"
+} as const;

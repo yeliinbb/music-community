@@ -1,8 +1,7 @@
 "use client";
 
 import authAxios from "@/lib/axios/authAxios";
-import { CLIENT_ERROR_MESSAGES } from "@/lib/constants/clientErrorMessages";
-import { COMMON_ERROR_MESSAGES } from "@/lib/constants/commonErrorMessages";
+import { ERROR_MESSAGES } from "@/lib/constants/errorMessages";
 import { SUCCESS_MESSAGES } from "@/lib/constants/successMessages";
 import axios from "axios";
 import Link from "next/link";
@@ -18,24 +17,24 @@ const SignUpPage = () => {
 
   const validateInputs = () => {
     if (!email || !password || !nickname) {
-      toast.warn(CLIENT_ERROR_MESSAGES.EMPTY_FIELDS);
+      toast.warn(ERROR_MESSAGES.VALIDATION.FORM.EMPTY_FIELDS);
       return false;
     }
 
     // 이메일 형식 검사
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      toast.warn(CLIENT_ERROR_MESSAGES.INVALID_EMAIL_FORMAT);
+      toast.warn(ERROR_MESSAGES.VALIDATION.EMAIL.INVALID_FORMAT);
       return false;
     }
 
     if (password.length < 8) {
-      toast.warn(CLIENT_ERROR_MESSAGES.PASSWORD_TOO_SHORT);
+      toast.warn(ERROR_MESSAGES.VALIDATION.PASSWORD.TOO_SHORT);
       return false;
     }
 
     if (nickname.length < 2 || nickname.length > 20) {
-      toast.warn(CLIENT_ERROR_MESSAGES.INVALID_NICKNAME_LENGTH);
+      toast.warn(ERROR_MESSAGES.VALIDATION.NICKNAME.INVALID_LENGTH);
       return false;
     }
     return true;
@@ -49,18 +48,18 @@ const SignUpPage = () => {
     try {
       const { data } = await authAxios.post("/api/signUp", { email, password, nickname });
       if (data.success) {
-        toast.success(SUCCESS_MESSAGES.SIGNUP);
+        toast.success(SUCCESS_MESSAGES.AUTH.SIGNUP);
         router.replace("/login");
       }
     } catch (error) {
       if (axios.isAxiosError(error)) {
         if (error.response && ![400, 401, 409, 500].includes(error.response.status)) {
           console.error("Unhandled error:", error.response?.data?.error);
-          toast.error(COMMON_ERROR_MESSAGES.SIGNUP_ERROR);
+          toast.error(ERROR_MESSAGES.AUTH.SIGNUP_ERROR);
         }
       } else {
         console.error("Unexpected error:", error);
-        toast.error(COMMON_ERROR_MESSAGES.UNEXPECTED_ERROR);
+        toast.error(ERROR_MESSAGES.SERVER.UNEXPECTED);
       }
     }
   };

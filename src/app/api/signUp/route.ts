@@ -1,4 +1,4 @@
-import { COMMON_ERROR_MESSAGES } from "@/lib/constants/commonErrorMessages";
+import { ERROR_MESSAGES } from "@/lib/constants/errorMessages";
 import { FormState } from "@/types/auth.type";
 import { createClient } from "@/utils/supabase/server";
 import { NextResponse } from "next/server";
@@ -12,7 +12,7 @@ export async function POST(request: Request) {
     const { data: existingUser } = await supabase.from("users").select("email").eq("email", email).single();
 
     if (existingUser) {
-      return NextResponse.json({ error: COMMON_ERROR_MESSAGES.EXISTING_EMAIL }, { status: 409 });
+      return NextResponse.json({ error: ERROR_MESSAGES.AUTH.EXISTING_EMAIL }, { status: 409 });
     }
 
     // 회원가입 진행
@@ -28,12 +28,12 @@ export async function POST(request: Request) {
 
     if (error) {
       console.error("Signup error:", error.message);
-      return NextResponse.json({ error: COMMON_ERROR_MESSAGES.SIGNUP_ERROR }, { status: 400 });
+      return NextResponse.json({ error: ERROR_MESSAGES.AUTH.SIGNUP_ERROR }, { status: 400 });
     }
 
     return NextResponse.json({ success: true, user: data.user });
   } catch (error) {
     console.error("Server error", error);
-    return NextResponse.json({ error: COMMON_ERROR_MESSAGES.SERVER_ERROR }, { status: 500 });
+    return NextResponse.json({ error: ERROR_MESSAGES.SERVER.INTERNAL_ERROR }, { status: 500 });
   }
 }

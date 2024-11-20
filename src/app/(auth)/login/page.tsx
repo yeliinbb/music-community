@@ -1,10 +1,9 @@
 "use client";
 
 import authAxios from "@/lib/axios/authAxios";
-import { CLIENT_ERROR_MESSAGES } from "@/lib/constants/clientErrorMessages";
+import { ERROR_MESSAGES } from "@/lib/constants/errorMessages";
 import { SUCCESS_MESSAGES } from "@/lib/constants/successMessages";
 import { useLoginStore } from "@/store/auth";
-import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -20,13 +19,13 @@ const LoginPage = () => {
     e.preventDefault();
 
     if (!email || !password) {
-      toast.warn(CLIENT_ERROR_MESSAGES.EMPTY_CREDENTIALS);
+      toast.warn(ERROR_MESSAGES.VALIDATION.FORM.EMPTY_FIELDS);
       return;
     }
 
     try {
       const { data } = await authAxios.post("/api/login", { email, password });
-      toast.success(`${SUCCESS_MESSAGES.LOGIN} ${data.user.nickname}님 환영합니다.`);
+      toast.success(`${SUCCESS_MESSAGES.AUTH.LOGIN} ${data.user.nickname}님 환영합니다.`);
       login();
       setUserId(data.user.id);
       router.replace("/");
