@@ -12,14 +12,15 @@ export const GET = async () => {
         try {
           const [playlistResponse, tracksResponse] = await Promise.all([
             spotifyApiAxios.get<SpotifyPlaylist>(`/playlists/${playlistId}`, {
-              params: { locale: "ko_KR" }
+              headers: {
+                "Content-Type": "application/json"
+              }
             }),
             spotifyApiAxios.get<{ items: { track: SpotifyTrack }[] }>(`/playlists/${playlistId}/tracks`, {
               params: {
                 fields:
                   "items(track(id,name,preview_url,external_urls,duration_ms,artists(id,name),album(id,name,images)))",
-                limit: 8,
-                locale: "ko_KR"
+                limit: 8
               }
             })
           ]);

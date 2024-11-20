@@ -7,10 +7,8 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { toast } from "react-toastify";
 import { usePostCommentData } from "@/hooks/usePostCommentData";
-import { QUERY_KEYS } from "@/lib/constants/queryKeys";
-
-type TableName = "comments" | "posts" | "artistComments";
-type QueryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];
+import { QueryKey } from "@/lib/constants/queryKeys";
+import { TableName } from "@/lib/constants/tableNames";
 
 export type NewCommentType = {
   content: string;

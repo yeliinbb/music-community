@@ -3,3 +3,5 @@ export const QUERY_KEYS = {
   comments: "comments",
   artistComments: "artistComments"
 } as const;
+
+export type QueryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];

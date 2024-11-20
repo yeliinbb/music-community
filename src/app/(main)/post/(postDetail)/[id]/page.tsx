@@ -4,23 +4,26 @@ import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query
 import { fetchPosts } from "@/lib/utils/fetchPosts";
 import { fetchComments } from "@/lib/utils/fetchComments";
 import CommentList from "@/components/CommentList";
+import { QUERY_KEYS } from "@/lib/constants/queryKeys";
+import { TABLE_NAMES } from "@/lib/constants/tableNames";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const queryClient = new QueryClient();
   const supabase = createClient();
   const user = await supabase.auth.getUser();
 
-  // 사용자가 없으면 prefetch하지 않음
-  if (!user) return;
+  if (!user) {
+    return;
+  }
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ["posts", params.id],
+      queryKey: [QUERY_KEYS.posts, params.id],
       queryFn: () => fetchPosts(params.id)
     }),
     queryClient.prefetchQuery({
-      queryKey: ["comments", params.id],
-      queryFn: () => fetchComments({ postId: params.id, tableName: "comments" })
+      queryKey: [QUERY_KEYS.comments, params.id],
+      queryFn: () => fetchComments({ postId: params.id, tableName: TABLE_NAMES.comments })
     })
   ]);
 

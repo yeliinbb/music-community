@@ -5,7 +5,10 @@ let accessToken: string | null = null;
 let tokenExpirationTime: number | null = null;
 
 const spotifyApiAxios = axios.create({
-  baseURL: process.env.NEXT_PUBLIC_SPOTIFY_API_URL
+  baseURL: process.env.NEXT_PUBLIC_SPOTIFY_API_URL,
+  params: {
+    locale: "ko_KR"
+  }
 });
 
 spotifyApiAxios.interceptors.request.use(

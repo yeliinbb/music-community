@@ -2,10 +2,20 @@ import axios from "axios";
 import { toast } from "react-toastify";
 import { ERROR_MESSAGES } from "../constants/errorMessages";
 
+// const environment = process.env.NEXT_PUBLIC_NODE_ENV;
+
 const authAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_URL,
   withCredentials: true // 모든 요청에 쿠키 포함
 });
+
+authAxios.interceptors.request.use(
+  (config) => {
+    console.log("Environment:", process.env.NEXT_PUBLIC_NODE_ENV);
+    return config;
+  },
+  (error) => Promise.reject(error)
+);
 
 authAxios.interceptors.response.use(
   (response) => response,

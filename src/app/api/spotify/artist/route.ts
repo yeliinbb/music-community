@@ -1,8 +1,7 @@
+import spotifyApiAxios from "@/lib/axios/spotifyApiAxios";
 import { getArtistIds } from "@/lib/utils/getArtistIds";
-import { getAccessToken } from "@/app/api/utils/getAccessToken";
 import { SpotifyArtist } from "@/types/spotify.type";
-import axios from "axios";
-import { NextRequest, NextResponse } from "next/server";
+import { NextResponse } from "next/server";
 
 export const GET = async () => {
   try {
@@ -12,19 +11,11 @@ export const GET = async () => {
       return NextResponse.json({ error: "No artist IDs found" }, { status: 404 });
     }
 
-    const accessToken = await getAccessToken();
-
-    if (!accessToken) {
-      console.error("Access token is missing");
-      return NextResponse.json({ error: "Access token is missing" }, { status: 500 });
-    }
-
     const artistData = await Promise.all(
       artistIds.map(async (artistId) => {
         try {
-          const response = await axios.get<SpotifyArtist>(`https://api.spotify.com/v1/artists/${artistId}`, {
-            headers: { Authorization: `Bearer ${accessToken}` },
-            params: { market: "KR", locale: "ko_KR" }
+          const response = await spotifyApiAxios.get<SpotifyArtist>(`/artists/${artistId}`, {
+            params: { market: "KR" }
           });
           return response.data;
         } catch (error) {

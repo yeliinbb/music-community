@@ -49,7 +49,7 @@ const Trending = () => {
       {isSuccess && (
         <>
           <span className="text-base">추천 플레이리스트 🎵</span>
-          <Link href={selectedPlaylist.trackLink} target="_blank" rel="noopener noreferrer">
+          <Link href={selectedPlaylist?.trackLink ?? ""} target="_blank" rel="noopener noreferrer">
             <div className="flex flex-col text-sm gap-2 place-self-center">
               {selectedPlaylist?.imageUrl ? (
                 <img

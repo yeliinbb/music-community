@@ -1,5 +1,5 @@
 import { CommonPostType } from "@/types/posts.type";
-import { getApiUrl } from "./config";
+import { getApiUrl } from "./getApiUrl";
 
 export const fetchPosts = async (id: string): Promise<CommonPostType> => {
   try {
