@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/app/api/utils/spotify";
+import { getAccessToken } from "@/app/api/utils/getAccessToken";
 import { TracksItems } from "@/types/spotify.type";
 import axios from "axios";
 import { NextRequest, NextResponse } from "next/server";

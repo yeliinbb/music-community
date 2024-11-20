@@ -1,4 +1,4 @@
-import { getAccessToken } from "@/app/api/utils/spotify";
+import { getAccessToken } from "@/app/api/utils/getAccessToken";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 

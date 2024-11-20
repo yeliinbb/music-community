@@ -1,4 +1,5 @@
 import axios from "axios";
+import { getAccessToken } from "../../app/api/utils/getAccessToken";
 
 let accessToken: string | null = null;
 let tokenExpirationTime: number | null = null;
@@ -7,7 +8,7 @@ const spotifyApiAxios = axios.create({
   baseURL: process.env.NEXT_PUBLIC_SPOTIFY_API_URL
 });
 
-spotifyApiAxios.interceptors.response.use(
+spotifyApiAxios.interceptors.request.use(
   async (config) => {
     if (!accessToken || (tokenExpirationTime && Date.now() > tokenExpirationTime)) {
       try {
@@ -27,22 +28,4 @@ spotifyApiAxios.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-
-const getAccessToken = async (): Promise<string> => {
-  const client_id = process.env.SPOTIFY_CLIENT_ID;
-  const client_secret = process.env.SPOTIFY_CLIENT_SECRET;
-
-  if (!client_id || !client_secret) {
-    throw new Error("Spotify credentials are not set.");
-  }
-
-  const response = await axios.post("https://accounts.spotify.com/api/token", "grant_type=client_credentials", {
-    headers: {
-      Authorization: "Basic " + Buffer.from(client_id + ":" + client_secret).toString("base64")
-    }
-  });
-
-  return response.data.access_token;
-};
-
 export default spotifyApiAxios;
