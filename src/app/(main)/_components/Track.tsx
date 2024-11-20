@@ -3,14 +3,17 @@ import Link from "next/link";
 import { HiMiniPlay } from "react-icons/hi2";
 import { Tooltip } from "react-tooltip";
 import "react-tooltip/dist/react-tooltip.css";
+import PlayButton from "./PlayButton";
 
 interface TrackProps {
   track: SpotifyTrack;
   audioRef: React.MutableRefObject<HTMLAudioElement | null>;
   playTrack: (track: SpotifyTrack) => void;
+  isPlaying: boolean;
+  isTrackIdMatch: boolean;
 }
 
-const Track = ({ track, audioRef, playTrack }: TrackProps) => {
+const Track = ({ track, audioRef, playTrack, isPlaying, isTrackIdMatch }: TrackProps) => {
   return (
     <li
       key={track.id}
@@ -25,9 +28,7 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
               href={`/artist/${track.artists[0].id}`}
               className="w-[130px] overflow-hidden overflow-ellipsis whitespace-nowrap"
             >
-              <span className="w-[230px] h-[20px] hover:underline">
-                {track.artists[0].name}
-              </span>
+              <span className="w-[230px] h-[20px] hover:underline">{track.artists[0].name}</span>
             </Link>
             <span>
               {(track.duration_ms / 1000 / 60).toFixed(0)}:{(track.duration_ms / 1000 / 60).toFixed(2).split(".")[1]}
@@ -35,30 +36,12 @@ const Track = ({ track, audioRef, playTrack }: TrackProps) => {
           </div>
         </div>
       </div>
-      {track.preview_url !== "none" ? (
-        <>
-          <button
-            className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center"
-            onClick={() => playTrack(track)}
-          >
-            <HiMiniPlay />
-          </button>
-          <audio ref={audioRef} className="hidden" />
-        </>
-      ) : (
-        <>
-          <button
-            className="bg-white rounded-[50%] min-w-[35px] min-h-[35px] flex items-center justify-center cursor-default"
-            disabled
-            data-tooltip-id="플레이버튼"
-            data-tooltip-content="미리 듣기를 지원하지 않는 곡입니다."
-          >
-            <HiMiniPlay />
-          </button>
-          <Tooltip id="플레이버튼" place="left" style={{ backgroundColor: "#858585", color: "white" }} />
-          <audio ref={audioRef} className="hidden" />
-        </>
-      )}
+      <PlayButton
+        track={track}
+        onPlay={playTrack}
+        audioRef={audioRef}
+        isThisTrackPlaying={isPlaying && isTrackIdMatch}
+      />
     </li>
   );
 };

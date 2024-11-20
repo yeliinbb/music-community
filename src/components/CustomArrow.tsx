@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 type CustomArrowProps = {
   className?: string;
   style?: React.CSSProperties;
@@ -5,21 +7,13 @@ type CustomArrowProps = {
 };
 
 export const CustomPrevArrow = ({ onClick, className }: CustomArrowProps) => (
-  <div
-    className={`custom-arrow custom-prev-arrow  absolute top-[calc(50%-15px)] ${className}`}
-    onClick={onClick}
-    style={{ width: "30px", height: "30px" }}
-  >
-    <img src="chevrons-left.svg" alt="이전 아티스트" />
+  <div className={`custom-arrow custom-prev-arrow absolute top-arrow-top ${className}`} onClick={onClick}>
+    <Image src="/chevrons-left.svg" alt="이전 아티스트" width={30} height={30} />
   </div>
 );
 
 export const CustomNextArrow = ({ onClick, className }: CustomArrowProps) => (
-  <div
-    className={`custom-arrow custom-next-arrow  absolute top-[calc(50%-15px)]  ${className}`}
-    onClick={onClick}
-    style={{ width: "30px", height: "30px" }}
-  >
-    <img src="chevrons-right.svg" alt="다음 아티스트" />
+  <div className={`custom-arrow custom-next-arrow absolute top-arrow-top  ${className}`} onClick={onClick}>
+    <Image src="/chevrons-right.svg" alt="다음 아티스트" width={30} height={30} />
   </div>
 );

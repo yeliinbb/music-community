@@ -49,6 +49,9 @@ const Playlists = () => {
 
   if (isPending) return <PlayListSkeleton />;
   if (error) return <div>Error loading playlists</div>;
+  if (!playlists || playlists.length === 0) {
+    return <div>No playlists available</div>;
+  }
 
   return (
     <div className="w-full h-full">
@@ -57,18 +60,25 @@ const Playlists = () => {
           {isSuccess &&
             playlists?.map((playlist, index) => (
               <div key={playlist.id} className="w-full h-full self-center">
-                {index === currentIndex && (
+                {index === currentIndex && playlist && (
                   <>
                     <h2 className="mb-2 font-bold">{playlist.name}</h2>
                     <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
                       <img
-                        src={currentTrack?.album.images[0].url || playlist.tracks[0].album.images[0].url}
-                        alt={currentTrack?.name || playlist.tracks[0].name}
+                        src={currentTrack?.album.images[0].url || playlist.tracks[0]?.album.images[0].url}
+                        alt={currentTrack?.name || playlist.tracks[0]?.name}
                         className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow"
                       />
                       <ul className="grid grid-cols-2 gap-2 ">
-                        {playlist.tracks.map((track) => (
-                          <Track key={track.id} track={track} audioRef={audioRef} playTrack={playTrack} />
+                        {playlist.tracks?.map((track) => (
+                          <Track
+                            key={track.id}
+                            track={track}
+                            audioRef={audioRef}
+                            playTrack={playTrack}
+                            isPlaying={isPlaying}
+                            isTrackIdMatch={currentTrack?.id === track.id}
+                          />
                         ))}
                       </ul>
                     </div>

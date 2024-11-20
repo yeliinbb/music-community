@@ -20,6 +20,9 @@ const config: Config = {
       },
       boxShadow: {
         custom: "0 0 10px 3px rgba(116, 116, 116, 0.3)"
+      },
+      spacing: {
+        "arrow-top": "calc(50% - 15px)"
       }
     }
   },

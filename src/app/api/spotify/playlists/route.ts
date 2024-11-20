@@ -17,6 +17,9 @@ export const GET = async () => {
               }
             }),
             spotifyApiAxios.get<{ items: { track: SpotifyTrack }[] }>(`/playlists/${playlistId}/tracks`, {
+              headers: {
+                "Content-Type": "application/json"
+              },
               params: {
                 fields:
                   "items(track(id,name,preview_url,external_urls,duration_ms,artists(id,name),album(id,name,images)))",
@@ -33,7 +36,7 @@ export const GET = async () => {
             },
             tracks: tracksResponse.data.items.map((item) => ({
               ...item.track,
-              preview_url: item.track.preview_url ?? "none",
+              preview_url: item.track.preview_url ?? null,
               external_urls: {
                 spotify: item.track.external_urls.spotify
               }

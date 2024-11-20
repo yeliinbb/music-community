@@ -8,9 +8,18 @@ import { getPlaylists } from "./_components/getPlaylists";
 import { getSpotifyArtists } from "./_components/getSpotifyArtists";
 
 const MainPage = async () => {
-  const queryClient = new QueryClient();
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        retry: 1,
+        staleTime: 1000 * 60
+      }
+    }
+  });
   const supabase = createClient();
-  const user = await supabase.auth.getUser();
+  const {
+    data: { user }
+  } = await supabase.auth.getUser();
 
   // 사용자가 없으면 prefetch하지 않음
   if (!user) return;

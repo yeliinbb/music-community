@@ -5,6 +5,8 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PropsWithChildren, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import CustomToastContainer from "./(main)/_components/CustomToastContainer";
+import { ErrorBoundary } from "react-error-boundary";
+import ErrorPage from "./error";
 
 const Providers = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(
@@ -18,11 +20,13 @@ const Providers = ({ children }: PropsWithChildren) => {
       })
   );
   return (
-    <QueryClientProvider client={queryClient}>
-      <CustomToastContainer />
-      {children}
-      <ReactQueryDevtools initialIsOpen={false} />
-    </QueryClientProvider>
+    <ErrorBoundary FallbackComponent={ErrorPage}>
+      <QueryClientProvider client={queryClient}>
+        <CustomToastContainer />
+        {children}
+        <ReactQueryDevtools initialIsOpen={false} />
+      </QueryClientProvider>
+    </ErrorBoundary>
   );
 };
 
