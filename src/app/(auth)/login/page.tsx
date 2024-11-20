@@ -25,7 +25,7 @@ const LoginPage = () => {
 
     try {
       const { data } = await authAxios.post("/api/login", { email, password });
-      toast.success(`${SUCCESS_MESSAGES.AUTH.LOGIN} ${data.user.nickname}님 환영합니다.`);
+      toast.success(`${SUCCESS_MESSAGES.AUTH.LOGIN}`);
       login();
       setUserId(data.user.id);
       router.replace("/");
