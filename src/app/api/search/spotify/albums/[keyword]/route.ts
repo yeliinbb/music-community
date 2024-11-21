@@ -1,5 +1,5 @@
 import { getAccessToken } from "@/app/api/utils/getAccessToken";
-import spotifyApiAxios from "@/lib/axios/spotifyApiAxios";
+import spotifyApiAxios from "@/lib/api/spotifyApiAxios";
 import { NextRequest, NextResponse } from "next/server";
 
 interface Context {

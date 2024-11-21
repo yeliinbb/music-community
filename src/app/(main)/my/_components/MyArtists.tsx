@@ -6,14 +6,15 @@ import MyArtistsCard from "./MyArtistsCard";
 import MyArtistsSkeleton from "../../_components/MyArtistsSkeleton";
 
 export default function MyArtists() {
-  const { likes, isPending } = useMe();
+  const { likes, isPending, error } = useMe();
 
-  if (isPending) {
-    return <MyArtistsSkeleton />;
-  }
+  if (isPending) return <MyArtistsSkeleton />;
+  if (error) return <div>데이터를 불러오는데 실패했습니다.</div>;
+  if (!likes?.artists || likes.artists.length === 0)
+    return <div className="h-[150px]">아직 좋아요 한 아티스트가 없습니다.</div>;
+
   return (
     <div>
-      {!likes?.artists && !isPending && <div className="h-[150px]">아직 좋아요 한 아티스트가 없습니다.</div>}
       {likes?.artists && (
         <ul className="grid grid-cols-4 gap-10 p-2">
           {likes?.artists?.map((artist) => (

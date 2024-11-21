@@ -1,4 +1,4 @@
-import spotifyApiAxios from "@/lib/axios/spotifyApiAxios";
+import spotifyApiAxios from "@/lib/api/spotifyApiAxios";
 import { getArtistIds } from "@/lib/utils/getArtistIds";
 import { SpotifyArtist } from "@/types/spotify.type";
 import { NextResponse } from "next/server";

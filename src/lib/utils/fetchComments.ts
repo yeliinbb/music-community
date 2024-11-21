@@ -1,6 +1,5 @@
 import { CommonCommentType } from "@/types/comment.type";
 import { TableName } from "../constants/tableNames";
-import { createClient } from "@/utils/supabase/client";
 import { getApiUrl } from "./getApiUrl";
 
 interface FetchCommentProps {

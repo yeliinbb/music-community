@@ -31,7 +31,11 @@ const MainPage = async () => {
     }),
     queryClient.prefetchQuery({
       queryKey: ["playlists"],
-      queryFn: getPlaylists
+      queryFn: async () => {
+        const data = await getPlaylists();
+        if (!data) throw new Error("No playlist data");
+        return data;
+      }
     }),
     queryClient.prefetchQuery({
       queryKey: ["artistData"],

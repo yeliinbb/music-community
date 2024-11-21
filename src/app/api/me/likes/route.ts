@@ -1,4 +1,5 @@
 import { getAccessToken } from "@/app/api/utils/getAccessToken";
+import spotifyApiAxios from "@/lib/api/spotifyApiAxios";
 import { createClient } from "@/utils/supabase/server";
 import { NextRequest, NextResponse } from "next/server";
 
@@ -10,7 +11,6 @@ export async function GET(req: NextRequest) {
   if (!userId) return NextResponse.json({ message: "API GET LIKES No User Id" });
 
   const supabase = createClient();
-  const token = await getAccessToken();
 
   const likesData = await supabase.from("likes").select("*").eq("userId", userId);
 
@@ -19,13 +19,8 @@ export async function GET(req: NextRequest) {
     query = likesData?.data?.map((like) => like.artistId).join(",");
   }
 
-  const response = await fetch(`https://api.spotify.com/v1/artists?ids=${query}`, {
-    method: "GET",
-    headers: {
-      Authorization: `Bearer ${token}`
-    }
-  });
-  const data = await response.json();
+  const response = await spotifyApiAxios.get(`/artists?ids=${query}`);
+  const data = await response.data;
 
   return NextResponse.json(data);
 }

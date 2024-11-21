@@ -1,9 +1,6 @@
 "use client";
 import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
-import { SpotifyPlaylistTracks, SpotifyTrack } from "@/types/spotify.type";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Image from "next/image";
+import { SpotifyTrack } from "@/types/spotify.type";
 import { useRef, useState } from "react";
 import Slider from "react-slick";
 import "react-tooltip/dist/react-tooltip.css";
@@ -47,7 +44,7 @@ const Playlists = () => {
     nextArrow: <CustomNextArrow />
   };
 
-  if (isPending) return <PlayListSkeleton />;
+  if (isPending || !playlists) return <PlayListSkeleton />;
   if (error) return <div>Error loading playlists</div>;
   if (!playlists || playlists.length === 0) {
     return <div>No playlists available</div>;

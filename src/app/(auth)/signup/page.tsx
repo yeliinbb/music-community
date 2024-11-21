@@ -1,6 +1,6 @@
 "use client";
 
-import authAxios from "@/lib/axios/authAxios";
+import authAxios from "@/lib/api/authAxios";
 import { ERROR_MESSAGES } from "@/lib/constants/errorMessages";
 import { SUCCESS_MESSAGES } from "@/lib/constants/successMessages";
 import axios from "axios";

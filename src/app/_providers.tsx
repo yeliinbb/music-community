@@ -5,7 +5,7 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { PropsWithChildren, useState } from "react";
 import "react-toastify/dist/ReactToastify.css";
 import CustomToastContainer from "./(main)/_components/CustomToastContainer";
-import { ErrorBoundary } from "react-error-boundary";
+import { ErrorBoundary, FallbackProps } from "react-error-boundary";
 import ErrorPage from "./error";
 
 const Providers = ({ children }: PropsWithChildren) => {
@@ -19,8 +19,18 @@ const Providers = ({ children }: PropsWithChildren) => {
         }
       })
   );
+
+  const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
+    <ErrorPage error={error} resetErrorBoundary={resetErrorBoundary} />
+  );
+
   return (
-    <ErrorBoundary FallbackComponent={ErrorPage}>
+    <ErrorBoundary
+      FallbackComponent={ErrorFallback}
+      onError={(error) => {
+        console.error("Error caught by boundary:", error);
+      }}
+    >
       <QueryClientProvider client={queryClient}>
         <CustomToastContainer />
         {children}

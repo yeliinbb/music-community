@@ -6,11 +6,11 @@ import MyPostCard from "./MyPostCard";
 import MyPostSkeleton from "../../_components/MyPostSkeleton";
 
 export default function MyPosts() {
-  const { posts, isPending } = useMe();
+  const { posts, isPending, error } = useMe();
 
-  if (isPending) {
-    return <MyPostSkeleton />;
-  }
+  if (isPending) return <MyPostSkeleton />;
+  if (error) return <div>데이터를 불러오는데 실패했습니다.</div>;
+  if (!posts || posts.length === 0) return <div className="h-[150px]">작성한 게시글이 없습니다.</div>;
 
   return (
     <div>

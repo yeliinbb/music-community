@@ -26,7 +26,6 @@ const fetchArtist = async (artistId: string) => {
 const fetchArtistLike = async (artistId: string) => {
   const res = await fetch(`/api/artist/likes/${artistId}`);
   const likeData = await res.json();
-  console.log("fetchArtistLike", likeData);
   return { isLiked: likeData.isLiked };
 };
 

@@ -24,12 +24,12 @@ export default function useMe() {
   const queries = useQueries({
     queries: [
       {
-        queryKey: ["myPosts"],
+        queryKey: ["myPosts", userId],
         queryFn: () => api.me.getMyPosts(userId),
         gcTime: 0
       },
       {
-        queryKey: ["myLikes"],
+        queryKey: ["myLikes", userId],
         queryFn: () => api.me.getMyLikes(userId),
         gcTime: 0
       }
@@ -38,10 +38,12 @@ export default function useMe() {
 
   const [posts, likes] = queries;
   const isPending = queries.some((query) => query.isPending);
+  const error = queries.some((query) => query.error);
 
   return {
     posts: posts.data as MyPostsType[] | undefined,
     likes: likes.data as LikeType | undefined,
-    isPending
+    isPending,
+    error
   };
 }
