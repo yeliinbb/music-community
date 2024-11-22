@@ -9,14 +9,6 @@ import 'react-tooltip/dist/react-tooltip.css';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Trending = () => {
-  // const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
-  //   id: '',
-  //   name: '',
-  //   description: '',
-  //   imageUrl: '',
-  //   trackLink: '',
-  //   tracksCount: 0,
-  // });
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -35,17 +27,6 @@ const Trending = () => {
       return response.data;
     },
   });
-
-  function getRandomNumber(arrLength: number) {
-    return Math.floor(Math.random() * (arrLength + 1));
-  }
-
-  // useEffect(() => {
-  //   if (isSuccess && featuredPlaylists?.length > 0 && featuredPlaylists !== undefined) {
-  //     const randomIndex = getRandomNumber(featuredPlaylists?.length);
-  //     setSelectedPlaylist(featuredPlaylists[randomIndex]);
-  //   } else return;
-  // }, [featuredPlaylists]);
 
   if (!mounted || isPending) {
     return <TrendingSkeleton />;
