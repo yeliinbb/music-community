@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { SpotifyTrack, TracksItems } from "@/types/spotify.type";
-import { useQuery } from "@tanstack/react-query";
-import PlayBtn from "./PlayBtn";
-import { useRef, useState } from "react";
+import { SpotifyTrack, TracksItems } from '@/types/spotify.type';
+import { useQuery } from '@tanstack/react-query';
+import { useRef, useState } from 'react';
+import PlayButton from '@/components/PlayButton';
 
 interface ArtistTrackProps {
   params: { id: string };
@@ -22,10 +22,10 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
   const {
     data = [],
     isLoading,
-    error
+    error,
   } = useQuery<TracksItems[]>({
-    queryKey: ["artistTrack", params.id],
-    queryFn: () => fetchArtistTrack(params.id)
+    queryKey: ['artistTrack', params.id],
+    queryFn: () => fetchArtistTrack(params.id),
   });
 
   const audioRef = useRef<HTMLAudioElement | null>(null);
@@ -36,7 +36,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        audioRef.current.src = track.preview_url || "";
+        audioRef.current.src = track.preview_url || '';
         audioRef.current.play();
         setIsPlaying(true);
         setCurrentTrack(track);
@@ -64,7 +64,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
   const formatDuration = (durationMs: number): string => {
     const minutes = Math.floor(durationMs / 60000);
     const seconds = Math.floor((durationMs % 60000) / 1000);
-    return `${minutes}:${seconds < 10 ? "0" : ""}${seconds}`;
+    return `${minutes}:${seconds < 10 ? '0' : ''}${seconds}`;
   };
 
   return (
@@ -77,7 +77,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
               <div
                 key={track.id}
                 className="p-4 border rounded-lg max-w-lg bg-[#d9d9d9]"
-                style={{ width: "500px", height: "85px" }}
+                style={{ width: '500px', height: '85px' }}
               >
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex flex-row gap-x-5 items-center ">
@@ -91,12 +91,14 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
                     </div>
                   </div>
 
-                  <div>
-                    <PlayBtn
-                      previewUrl={track.preview_url}
-                      playTrack={() => playTrack(track)}
+                  <div className="pr-5">
+                    <PlayButton
+                      track={track}
+                      onPlay={playTrack}
                       audioRef={audioRef}
-                      isPlaying={isPlaying}
+                      isThisTrackPlaying={isPlaying && currentTrack?.id === track.id}
+                      playerBgColor="black"
+                      playerColor="white"
                     />
                   </div>
                 </div>

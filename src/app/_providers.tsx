@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { PropsWithChildren, useState } from "react";
-import "react-toastify/dist/ReactToastify.css";
-import CustomToastContainer from "./(main)/_components/CustomToastContainer";
-import { ErrorBoundary, FallbackProps } from "react-error-boundary";
-import ErrorPage from "./error";
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+import { PropsWithChildren, useState } from 'react';
+import 'react-toastify/dist/ReactToastify.css';
+import CustomToastContainer from '../components/CustomToastContainer';
+import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
+import ErrorPage from './error';
 
 const Providers = ({ children }: PropsWithChildren) => {
   const [queryClient] = useState(
@@ -14,10 +14,10 @@ const Providers = ({ children }: PropsWithChildren) => {
       new QueryClient({
         defaultOptions: {
           queries: {
-            staleTime: Infinity
-          }
-        }
-      })
+            staleTime: Infinity,
+          },
+        },
+      }),
   );
 
   const ErrorFallback = ({ error, resetErrorBoundary }: FallbackProps) => (
@@ -28,7 +28,7 @@ const Providers = ({ children }: PropsWithChildren) => {
     <ErrorBoundary
       FallbackComponent={ErrorFallback}
       onError={(error) => {
-        console.error("Error caught by boundary:", error);
+        console.error('Error caught by boundary:', error);
       }}
     >
       <QueryClientProvider client={queryClient}>

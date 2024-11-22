@@ -2,6 +2,9 @@
 
 import { useLoginStore } from "@/store/auth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
+import EmptyHeart from "../../../../../public/heart.svg";
+import FullHeart from "../../../../../public/heart_plus.svg";
 
 interface ArtistProps {
   params: { id: string };
@@ -133,24 +136,21 @@ const Artist = ({ params }: ArtistProps) => {
       <div className="flex items-center space-x-4">
         {isSuccess && (
           <>
-            <img
-              src={artistData.images.length ? artistData.images[0].url : "http://via.placeholder.com/640x640"}
-              alt="이미지"
-              width={300}
-              height={300}
-              className=" object-cover rounded-lg shadow-lg mb-4"
-            />
-
-            <div className="flex flex-col">
+            <div className="relative w-[300px] h-[300px] rounded-lg shadow-lg mb-4 overflow-hidden">
+              <Image
+                src={artistData.images.length ? artistData.images[0].url : "http://via.placeholder.com/640x640"}
+                alt="artist cover image"
+                fill
+                className="object-cover"
+                sizes="300px"
+              />
+            </div>
+            <div className="flex flex-col justify-start">
               <div className="font-bold text-xl">{artistData.name}</div>
               <div className="text-gray-600">{artistData.genres[0]}</div>
               <div className="text-gray-600">{artistData.followers.total.toLocaleString()}</div>
               <button onClick={handleToggleLike} disabled={toggleLikeMutation.isPending}>
-                {likeData?.isLiked ? (
-                  <img src="/heart.svg" alt="꽉찬하트" width={40} height={40} />
-                ) : (
-                  <img src="/heart_plus.svg" alt="빈하트" width={40} height={40} />
-                )}
+                {likeData?.isLiked ? <EmptyHeart width={40} height={40} /> : <FullHeart width={40} height={40} />}
               </button>
             </div>
           </>

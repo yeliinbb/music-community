@@ -1,47 +1,52 @@
-import PostList from "./_components/PostList";
-import Playlists from "./(playlists)/_components/Playlists";
-import Artist from "./(artist)/Artist";
-import { createClient } from "@/utils/supabase/server";
-import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
-import { getAllPost } from "./_components/getAllPost";
-import { getPlaylists } from "./_components/getPlaylists";
-import { getSpotifyArtists } from "./_components/getSpotifyArtists";
+import PostList from './_components/PostList';
+import Playlists from './(playlists)/_components/Playlists';
+import Artist from './(artist)/Artist';
+import { createClient } from '@/utils/supabase/server';
+import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
+import { getAllPost } from '../../lib/utils/getAllPost';
+import { getPlaylists } from '../../lib/utils/getPlaylists';
+import { getSpotifyArtists } from '../../lib/utils/getSpotifyArtists';
 
 const MainPage = async () => {
+  const startTime = performance.now();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
         retry: 1,
-        staleTime: 1000 * 60
-      }
-    }
+        staleTime: 1000 * 60,
+      },
+    },
   });
   const supabase = createClient();
   const {
-    data: { user }
+    data: { user },
   } = await supabase.auth.getUser();
 
-  // 사용자가 없으면 prefetch하지 않음
-  if (!user) return;
+  if (!user) {
+    return;
+  }
 
-  await Promise.all([
-    queryClient.prefetchQuery({
-      queryKey: ["allPosts"],
-      queryFn: getAllPost
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["playlists"],
-      queryFn: async () => {
-        const data = await getPlaylists();
-        if (!data) throw new Error("No playlist data");
-        return data;
-      }
-    }),
-    queryClient.prefetchQuery({
-      queryKey: ["artistData"],
-      queryFn: getSpotifyArtists
-    })
-  ]);
+  try {
+    await Promise.all([
+      queryClient.prefetchQuery({
+        queryKey: ['allPosts'],
+        queryFn: getAllPost,
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ['playlists'],
+        queryFn: getPlaylists,
+      }),
+      queryClient.prefetchQuery({
+        queryKey: ['artistData'],
+        queryFn: getSpotifyArtists,
+      }),
+    ]);
+
+    const endTime = performance.now();
+    console.log(`MainPage Prefetch execution time: ${endTime - startTime}ms`);
+  } catch (error) {
+    console.error('MainPage Prefetch error:', error);
+  }
 
   return (
     <div className="p-4">

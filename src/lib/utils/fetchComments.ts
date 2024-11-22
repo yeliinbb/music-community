@@ -1,6 +1,6 @@
 import { CommonCommentType } from "@/types/comment.type";
 import { TableName } from "../constants/tableNames";
-import { getApiUrl } from "./getApiUrl";
+import { createClient } from "@/utils/supabase/client";
 
 interface FetchCommentProps {
   postId: string;
@@ -8,21 +8,16 @@ interface FetchCommentProps {
 }
 
 export const fetchComments = async ({ postId, tableName }: FetchCommentProps): Promise<CommonCommentType[]> => {
+  const supabase = createClient();
   try {
-    const apiUrl = getApiUrl();
-    const response = await fetch(`${apiUrl}/api/${tableName}/${postId}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      cache: "no-store"
-    });
+    const { data, error } = await supabase
+      .from(tableName)
+      .select("*,users(nickname, email)")
+      .eq("postId", postId)
+      .order("createdAt", { ascending: false });
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
-    }
+    if (!data || error) return [];
 
-    const data = await response.json();
     return data as CommonCommentType[];
   } catch (error) {
     console.error("댓글 불러오기 실패", error);

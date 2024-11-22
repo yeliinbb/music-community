@@ -1,16 +1,18 @@
-"use client";
+'use client';
 
-import { useQuery } from "@tanstack/react-query";
+import { useQuery } from '@tanstack/react-query';
 
-import type { SpotifyArtist } from "@/types/spotify.type";
+import type { SpotifyArtist } from '@/types/spotify.type';
 
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
-import Link from "next/link";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import ArtistSkeleton from "./ArtistSkeleton";
-import { useMainPageData } from "@/hooks/useMainPageData";
+import { CustomNextArrow, CustomPrevArrow } from '@/components/CustomArrow';
+import Link from 'next/link';
+import Slider from 'react-slick';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import ArtistSkeleton from './ArtistSkeleton';
+import { useMainPageData } from '@/hooks/useMainPageData';
+import Image from 'next/image';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Artist = () => {
   const { artistData, isSuccess, isPending, error } = useMainPageData();
@@ -32,8 +34,11 @@ const Artist = () => {
     autoplay: true,
     autoplaySpeed: 10000,
     prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />
+    nextArrow: <CustomNextArrow />,
   };
+
+  const defaultAvatarUrl =
+    'https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg';
 
   return (
     <div className="w-full mt-10">
@@ -45,18 +50,13 @@ const Artist = () => {
               <Link href={`/artist/${artist.id}`} key={artist.id} className="flex flex-col items-center">
                 <div className="flex justify-center">
                   {artist.images && artist.images ? (
-                    <img
-                      src={artist.images[2].url}
-                      alt={`${artist.name}`}
-                      className="w-[100px] h-[100px] rounded-md object-cover"
-                    />
-                  ) : (
-                    <img
-                      src="https://static.vecteezy.com/system/resources/thumbnails/009/292/244/small/default-avatar-icon-of-social-media-user-vector.jpg"
-                      alt="artist image"
-                      className="w-20 h-20 object-cover rounded-full"
-                    />
-                  )}
+                    <div className="relative w-[100px] h-[100px] rounded-md overflow-hidden">
+                      <ResponsiveImage
+                        src={artist.images[2].url ?? defaultAvatarUrl}
+                        alt={`${artist.name}` ?? 'artist image'}
+                      />
+                    </div>
+                  ) : null}
                 </div>
                 <p className="truncate text-center mt-2 w-full" title={artist.name}>
                   {artist.name}

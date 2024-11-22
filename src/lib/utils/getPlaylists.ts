@@ -1,9 +1,19 @@
-import { spotifyFetcher } from '@/lib/api/spotifyFetcher';
-import getPlaylistIdList from '@/lib/utils/getPlaylistIdList';
-import { SpotifyTrack, SpotifyPlaylistTracks } from '@/types/spotify.type';
-import { NextResponse } from 'next/server';
+import { SpotifyPlaylist, SpotifyPlaylistTracks, SpotifyTrack } from '@/types/spotify.type';
+import getPlaylistIdList from './getPlaylistIdList';
+import spotifyApiAxios from '../api/spotifyApiAxios';
+import axios from 'axios';
+import { spotifyFetcher } from '../api/spotifyFetcher';
 
-export const GET = async () => {
+export const getPlaylists = async (): Promise<SpotifyPlaylistTracks[]> => {
+  if (typeof window === 'undefined') {
+    return getPlaylistsServer();
+  }
+  const { data } = await axios.get(`/api/spotify/playlists`);
+  return data;
+};
+
+export const getPlaylistsServer = async () => {
+  const startTime = performance.now();
   const playlistsIds = await getPlaylistIdList();
 
   try {
@@ -52,9 +62,15 @@ export const GET = async () => {
     const validPlaylists = playlistsWithTracks.filter(
       (playlist): playlist is SpotifyPlaylistTracks => playlist !== null,
     );
-    return NextResponse.json(validPlaylists);
+
+    const endTime = performance.now();
+    console.log(`getPlaylists Execution time: ${endTime - startTime}ms`);
+    return validPlaylists;
   } catch (error) {
+    const endTime = performance.now();
+    console.log(`Error execution time: ${endTime - startTime}ms`);
+
     console.error('Error fetching track:', error);
-    return NextResponse.json({ error: 'Failed to fetch playlists data' }, { status: 500 });
+    return [];
   }
 };

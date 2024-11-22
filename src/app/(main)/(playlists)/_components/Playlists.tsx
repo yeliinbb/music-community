@@ -1,14 +1,16 @@
-"use client";
-import { CustomNextArrow, CustomPrevArrow } from "@/components/CustomArrow";
-import { SpotifyTrack } from "@/types/spotify.type";
-import { useRef, useState } from "react";
-import Slider from "react-slick";
-import "react-tooltip/dist/react-tooltip.css";
-import "slick-carousel/slick/slick-theme.css";
-import "slick-carousel/slick/slick.css";
-import Track from "../../_components/Track";
-import PlayListSkeleton from "./PlayListSkeleton";
-import { useMainPageData } from "@/hooks/useMainPageData";
+'use client';
+import { CustomNextArrow, CustomPrevArrow } from '@/components/CustomArrow';
+import { SpotifyTrack } from '@/types/spotify.type';
+import { useRef, useState } from 'react';
+import Slider from 'react-slick';
+import 'react-tooltip/dist/react-tooltip.css';
+import 'slick-carousel/slick/slick-theme.css';
+import 'slick-carousel/slick/slick.css';
+import Track from '../../_components/Track';
+import PlayListSkeleton from './PlayListSkeleton';
+import { useMainPageData } from '@/hooks/useMainPageData';
+import Image from 'next/image';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Playlists = () => {
   const [currentIndex, setCurrentIndex] = useState<number>(0);
@@ -24,7 +26,7 @@ const Playlists = () => {
         audioRef.current.pause();
         setIsPlaying(false);
       } else {
-        audioRef.current.src = track.preview_url || "";
+        audioRef.current.src = track.preview_url || '';
         audioRef.current.play();
         setIsPlaying(true);
         setCurrentTrack(track);
@@ -35,13 +37,13 @@ const Playlists = () => {
   const settings = {
     infinite: true,
     speed: 1000,
-    cssEase: "ease-in-out",
+    cssEase: 'ease-in-out',
     slidesToShow: 1,
     slidesToScroll: 1,
     arrow: true,
     beforeChange: (current: number, next: number) => setCurrentIndex(next),
     prevArrow: <CustomPrevArrow />,
-    nextArrow: <CustomNextArrow />
+    nextArrow: <CustomNextArrow />,
   };
 
   if (isPending || !playlists) return <PlayListSkeleton />;
@@ -61,11 +63,12 @@ const Playlists = () => {
                   <>
                     <h2 className="mb-2 font-bold">{playlist.name}</h2>
                     <div className="flex w-full h-full gap-2.5 pl-1 pr-1">
-                      <img
-                        src={currentTrack?.album.images[0].url || playlist.tracks[0]?.album.images[0].url}
-                        alt={currentTrack?.name || playlist.tracks[0]?.name}
-                        className="w-[270px] h-[270px] object-fill  rounded-xl min-w-[270px] min-h-[270px] shadow"
-                      />
+                      <div className="relative w-[270px] h-[270px] rounded-xl min-w-[270px] min-h-[270px] shadow overflow-hidden">
+                        <ResponsiveImage
+                          src={currentTrack?.album.images[0].url || playlist.tracks[0]?.album.images[0].url}
+                          alt={currentTrack?.name || playlist.tracks[0]?.name}
+                        />
+                      </div>
                       <ul className="grid grid-cols-2 gap-2 ">
                         {playlist.tracks?.map((track) => (
                           <Track

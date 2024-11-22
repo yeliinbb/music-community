@@ -1,34 +1,35 @@
-"use client";
-import { SpotifyFeaturedPlaylist } from "@/types/spotify.type";
-import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import Link from "next/link";
-import { useEffect, useState } from "react";
-import TrendingSkeleton from "./TrendingSkeleton";
-import { Tooltip } from "react-tooltip";
-import "react-tooltip/dist/react-tooltip.css";
+'use client';
+import { SpotifyFeaturedPlaylist } from '@/types/spotify.type';
+import { useQuery } from '@tanstack/react-query';
+import axios from 'axios';
+import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import TrendingSkeleton from './TrendingSkeleton';
+import 'react-tooltip/dist/react-tooltip.css';
+import Image from 'next/image';
+import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Trending = () => {
   const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
-    id: "",
-    name: "",
-    description: "",
-    imageUrl: "",
-    trackLink: "",
-    tracksCount: 0
+    id: '',
+    name: '',
+    description: '',
+    imageUrl: '',
+    trackLink: '',
+    tracksCount: 0,
   });
   const {
     data: featuredPlaylists,
     isPending,
     isError,
-    isSuccess
+    isSuccess,
   } = useQuery({
-    queryKey: ["trending"],
+    queryKey: ['trending'],
     queryFn: async () => {
-      const response = await axios<SpotifyFeaturedPlaylist[]>("/api/spotify/featuredPlaylists");
+      const response = await axios<SpotifyFeaturedPlaylist[]>('/api/spotify/featuredPlaylists');
 
       return response.data;
-    }
+    },
   });
 
   function getRandomNumber(arrLength: number) {
@@ -42,23 +43,30 @@ const Trending = () => {
     } else return;
   }, [featuredPlaylists]);
 
-  if (isPending) return <TrendingSkeleton />;
+  console.log('featuredPlaylists', featuredPlaylists);
+
+  if (isPending || !selectedPlaylist) {
+    return <TrendingSkeleton />;
+  }
+
+  if (isError) {
+    return <div>Error fetching playlists.</div>;
+  }
 
   return (
     <div className="w-full flex flex-col p-2 gap-y-2">
-      {isSuccess && (
+      {isSuccess && selectedPlaylist && (
         <>
           <span className="text-base">추천 플레이리스트 🎵</span>
-          <Link href={selectedPlaylist?.trackLink ?? ""} target="_blank" rel="noopener noreferrer">
+          <Link href={selectedPlaylist?.trackLink ?? '#'} target="_blank" rel="noopener noreferrer">
             <div className="flex flex-col text-sm gap-2 place-self-center">
               {selectedPlaylist?.imageUrl ? (
-                <img
-                  src={selectedPlaylist.imageUrl || ""}
-                  alt={selectedPlaylist.name}
-                  height={200}
-                  width={200}
-                  className="w-[200px] h-[200px] max-w-[180px] max-h-[180px] object-cover rounded-md self-center"
-                />
+                <div className="relative w-[200px] h-[200px] max-w-[180px] max-h-[180px] rounded-md overflow-hidden">
+                  <ResponsiveImage
+                    src={selectedPlaylist?.imageUrl || ''}
+                    alt={selectedPlaylist?.name ?? '플레이리스트 이미지'}
+                  />
+                </div>
               ) : null}
               <div className="flex flex-col text-sm gap-2 text-center">
                 <p
@@ -66,7 +74,7 @@ const Trending = () => {
                   data-tooltip-id="플레이리스트 바로가기"
                   data-tooltip-content="바로가기"
                 >
-                  {selectedPlaylist.name}
+                  {selectedPlaylist?.name}
                 </p>
               </div>
             </div>

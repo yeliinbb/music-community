@@ -6,6 +6,8 @@ import { fetchComments } from "@/lib/utils/fetchComments";
 import CommentList from "@/components/CommentList";
 import { QUERY_KEYS } from "@/lib/constants/queryKeys";
 import { TABLE_NAMES } from "@/lib/constants/tableNames";
+import { Suspense } from "react";
+import LoadingPage from "@/app/loading";
 
 const DetailPage = async ({ params }: { params: { id: string } }) => {
   const queryClient = new QueryClient();
@@ -29,10 +31,12 @@ const DetailPage = async ({ params }: { params: { id: string } }) => {
 
   return (
     <div className="rounded-xl flex flex-col h-full w-full gap-4">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Post params={params} />
-        <CommentList params={params} type="regular" />
-      </HydrationBoundary>
+      <Suspense fallback={<LoadingPage />}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Post params={params} />
+          <CommentList params={params} type="regular" />
+        </HydrationBoundary>
+      </Suspense>
     </div>
   );
 };

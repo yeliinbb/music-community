@@ -1,26 +1,26 @@
-import { useQueries } from "@tanstack/react-query";
-import { getAllPost } from "@/app/(main)/_components/getAllPost";
-import { getPlaylists } from "@/app/(main)/_components/getPlaylists";
-import { getSpotifyArtists } from "@/app/(main)/_components/getSpotifyArtists";
-import { MainPostType } from "@/types/posts.type";
-import { SpotifyArtist, SpotifyPlaylistTracks } from "@/types/spotify.type";
+import { useQueries } from '@tanstack/react-query';
+import { getAllPost } from '@/lib/utils/getAllPost';
+import { getPlaylists } from '@/lib/utils/getPlaylists';
+import { getSpotifyArtists } from '@/lib/utils/getSpotifyArtists';
+import { MainPostType } from '@/types/posts.type';
+import { SpotifyArtist, SpotifyPlaylistTracks } from '@/types/spotify.type';
 
 export function useMainPageData() {
   const queries = useQueries({
     queries: [
       {
-        queryKey: ["allPosts"],
-        queryFn: getAllPost
+        queryKey: ['allPosts'],
+        queryFn: getAllPost,
       },
       {
-        queryKey: ["playlists"],
-        queryFn: getPlaylists
+        queryKey: ['playlists'],
+        queryFn: getPlaylists,
       },
       {
-        queryKey: ["artistData"],
-        queryFn: getSpotifyArtists
-      }
-    ]
+        queryKey: ['artistData'],
+        queryFn: getSpotifyArtists,
+      },
+    ],
   });
 
   const [allPostsQuery, playlistsQuery, artistDataQuery] = queries;
@@ -37,6 +37,6 @@ export function useMainPageData() {
     error,
     allPostsError: allPostsQuery.error,
     playlistsError: playlistsQuery.error,
-    artistDataError: artistDataQuery.error
+    artistDataError: artistDataQuery.error,
   };
 }

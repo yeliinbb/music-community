@@ -1,25 +1,18 @@
-import { CommonPostType } from "@/types/posts.type";
-import { getApiUrl } from "./getApiUrl";
+import { CommonPostType } from '@/types/posts.type';
+import { createClient } from '@/utils/supabase/client';
 
 export const fetchPosts = async (id: string): Promise<CommonPostType> => {
   try {
-    const apiUrl = getApiUrl();
-    const response = await fetch(`${apiUrl}/api/posts/${id}`, {
-      method: "GET",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      cache: "no-store"
-    });
+    const supabase = createClient();
+    const { data, error } = await supabase.from('posts').select('*,users(nickname, email)').eq('id', id).single();
 
-    if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+    if (error) {
+      throw error;
     }
 
-    const data = await response.json();
-    return data as CommonPostType;
+    return data;
   } catch (error) {
-    console.error("게시물 불러오기 실패", error);
+    console.error('게시물 불러오기 실패', error);
     throw error;
   }
 };
