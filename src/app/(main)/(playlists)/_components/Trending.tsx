@@ -6,18 +6,23 @@ import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import TrendingSkeleton from './TrendingSkeleton';
 import 'react-tooltip/dist/react-tooltip.css';
-import Image from 'next/image';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Trending = () => {
-  const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
-    id: '',
-    name: '',
-    description: '',
-    imageUrl: '',
-    trackLink: '',
-    tracksCount: 0,
-  });
+  // const [selectedPlaylist, setSelectedPlaylist] = useState<SpotifyFeaturedPlaylist>({
+  //   id: '',
+  //   name: '',
+  //   description: '',
+  //   imageUrl: '',
+  //   trackLink: '',
+  //   tracksCount: 0,
+  // });
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const {
     data: featuredPlaylists,
     isPending,
@@ -27,7 +32,6 @@ const Trending = () => {
     queryKey: ['trending'],
     queryFn: async () => {
       const response = await axios<SpotifyFeaturedPlaylist[]>('/api/spotify/featuredPlaylists');
-
       return response.data;
     },
   });
@@ -36,22 +40,26 @@ const Trending = () => {
     return Math.floor(Math.random() * (arrLength + 1));
   }
 
-  useEffect(() => {
-    if (isSuccess && featuredPlaylists?.length > 0 && featuredPlaylists !== undefined) {
-      const randomIndex = getRandomNumber(featuredPlaylists?.length);
-      setSelectedPlaylist(featuredPlaylists[randomIndex]);
-    } else return;
-  }, [featuredPlaylists]);
+  // useEffect(() => {
+  //   if (isSuccess && featuredPlaylists?.length > 0 && featuredPlaylists !== undefined) {
+  //     const randomIndex = getRandomNumber(featuredPlaylists?.length);
+  //     setSelectedPlaylist(featuredPlaylists[randomIndex]);
+  //   } else return;
+  // }, [featuredPlaylists]);
 
-  console.log('featuredPlaylists', featuredPlaylists);
-
-  if (isPending || !selectedPlaylist) {
+  if (!mounted || isPending) {
     return <TrendingSkeleton />;
   }
 
   if (isError) {
     return <div>Error fetching playlists.</div>;
   }
+  if (!featuredPlaylists?.length) {
+    return null;
+  }
+
+  const randomIndex = Math.floor(Math.random() * featuredPlaylists.length);
+  const selectedPlaylist = featuredPlaylists[randomIndex];
 
   return (
     <div className="w-full flex flex-col p-2 gap-y-2">
@@ -59,7 +67,7 @@ const Trending = () => {
         <>
           <span className="text-base">추천 플레이리스트 🎵</span>
           <Link href={selectedPlaylist?.trackLink ?? '#'} target="_blank" rel="noopener noreferrer">
-            <div className="flex flex-col text-sm gap-2 place-self-center">
+            <div className="flex flex-col items-center text-sm gap-2 place-self-center">
               {selectedPlaylist?.imageUrl ? (
                 <div className="relative w-[200px] h-[200px] max-w-[180px] max-h-[180px] rounded-md overflow-hidden">
                   <ResponsiveImage
