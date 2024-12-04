@@ -48,7 +48,8 @@ const MainArtist = () => {
                     <div className="relative w-[100px] h-[100px] rounded-md overflow-hidden">
                       <ResponsiveImage
                         src={artist.images[2].url ?? defaultAvatarUrl}
-                        alt={`${artist.name}` ?? 'artist image'}
+                        alt={`${artist.name + artist.id}` ?? 'artist image'}
+                        priority={index < 5}
                       />
                     </div>
                   ) : null}
