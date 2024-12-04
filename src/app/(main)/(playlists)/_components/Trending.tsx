@@ -28,6 +28,10 @@ const Trending = () => {
     },
   });
 
+  useEffect(() => {
+    console.log('featuredPlaylists', featuredPlaylists);
+  }, [featuredPlaylists]);
+
   if (!mounted || isPending) {
     return <TrendingSkeleton />;
   }

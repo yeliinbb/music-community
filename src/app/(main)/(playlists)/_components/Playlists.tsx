@@ -9,7 +9,6 @@ import 'slick-carousel/slick/slick.css';
 import Track from '../../_components/Track';
 import PlayListSkeleton from './PlayListSkeleton';
 import { useMainPageData } from '@/hooks/useMainPageData';
-import Image from 'next/image';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
 const Playlists = () => {

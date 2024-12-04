@@ -1,54 +1,60 @@
-"use client";
+'use client';
 
-import { deletePost, editPost, uploadImg } from "@/lib/utils/postUtils";
-import { PostType } from "@/types/posts.type";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
-import { useLoginStore } from "@/store/auth";
-import PostSkeleton from "./PostSkeleton";
-import { toast } from "react-toastify";
-import { usePostCommentData } from "@/hooks/usePostCommentData";
-import { QUERY_KEYS } from "@/lib/constants/queryKeys";
+import { deletePost, editPost, uploadImg } from '@/lib/utils/postUtils';
+import { PostType } from '@/types/posts.type';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { useRouter } from 'next/navigation';
+import { useRef, useState } from 'react';
+import { useLoginStore } from '@/store/auth';
+import PostSkeleton from './PostSkeleton';
+import { toast } from 'react-toastify';
+import { usePostCommentData } from '@/hooks/usePostCommentData';
+import { QUERY_KEYS } from '@/lib/constants/queryKeys';
+import { TABLE_NAMES } from '@/lib/constants/tableNames';
 
 interface PostProps {
   params: { id: string };
 }
 
 const Post = ({ params }: PostProps) => {
-  const postId = params.id;
   const SUPABASE_URL = process.env.NEXT_PUBLIC_SUPABASE_URL;
+
   const [isEditing, setIsEditing] = useState(false);
+  const [file, setFile] = useState<File | null>(null);
+
   const titleRef = useRef<HTMLInputElement | null>(null);
   const contentRef = useRef<HTMLTextAreaElement | null>(null);
+
   const userId = useLoginStore((state) => state.userId);
   const queryClient = useQueryClient();
   const router = useRouter();
-  const [file, setFile] = useState<File | null>(null);
-  const tableName = "posts";
 
-  const { post, isPending, isSuccess, error } = usePostCommentData({ postId, queryKey: QUERY_KEYS.posts, tableName });
+  const { post, isPending, isSuccess, error } = usePostCommentData({
+    postId: params.id,
+    queryKey: QUERY_KEYS.posts,
+    tableName: TABLE_NAMES.posts,
+  });
 
   const editMutation = useMutation({
     mutationFn: editPost,
     onSuccess: () => {
       setIsEditing(false);
-      toast.success("수정되었습니다!");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
+      toast.success('수정되었습니다!');
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
   });
 
   const deleteMutation = useMutation({
     mutationFn: deletePost,
     onSuccess: () => {
-      toast.success("삭제되었습니다!");
-      queryClient.invalidateQueries({ queryKey: ["posts"] });
-    }
+      toast.success('삭제되었습니다!');
+      queryClient.invalidateQueries({ queryKey: ['posts'] });
+    },
   });
 
   const onEdit = async () => {
     if (userId !== post?.userId) {
-      toast.warn("작성자만 게시글을 수정할 수 있습니다");
+      toast.warn('작성자만 게시글을 수정할 수 있습니다');
       return;
     }
 
@@ -62,55 +68,55 @@ const Post = ({ params }: PostProps) => {
     try {
       if (file) {
         const formData = new FormData();
-        formData.append("postImg", file);
+        formData.append('postImg', file);
 
         const response = await uploadImg(formData);
         if (!response) {
-          throw new Error("Failed to upload profile picture");
+          throw new Error('Failed to upload profile picture');
         }
 
         uploadImageURL = `${SUPABASE_URL}/storage/v1/object/public/postsImage/${response.path}`;
       }
 
       if (titleRef.current && contentRef.current) {
-        const title: PostType["title"] = titleRef.current.value;
-        const content: PostType["content"] = contentRef.current.value;
+        const title: PostType['title'] = titleRef.current.value;
+        const content: PostType['content'] = contentRef.current.value;
 
         if ((title !== undefined && content !== undefined) || uploadImageURL !== undefined) {
           const editedPost: PostType = {
-            id: postId,
+            id: params.id,
             title: title,
             content: content,
-            created_at: post?.created_at ?? "",
+            created_at: post?.created_at ?? '',
             imageURL: uploadImageURL,
-            userId: userId || null
+            userId: userId || null,
           };
 
           editMutation.mutate(editedPost);
         }
       }
     } catch (error) {
-      console.error("Error in edit process:", error);
-      toast.error("게시글 수정 중 오류가 발생했습니다.");
+      console.error('Error in edit process:', error);
+      toast.error('게시글 수정 중 오류가 발생했습니다.');
     }
   };
 
   const onDelete = async () => {
     if (userId !== post?.userId) {
-      toast.warn("작성자만 게시글을 삭제할 수 있습니다.");
+      toast.warn('작성자만 게시글을 삭제할 수 있습니다.');
       return;
     }
 
-    if (confirm("정말로 이 게시글을 삭제하시겠습니까?")) {
+    if (confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
       try {
-        deleteMutation.mutate(postId);
-        router.push("/my");
+        deleteMutation.mutate(params.id);
+        router.push('/my');
       } catch (error) {
-        console.error("게시글 삭제 중 오류 발생", error);
-        toast.warn("게시글 삭제 중 오류가 발생했습니다.");
+        console.error('게시글 삭제 중 오류 발생', error);
+        toast.warn('게시글 삭제 중 오류가 발생했습니다.');
       }
     } else {
-      toast.success("게시글 삭제가 취소되었습니다.");
+      toast.success('게시글 삭제가 취소되었습니다.');
     }
   };
 

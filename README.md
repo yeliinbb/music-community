@@ -5,6 +5,10 @@
 음악 공유 커뮤니티로, 사용자들끼리 음악을 추천하고 확인할 수 있으며 검색을 통해 <br>
 다른 사용자와 아티스트, 노래를 찾아볼 수 있습니다.
 
+🔗 [Cytunes 사이트 바로가기](music-community-pearl.vercel.app)
+
+<img width="1377" alt="main" src="https://github.com/user-attachments/assets/c82523b4-9eba-4c69-9c6d-48aa80354a9e">
+
 # 프로젝트 내용
 
 - Cytunes는 사용자들이 음악을 추천하고 확인할 수 있는 공간입니다.
@@ -58,6 +62,14 @@
 
 <img src="https://img.shields.io/badge/Figma-F05032?style=for-the-badge&logo=Figma&logoColor=white"> <img src="https://img.shields.io/badge/slack-4053D6?style=for-the-badge&logo=slack&logoColor=white">
 
+<br />
+
+# 아키텍쳐
+
+![스크린샷 2024-07-13 오후 10 47 42 1](https://github.com/user-attachments/assets/e771ae08-29fa-48f7-bb46-4f32efb5ceb3)
+
+<br />
+
 # 💜 주요기능
 
 - 추천하는 글, 댓글 작성하는 기능
@@ -68,7 +80,6 @@
 
 - 메인페이지에서 플레이리스트 추천해주고 미리듣기 음원 제공
 
-# 메인 페이지
+# ⛓ ERD
 
-![main](https://github.com/user-attachments/assets/2bd1c71f-e857-46aa-b632-cbee5c730348)
-
+![Screen Shot 2024-11-25 at 3 30 12 PM](https://github.com/user-attachments/assets/12201ed7-1f9b-4a5f-b5a2-e1e490124b48)

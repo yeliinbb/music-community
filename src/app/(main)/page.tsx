@@ -6,6 +6,8 @@ import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query
 import { getAllPost } from '../../lib/utils/getAllPost';
 import { getPlaylists } from '../../lib/utils/getPlaylists';
 import { getSpotifyArtists } from '../../lib/utils/getSpotifyArtists';
+import { Suspense } from 'react';
+import LoadingPage from '../loading';
 
 const MainPage = async () => {
   const startTime = performance.now();
@@ -50,11 +52,13 @@ const MainPage = async () => {
 
   return (
     <div className="p-4">
-      <HydrationBoundary state={dehydrate(queryClient)}>
-        <Playlists />
-        <PostList />
-        <Artist />
-      </HydrationBoundary>
+      <Suspense fallback={<LoadingPage />}>
+        <HydrationBoundary state={dehydrate(queryClient)}>
+          <Playlists />
+          <PostList />
+          <Artist />
+        </HydrationBoundary>
+      </Suspense>
     </div>
   );
 };

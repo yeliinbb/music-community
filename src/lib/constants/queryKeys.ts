@@ -1,7 +1,7 @@
 export const QUERY_KEYS = {
-  posts: "posts",
-  comments: "comments",
-  artistComments: "artistComments"
+  posts: 'posts',
+  comments: 'comments',
+  artistComments: 'artistComments',
 } as const;
 
-export type QueryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];
+export type queryKey = (typeof QUERY_KEYS)[keyof typeof QUERY_KEYS];
