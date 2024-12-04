@@ -25,6 +25,10 @@ const nextConfig = {
         pathname: '/image/**',
       },
     ],
+    formats: ['image/avif', 'image/webp'],
+    deviceSizes: [300], // 실제로 사용하는 이미지 크기만 지정
+    imageSizes: [300],
+    minimumCacheTTL: 60,
   },
   eslint: {
     // Warning: This allows production builds to successfully complete even if

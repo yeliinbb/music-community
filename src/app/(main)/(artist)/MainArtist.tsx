@@ -1,24 +1,19 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-
-import type { SpotifyArtist } from '@/types/spotify.type';
-
 import { CustomNextArrow, CustomPrevArrow } from '@/components/CustomArrow';
 import Link from 'next/link';
 import Slider from 'react-slick';
 import 'slick-carousel/slick/slick-theme.css';
 import 'slick-carousel/slick/slick.css';
-import ArtistSkeleton from './ArtistSkeleton';
+import MainArtistSkeleton from './MainArtistSkeleton';
 import { useMainPageData } from '@/hooks/useMainPageData';
-import Image from 'next/image';
 import ResponsiveImage from '@/components/ResponsiveImage';
 
-const Artist = () => {
+const MainArtist = () => {
   const { artistData, isSuccess, isPending, error } = useMainPageData();
 
   if (isPending) {
-    return <ArtistSkeleton />;
+    return <MainArtistSkeleton />;
   }
 
   if (error) {
@@ -46,7 +41,7 @@ const Artist = () => {
       <div className="custom-slider ml-3 mr-3">
         <Slider {...settings}>
           {isSuccess &&
-            artistData?.map((artist) => (
+            artistData?.map((artist, index) => (
               <Link href={`/artist/${artist.id}`} key={artist.id} className="flex flex-col items-center">
                 <div className="flex justify-center">
                   {artist.images && artist.images ? (
@@ -69,4 +64,4 @@ const Artist = () => {
   );
 };
 
-export default Artist;
+export default MainArtist;

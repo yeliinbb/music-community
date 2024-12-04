@@ -1,6 +1,6 @@
 import PostList from './_components/PostList';
 import Playlists from './(playlists)/_components/Playlists';
-import Artist from './(artist)/Artist';
+import MainArtist from './(artist)/MainArtist';
 import { createClient } from '@/utils/supabase/server';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { getAllPost } from '../../lib/utils/getAllPost';
@@ -52,7 +52,7 @@ const MainPage = async () => {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Playlists />
           <PostList />
-          <Artist />
+          <MainArtist />
         </HydrationBoundary>
       </Suspense>
     </div>

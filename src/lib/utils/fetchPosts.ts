@@ -12,7 +12,7 @@ export const fetchPosts = async (id: string): Promise<CommonPostType> => {
 
     return data;
   } catch (error) {
-    console.error('게시물 불러오기 실패', error);
+    process.stderr.write(`게시물 불러오기 실패: ${error}\n`);
     throw error;
   }
 };

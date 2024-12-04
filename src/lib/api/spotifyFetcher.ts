@@ -18,7 +18,9 @@ interface IRequestOptions extends RequestInit {
 
 export const fetcher = (defaultOptions: IDefaultOptions) => {
   return async (url: string, options: IRequestOptions = {}) => {
-    const fullUrl = new URL(defaultOptions.baseURL + url);
+    const baseURL = defaultOptions.baseURL.replace(/\/$/, '');
+    const cleanUrl = url.startsWith('/') ? url : `/${url}`;
+    const fullUrl = new URL(baseURL + cleanUrl);
 
     // 기본 params 추가
     if (defaultOptions.defaultParams) {
