@@ -10,7 +10,6 @@ import { Suspense } from 'react';
 import LoadingPage from '../loading';
 
 const MainPage = async () => {
-  const startTime = performance.now();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -43,9 +42,6 @@ const MainPage = async () => {
         queryFn: getSpotifyArtists,
       }),
     ]);
-
-    const endTime = performance.now();
-    console.log(`MainPage Prefetch execution time: ${endTime - startTime}ms`);
   } catch (error) {
     console.error('MainPage Prefetch error:', error);
   }
