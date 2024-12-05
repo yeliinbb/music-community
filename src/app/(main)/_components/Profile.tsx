@@ -53,7 +53,8 @@ const Profile = () => {
           </div>
         </div>
       </div>
-      <Trending />
+      {/* spotify api is deprecated */}
+      {/* <Trending /> */}
     </div>
   );
 };

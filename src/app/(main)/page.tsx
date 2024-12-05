@@ -1,6 +1,6 @@
 import PostList from './_components/PostList';
 import Playlists from './(playlists)/_components/Playlists';
-import Artist from './(artist)/Artist';
+import MainArtist from './(artist)/MainArtist';
 import { createClient } from '@/utils/supabase/server';
 import { dehydrate, HydrationBoundary, QueryClient } from '@tanstack/react-query';
 import { getAllPost } from '../../lib/utils/getAllPost';
@@ -10,7 +10,6 @@ import { Suspense } from 'react';
 import LoadingPage from '../loading';
 
 const MainPage = async () => {
-  const startTime = performance.now();
   const queryClient = new QueryClient({
     defaultOptions: {
       queries: {
@@ -43,9 +42,6 @@ const MainPage = async () => {
         queryFn: getSpotifyArtists,
       }),
     ]);
-
-    const endTime = performance.now();
-    console.log(`MainPage Prefetch execution time: ${endTime - startTime}ms`);
   } catch (error) {
     console.error('MainPage Prefetch error:', error);
   }
@@ -56,7 +52,7 @@ const MainPage = async () => {
         <HydrationBoundary state={dehydrate(queryClient)}>
           <Playlists />
           <PostList />
-          <Artist />
+          <MainArtist />
         </HydrationBoundary>
       </Suspense>
     </div>

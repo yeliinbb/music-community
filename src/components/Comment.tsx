@@ -1,7 +1,7 @@
-import { convertDateFormat } from "@/lib/utils/convertDateFormat";
-import { CommonCommentType } from "@/types/comment.type";
-import React, { ChangeEvent } from "react";
-import { RiDeleteBinLine, RiEditFill } from "react-icons/ri";
+import { convertDateFormat } from '@/lib/utils/convertDateFormat';
+import { CommonCommentType } from '@/types/comment.type';
+import React, { ChangeEvent } from 'react';
+import { RiDeleteBinLine, RiEditFill } from 'react-icons/ri';
 
 interface CommentProps {
   comment: CommonCommentType;
@@ -19,13 +19,13 @@ const Comment = ({ comment, onEdit, onDelete, isPossibleEdit, onEditChange, edit
         <div className="flex items-center justify-between gap-1.5">
           <div className="flex items-center gap-1.5">
             <span className="font-semibold w-[100px] truncate">{comment.users?.nickname}</span>
-            <span className="text-xs text-slate-400">{convertDateFormat(comment.createdAt ?? "")}</span>
+            <span className="text-xs text-slate-400">{convertDateFormat(comment.createdAt ?? '')}</span>
           </div>
           <div>
-            <button className="mr-1" onClick={() => onEdit(comment.id)}>
+            <button className="mr-1" onClick={() => onEdit(comment.id)} aria-label="edit comment">
               <RiEditFill />
             </button>
-            <button onClick={() => onDelete(comment.id)}>
+            <button onClick={() => onDelete(comment.id)} aria-label="delete comment">
               <RiDeleteBinLine />
             </button>
           </div>

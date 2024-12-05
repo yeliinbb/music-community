@@ -149,3 +149,10 @@ export interface Followers {
   href: string;
   total: number;
 }
+
+export type ArtistAlbums = {
+  external_urls: ExternalUrls;
+  id: string;
+  images: Image[];
+  name: string;
+};

@@ -1,4 +1,4 @@
-export default function ArtistSkeleton() {
+const MainArtistSkeleton = () => {
   return (
     <div className="mt-10 animate-pulse">
       <p className="w-20 h-4 bg-gray-300 rounded-full mb-5" />
@@ -12,4 +12,6 @@ export default function ArtistSkeleton() {
       </ul>
     </div>
   );
-}
+};
+
+export default MainArtistSkeleton;

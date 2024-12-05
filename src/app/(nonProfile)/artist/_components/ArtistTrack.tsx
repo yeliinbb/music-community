@@ -4,6 +4,8 @@ import { SpotifyTrack, TracksItems } from '@/types/spotify.type';
 import { useQuery } from '@tanstack/react-query';
 import { useRef, useState } from 'react';
 import PlayButton from '@/components/PlayButton';
+import ResponsiveImage from '@/components/ResponsiveImage';
+import ArtistTrackSkeleton from './ArtistTrackSkeleton';
 
 interface ArtistTrackProps {
   params: { id: string };
@@ -21,7 +23,7 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
 
   const {
     data = [],
-    isLoading,
+    isPending,
     error,
   } = useQuery<TracksItems[]>({
     queryKey: ['artistTrack', params.id],
@@ -44,17 +46,8 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
     }
   };
 
-  if (isLoading) {
-    return (
-      <div className="mt-4 animate-pulse">
-        <div className="bg-gray-300 h-4 w-20 rounded-full mb-4" />
-        <ul className="grid gap-y-4  h-[300px]">
-          <li className="rounded-lg bg-gray-300 w-full h-[100px]" />
-          <li className="rounded-lg bg-gray-300 w-full h-[100px]" />
-          <li className="rounded-lg bg-gray-300 w-full h-[100px]" />
-        </ul>
-      </div>
-    );
+  if (isPending) {
+    return <ArtistTrackSkeleton />;
   }
 
   if (error) {
@@ -82,7 +75,9 @@ const ArtistTrack = ({ params }: ArtistTrackProps) => {
                 <div className="flex items-center space-x-4 justify-between">
                   <div className="flex flex-row gap-x-5 items-center ">
                     <div className="font-bold">{index + 1}</div>
-                    <img src={track.album.images[2].url} alt="앨범 이미지" width={50} height={50} />
+                    <div className="relative w-[50px] h-[50px] min-w-[50px] overflow-hidden">
+                      <ResponsiveImage src={track.album.images[2].url} alt="아티스트 앨범 이미지" />
+                    </div>
                     <div>
                       <div className="mt-2 overflow-hidden overflow-ellipsis whitespace-nowrap w-[300px]">
                         {track.name}
