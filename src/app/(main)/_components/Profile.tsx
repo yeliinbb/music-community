@@ -24,7 +24,11 @@ const Profile = () => {
         <div className="flex items-center">
           <span className="mr-1.5 text-base">마이 프로필</span>
           <ProfileModal data-tooltip-id="프로필 수정" data-tooltip-content="프로필 수정" userId={userId} />
-          <Tooltip id="프로필 수정" place="bottom" style={{ backgroundColor: '#858585', color: 'white' }} />
+          <Tooltip
+            id="프로필 수정"
+            place="bottom"
+            style={{ backgroundColor: '#858585', color: 'white', zIndex: '100' }}
+          />
         </div>
         {
           <div className="relative w-[180px] h-[220px] overflow-hidden rounded-md self-center">
